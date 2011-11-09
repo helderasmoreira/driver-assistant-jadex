@@ -23,18 +23,13 @@ import java.util.*;
 /*
  * Example.
  */
-public class PathFinder 
+public class PathFinder extends AStar<PathFinder.Node>
 {
 		private int[][] map;
 
 		public static class Node{
 				public int x;
 				public int y;
-				public Node parent;
-				public Double g = 0.0;
-				public Double h = 0.0;
-				public Double f = 0.0;
-				
 				public Node(int x, int y){
 						this.x = x; 
 						this.y = y;
@@ -62,7 +57,10 @@ public class PathFinder
 				return Double.MAX_VALUE;
 		}
 
-		
+		protected Double h(Node from, Node to){
+				/* Use the Manhattan distance heuristic.  */
+				return new Double(Math.abs(map[0].length - 1 - to.x) + Math.abs(map.length - 1 - to.y));
+		}
 
 		protected List<Node> generateSuccessors(Node node){
 				List<Node> ret = new LinkedList<Node>();
@@ -79,115 +77,8 @@ public class PathFinder
 
 				if(x > 0 && map[y][x-1] == 1)
 					ret.add(new Node(x-1, y));
+
 				return ret;
-		}
-		
-		public Double g(Node node)
-		{
-			Double g = 0.0;
-			while(node != null)
-			{
-				g+=node.g;
-				node = node.parent;
-			}
-			return g;
-		}
-		
-		protected Double h(Node from, Node to){
-			/* Use the Manhattan distance heuristic.  */
-			return new Double(Math.abs(map[0].length - 1 - to.x) + Math.abs(map.length - 1 - to.y));
-	}
-		
-		
-		protected Double f(Node from, Node to)
-		{
-			return g(from) + h(from, to);
-		}
-		
-		public List<Node> compute(Node start, Node end)
-		{
-			List<Node> openset = new ArrayList<Node>();
-			openset.add(start);
-			
-			start.g = 0.0;
-			start.h = h(start, end);
-			start.f = start.g + start.h;
-			
-			List<Node> closedset = new ArrayList<Node>();
-			
-			while(!openset.isEmpty())
-			{
-				Node x = bestNode(openset, end);
-				if(isGoal(x, end))
-				{
-					List<Node> list = new ArrayList<Node>();
-					list.add(0, x);
-					while(x != null) {
-						list.add(0, x.parent);
-						x = x.parent;
-					}
-					return list;
-					
-				}
-				
-				openset.remove(x);
-				closedset.add(x);
-				
-				for(Node y: generateSuccessors(x))
-				{
-					if(contains(closedset, y))
-						continue;
-					
-					Double tentative_g_score = g(x) + h(x, y);
-					boolean tentative_is_better;
-					if(!contains(openset, y))
-					{
-						openset.add(y);
-						tentative_is_better = true;
-					} else if(tentative_g_score < g(y))				
-						tentative_is_better = true;
-					else
-						tentative_is_better = false;
-					
-					if(tentative_is_better)
-					{
-						y.parent = x;
-						y.g = tentative_g_score;
-						y.h = h(y, end);
-						y.f = g(y)+h(y, end);
-					}
-				}
-			}
-			
-			
-			return null;
-			
-		}
-		
-		protected boolean equal(Node node, Node end){
-			return (node.x == end.x) && (node.y == end.y);
-	}
-		
-		protected boolean contains(List<Node> list, Node n){
-			for(Node x : list)
-				if(equal(x, n)) return true;
-			return false;
-		}
-		
-		
-		private Node bestNode(List<Node> openset, Node end) {
-			
-			Node ret = openset.get(0);
-			Double retf = f(ret, end);
-			for(Node n: openset)
-			{
-				if(f(n, end) < retf)
-				{
-					ret = n;
-					retf = f(n, end);
-				}
-			}
-			return ret;
 		}
 
 		public static void main(String [] args){
@@ -238,6 +129,28 @@ public class PathFinder
 				}
 
 				
+				PathFinder pf = new PathFinder(map);
+				
+				
+				long begin = System.currentTimeMillis();
+
+				List<Node> nodes = pf.compute(new PathFinder.Node(6, 10), new PathFinder.Node(15, 5));
+				
+				long end = System.currentTimeMillis();
+
+
+				System.out.println("Time = " + (end - begin) + " ms" );
+				System.out.println("Expanded = " + pf.getExpandedCounter());
+				System.out.println("Cost = " + pf.getCost());
+				
+				if(nodes == null)
+						System.out.println("No path");
+				else{
+						System.out.print("Path = ");
+						for(Node n : nodes)
+								System.out.print(n);
+						System.out.println();
+				}
 		}
 
 }
