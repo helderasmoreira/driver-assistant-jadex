@@ -41,19 +41,28 @@ public class GoDestiny  extends Plan {
 					{
 						if((poi[i].getProperty("state")).equals("notvisited"))
 						{
+							
 							IVector2	newpos	= (IVector2)poi[i].getProperty(Space2D.PROPERTY_POSITION);
 							PathFinder pf = new PathFinder(Utils.map);
+							
+							System.out.println(((IVector2)myself.getProperty(Space2D.PROPERTY_POSITION)).getXAsInteger() + " " +((IVector2)myself.getProperty(Space2D.PROPERTY_POSITION)).getYAsInteger() );
+							System.out.println(newpos.getXAsInteger() + " " + newpos.getYAsInteger());
+							
 							
 							List<Node> nodes = pf.compute(new PathFinder.Node(((IVector2)myself.getProperty(Space2D.PROPERTY_POSITION)).getXAsInteger(),
 									((IVector2)myself.getProperty(Space2D.PROPERTY_POSITION)).getYAsInteger()), 
 									new PathFinder.Node(newpos.getXAsInteger(), 
 											newpos.getYAsInteger()));
-							if(target == null && nodes != null)
+							
+							
+							
+							System.out.println(nodes);
+							if(target == null)
 							{
 								target = poi[i];
 								size = nodes.size();
 							}
-							else if(nodes != null && nodes.size() < size)
+							else if(nodes.size() < size)
 							{
 								target	= poi[i];
 								size = nodes.size();
