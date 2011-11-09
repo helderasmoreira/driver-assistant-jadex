@@ -180,7 +180,11 @@
 						</env:object>
 						
 						<env:object type="pointofinterest">
-							<env:property name="position">new Vector2Double(15, 5)</env:property>
+							<env:property name="position">new Vector2Double(15, 4)</env:property>
+						</env:object>
+						
+						<env:object type="pointofinterest">
+							<env:property name="position">new Vector2Double(6, 10)</env:property>
 						</env:object>
 					</env:objects>
 					<env:observers>
