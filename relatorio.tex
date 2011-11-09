@@ -1,0 +1,369 @@
+\documentclass[11pt,a4paper]{report}
+ 
+\usepackage[portuguese]{babel}
+\usepackage{indentfirst}
+%Em windows
+ 
+\usepackage[latin1]{inputenc} 
+\usepackage[T1]{fontenc}
+\usepackage[tt]{titlepic}
+
+\usepackage{listings}
+\usepackage{graphicx}
+
+\begin{document}
+
+\begin{titlepage}
+
+\begin{center}
+
+\begin{figure}[htp]
+  \centering
+  \includegraphics{feup}
+ 
+\end{figure}
+
+\vspace{10 mm}
+
+\textsc{\large Mestrado Integrado em Engenharia Informática e Computação} \\
+\textsc{\large Agentes e Inteligência Artificial Distribuída} \\
+\textsc{\normalsize 4º Ano} \\ 
+\vspace{10 mm}
+\textsc{\LARGE Determinação de percursos usando agentes BDI} \\
+\textsc{\normalsize Relatório Intercalar} \\
+
+% Title
+\vspace{30 mm}
+% Author and supervisor
+\emph{Autores:}\\
+Bruno Filipe Neves Ferreira - 080509088 - ei08088@fe.up.pt \\
+Carlos Tiago da Rocha Babo - 080509118 - ei08118@fe.up.pt \\
+Hélder Alexandre dos Santos Moreira - 080509170 - ei08170@fe.up.pt
+
+\vfill
+
+% Bottom of the page
+{\large \today}
+
+\end{center}
+
+\end{titlepage}
+
+\newpage
+
+\tableofcontents
+\setcounter{tocdepth}{1}
+
+
+\chapter{Enunciado}
+
+\section{Descrição do cenário}
+
+Numa viagem de automóvel o condutor tem que tomar várias decisões até chegar ao seu destino. Tendo em mente que o agente condutor pode ter várias intenções sobre o percurso a realizar, a escolha do caminho tem como base essas intenções. \\
+
+Independentemente da intenção do condutor (chegar rapidamente a um local ou realizar um percurso turístico), o agente não conhece antecipadamente as condições do percurso escolhido. Apenas toma conhecimento dessas condições quando estas se encontram no seu campo de visão, ou então quando o rádio informa da ocorrência de um acidente. \\
+
+
+\section{Objetivos do trabalho}
+
+No âmbito da Unidade Curricular de Agentes e Inteligência Artificial Distribuída, o objetivo deste trabalho é criar um sistema multi-agente que consiga recolher informações sobre o espaço e indicar ao condutor qual o percurso que este deve tomar, tendo em conta os vários estímulos possíveis: acidentes, pontos de interesse, estado do tempo, rádio, entre outros.
+O sistema deve avaliar os estímulos (condições do percurso), bem como as condições pré-definidas de modo a que o condutor chegue ao destino do modo pretendido. \\
+
+
+\section{Resultados esperados e forma de avaliação}
+
+No final do trabalho o agente responderá a várias simulações de forma correta e eficiente de acordo com as diferentes configurações definidas, por exemplo, diferentes mapas de estradas. \\
+
+A avaliação será feita modificando parâmetros e analisando o comportamento do agente, por exemplo, ao definirmos que queremos um percurso direto entre o ponto de partida e o ponto de chegada, esperamos ver o agente a deslocar-se diretamente para o destino. \\
+
+Com o objetivo de ter uma avaliação detalhada, iremos abranger todas as combinações. Partindo do exemplo anterior, podemos ter o mesmo percurso mas desta vez adicionando um acidente, obrigando assim a que seja calculado um desvio. Adicionalmente a forma de transmitir essa informação ao agente condutor também pode ser modificada, ou seja, pode ser transmitida por rádio ou então só quando estiver no campo de visão do agente é que é calculado o desvio. \\
+
+Não esquecendo que essas mesmas combinações também serão feitas para percursos com pontos de interesse escolhidos, e variando o local onde existirá um acidente. \\
+
+Relativamente aos acidentes, importa ainda referir que estes podem pré-definidos ou criados dinamicamente. Qualquer alteração ao estado do tempo pode também levar a visitar ou não um determinado ponto. \\
+
+
+\chapter{Plataforma/Ferramenta}
+
+\section{Para que serve}
+
+O \emph{Jadex} BDI 2.0 é um motor que permite especificar agentes inteligentes baseado no modelo \emph{Belief-Desire-Intention} com recurso a \emph{XML} e Java. Uma das principais vantagens da ferramenta é não introduzir nenhuma linguagem de programação nova, permitindo usar \emph{IDEs} focados no desenvolvimento orientado a objetos, como o Eclipse. 
+
+\section{Características Principais}
+
+Os agentes racionais têm uma representação explícita no ambiente e dos objetivos que estão a tentar atingir. Estes são racionais, pois escolhem sempre a ação mais promissora (de acordo com a base de conhecimento do mundo) para atingir os seus objetivos. Dado que normalmente não têm conhecimento dos efeitos de cada ação previamente, os agentes deliberam sempre sobre as opções disponíveis.\\
+
+Em 1987, Bratman introduziu uma arquitetura para descrever os agentes racionais. Esta  consiste em explorar as atitudes mentais que geram as ações do homem - crenças, desejos e intenções. Assim, as crenças captam as atitudes de informação, os desejos as atitudes de motivação, e as intenções as atitudes de deliberação dos agentes. Mais tarde, Rao e Geroff adotaram este modelo e transformaram-no numa teoria mais formal e num modelo de execução para software de agentes, baseado na noção de crenças, objetivos e planos (\emph{beliefs}, \emph{goals} e \emph{plans}).\\
+
+Deste modo, o \emph{Jadex} reaproveitou o modelo de Rao e Geroff e portou-o para o contexto da programação orientada a objetos. Assim, os \emph{beliefs}, \emph{goals} e \emph{plans} representam objetos de classes que são criadas e manipuladas no contexto de cada agente. Os agentes comportam  \emph{beliefs}, representados por qualquer tipo de objeto Java e que pertencem à sua \emph{beliefbase}. Os \emph{goals} representam motivações concretas (estados a atingir) e que influenciam o comportamento do agente. Para atingir os seus objetivos (\emph{goals}), o agente executa planos (\emph{plans}), que são descritos em Java.\\
+
+Este modelo comporta, desta forma, duas componentes essenciais. Por um lado, o agente reage a mensagens, eventos internos e \emph{goals} selecionando e executando \emph{plans}. Por outro lado, o agente delibera continuamente sobre os seus \emph{goals} atuais, adaptando-se às condições de cada momento.\\
+
+\section{Funcionalidades Relevantes para o Trabalho}
+
+\subsection{\emph{Agents} (agentes)}
+	
+	Para especificar um agente é necessário criar dois tipos de ficheiros: um ficheiro \emph{XML} com as definições do agente e um ficheiro JAVA para cada plano especificado no \emph{XML}. \\
+	
+
+\begin{figure}[htp]
+  \centering
+  \includegraphics[width=0.8\textwidth]{jadex}
+  \caption{Esquema representativo da plataforma Jadex.}
+\end{figure}
+
+
+\begin{itemize}
+\item \emph{Beliefs}: representam o conhecimento do agente sobre o ambiente e sobre si mesmo. São representados por qualquer tipo de objeto  Java. Podem ser referenciados em expressões, acedidos e modificados pelos planos, usando a interface da \emph{beliefbase}, ou até mesmo herdados de uma \emph{capabilitie} utilizando o sufixo \emph{ref}. \\
+
+Exemplo em que um agente tem como \emph{belief} a sua posição no espaço (que herda de uma \emph{capabilite}) e informação sobre o seu modo de operação (turístico ou direto):
+	
+\begin{lstlisting}
+<agent>
+ ...
+ <beliefs>
+  <beliefref name="myself">
+   <concrete ref="move.myself"/>
+  </beliefref>	
+  ...
+  <belief name="turistica" class="boolean">
+   <fact>true</fact>
+  </belief>
+ </beliefs>
+ ...
+</agent>
+\end{lstlisting}
+
+\item \emph{Goals}: representam as motivações do agente e que despoletam as ações. Podem ser de quatro tipos, mas apenas dois se adequam no contexto do trabalho:
+
+\begin{itemize}
+\item \emph{Perform goal}: algo que precisa de ser feito, mas sem ter necessariamente um objetivo. \\
+
+Exemplo: criar um \emph{goal} para deslocar um agente até ao destino final. De acordo com a sua posição, e os pontos que já visitou, o \emph{plan} respetivo terá de analisar e encontrar os diferentes objetivos intermédios até ao destino final. Este \emph{goal} é descartado quando surge um acidente no caminho (\emph{drop condition}):
+
+\begin{lstlisting}
+<performgoal name ="go_destiny" retry="false" >
+ <dropcondition language="jcl">
+  ISpaceObject $target &amp;&amp;
+  $beliefbase.acidente == $target &amp;&amp;
+  $target.state=="notavoid"
+ </dropcondition>	
+</performgoal>
+\end{lstlisting}
+
+\item \emph{Achieve goal}: representa um estado desejado, mas não  especifica como lá chegar.\\
+
+Exemplo em que surge um acidente e pretende-se que o condutor se desloque até um estado em que evitou o acidente. Este \emph{goal} é criado automaticamente quando surge um acidente no campo de visão do condutor:
+
+\begin{lstlisting}
+<achievegoal name="avoid_accident" retry="false">
+ <parameter name="accident" class="ISpaceObject">
+  <value>
+   $accident
+  </value>
+ </parameter>	
+ <creationcondition language="jcl">
+  ISpaceObject $target &amp;&amp;
+  $beliefbase.acidente == $target &amp;&amp;
+  $target.state=="notavoid" 
+ </creationcondition>
+ ...
+</achievegoal>
+\end{lstlisting}
+\end{itemize}
+
+\item \emph{Plans}: descrevem como é que as ações do agente se desenrolam. Os \emph{plans} são selecionados de acordo com a ocorrência de \emph{events} e \emph{goals}. A seleção de \emph{plans} é feito de forma automática pelo sistema e representa um dos aspetos principais da infraestrutura BDI. No \emph{Jadex} os \emph{plans} dividem-se em duas partes: um \emph{head} declarado em XML e um \emph{body} declarado em Java. 
+
+Exemplo de um \emph{plan} que é acionado pelo \emph{goal go\_destiny}:
+
+\emph{Head}:
+\begin{lstlisting}
+<plan name="go_destiny">
+ ...
+ <body class="GoDestiny" />
+  <trigger>
+   <goal ref="go_destiny"/>
+  </trigger>
+</plan>
+\end{lstlisting}
+
+\emph{Body}:
+\begin{lstlisting}
+public class GoDestiny extends Plan 
+{
+ public void body() 
+ {
+  ...
+ }
+}
+\end{lstlisting}
+\end{itemize}
+
+\subsection{\emph{Capabilities} (capacidades)}
+
+No \emph{Jadex}, uma \emph{capability} representa um módulo de agente encapsulado composto por \emph{beliefs}, \emph{goals} e \emph{plans}. Este conceito permite criar um pacote com todas as características de um agente e que pode ser reutilizado em qualquer outro agente. Normalmente, as \emph{capabilities} não têm representação explícita no ambiente, representando uma extensão de um ou vários agentes. Para aceder às \emph{beliefs} ou \emph{goals} de uma \emph{capability}, o agente tem de incluir uma referência na sua declaração, não sendo obrigatório herdar todas as características desta, introduzindo a noção de hierarquia.\\
+
+Definição da capability:
+\begin{lstlisting}
+<capability xmlns="http://jadex.sourceforge.net/jadex-bdi"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://jadex.sourceforge.net/jadex-bdi
+ http://jadex.sourceforge.net/jadex-bdi-2.0.xsd"
+ name="MyCapability" package="mypackage">
+
+ <beliefs> ... </beliefs>
+ <goals> ... </goals>
+ <plans> ... </plans>
+ ...
+</capability>
+\end{lstlisting}
+
+No agente que herda a \emph{capability}:
+
+\begin{lstlisting}
+<agent ...>
+ <capabilities>
+  <capability name="MyCapability" 
+   file="mypackage/MyCapability.capability.xml"/>
+  ...
+ </capabilities>
+ ...
+</agent
+\end{lstlisting}
+
+\subsection{\emph{Events} (eventos)}
+
+	Uma característica importante do agente é a capacidade de reagir a eventos internos, ou mensagens externas. Os eventos internos podem ser usados para denotar uma ocorrência dentro de um agente, enquanto que as mensagens externas representam a comunicação entre dois agente. Os \emph{events} podem despoletar \emph{plans}. 
+
+\subsection{\emph{Expressions} (expressões)}
+
+	As \emph{expressions} permitem especificar \emph{beliefs} e valores dos parâmetros numa sintaxe que se assemelha a consultas em \emph{SQL}. Esta funcionalidade facilita a seleção de objetos. \\
+	
+Exemplo de um caso em que se pretende obter um ponto de interesse chamado "Praia": 
+
+Ficheiro \emph{XML} do agente:
+
+\begin{lstlisting}
+<agent ...>
+ ...
+ <expressions>
+  <expression name="find_poi" class="POI">
+   select one POI $poi
+   from $poi in $beliefbase.pois
+   where $poi.getName().equals($name)
+  </expression>
+  ...
+ </expressions>
+ ...
+</agent>
+\end{lstlisting}
+
+Classe que implementa o \emph{plan}:
+
+\begin{lstlisting}
+public void body 
+{
+ IExpression query = getExpression("find_poi");
+ ...
+ POI poi = (POI)query.execute("$name", "Praia");
+ ...
+}
+\end{lstlisting}
+
+\subsection{\emph{Application} (aplicação)}
+
+	A \emph{application} é criada com recurso a um ficheiro \emph{XML} e é nela onde estão declarados todos os objetos do ambiente, as suas características, posições no espaço, entre outras propriedades. É também nela onde se pode declarar os vários cenários de simulação, criando para isso diferentes conjuntos de configurações. Cada cenário pode conter objetos em diferentes posições, assim como propriedades distintas. Por exemplo, é possível ter uma configuração em que o objetivo do condutor é deslocar-se simplesmente para o seu destino e outro onde é desejado que passe nos vários pontos de interesse do mapa. Esta possibilidade surgiu na versão 2.0 do \emph{Jadex}, não sendo necessário recorrer a ferramentas de terceiros (\emph{Swing}) para desenhar a interface.
+
+
+\chapter{Especificação}
+
+\section{Identificação e caraterização dos agentes}
+
+A aplicação contempla um agente, Driver, e duas \emph{capabilities}, GPS e Rádio. \\
+
+\subsection{GPS}
+
+O GPS contém como \emph{beliefs} o ambiente em que o condutor se encontra, tendo assim a informação sobre vários componentes do espaço, isto é, pontos de interesse, ponto inicial e final da viagem, o mapa de estradas (caminhos possíveis), entre outros. O GPS tem como \emph{goals} mover o condutor, Driver, até um destino a determinar quando recebe um pedido do mesmo e também recalcular a nova rota quando toma conhecimento de um acidente no percurso estabelecido. \\ 
+
+O GPS procura assim nas pontos de interesse nas imediações do agente e encaminha-o para lá. Em caso de acidente, é recalculada a rota para um próximo ponto de interesse e o que iria ser visitado fica guardado para ser visitado novamente. Quando todos os pontos estiverem visitados, ou não houver caminho possível para nenhum outro, o GPS encaminha o agente para o ponto final da viagem. \\
+
+\subsection{Driver}
+
+O agente Driver inclui a \emph{capability} GPS para interagir com a mesma e possui como \emph{beliefs} o próximo ponto turístico para onde se está a dirigir e eventualmente algum acidente que esteja a evitar.  O condutor não tem desta forma acesso aos restantes componentes do espaço, indicando apenas que tipo de viagem pretende realizar (turística, rápida, etc) e deixando as decisões a cabo do GPS, tal como acontece num ambiente real. O agente tem assim como \emph{goals} analisar o seu espaço circundante (radar) e avisar o GPS caso encontre alguma acidente no seu percurso. \\
+ 
+\subsection{Rádio} 
+ 
+A informação relativa aos acidentes é guardada ao nível do Rádio, não sendo assim conhecida previamente nem pelo condutor, nem pelo GPS, e será transmitida ao GPS através da troca de eventos por mensagem com o agente quando o rádio se encontrar ativo ou detetados pelo campo de visão do condutor. \\
+
+\subsection{Aplicação} 
+
+A aplicação recorre às funcionalidades disponibilizadas pelo \emph{Jadex} 2.0 e tem como elemento principal um espaço 2D da classe \emph{ContinuousSpace2D} que aloja vários elementos:
+
+\begin{itemize}
+
+\item {\bf Mapa de estradas} \\
+Representa os caminhos onde o condutor pode movimentar-se e será representado pelo meio de arestas. Esta representação tem como objetivo permitir o mapeamento do mapa num grafo, facilitando a determinação de percursos.
+
+\item {\bf Pontos de interesse} \\
+São os pontos de interesse que o condutor deve visitar caso faça uma visita turística. Podem conter propriedades específicas, tais como o facto de só permitir visitas num determinado estado atmosférico ou também uma pré-condição para a visita (a visita de outro ponto de interesse por exemplo).
+
+\item {\bf Acidentes}  \\
+Representam um obstáculo incontornável na estrada e que obrigará o condutor a procurar outro caminho. Tal como os pontos de interesse, podem conter propriedades específicas de acordo com o estado atmosférico (só se encontra ativo em tempo de chuva por exemplo).
+
+\item {\bf Ponto inicial da viagem}  \\
+Representa o ponto inicial da viagem a partir do qual o condutor partirá.
+
+\item {\bf Ponto final da viagem}  \\
+Representa o ponto final da viagem para o qual o condutor tem como objetivo dirigir-se.
+
+\end{itemize}
+
+\begin{figure}[htp]
+  \centering
+  \includegraphics[width=0.8\textwidth]{aplicação}
+  \caption{Esquema representativo da estrutura da aplicação.}
+\end{figure}
+
+\section{Protocolos de interação}
+
+
+\begin{figure}[htp]
+  \centering
+  \includegraphics[width=0.8\textwidth]{interação}
+  \caption{Esquema representativo das interações entre os vários componentes.}
+\end{figure}
+
+
+Hierarquicamente, o GPS encontra-se numa camada superior ao agente Driver e é esta que, com conhecimento do ambiente e com um pedido do agente, o move até à localização desejada. De acordo com a pesquisa que fizemos sobre a tecnologia \emph{Jadex} e sobre as possíveis abordagens ao problema esta pareceu-nos a mais correta e viável. \\
+
+Assim o processo de interação entre os vários componentes começa pelo agente que comunicará ao GPS a sua intenção de realizar uma viagem e visitar os pontos turísticos conhecidos. O GPS calcula o caminho que o agente deve seguir e move-o de acordo. Ao mover-se o condutor comunicará ao GPS caso encontre algum acidente no seu caminho e este recalculará a nova rota. \\
+
+Caso o modo rádio esteja ativado, este comunica através de eventos por mensagem com o GPS, indicando-lhe os acidentes que estão presentes ao longo do mapa e este terá a responsabilidade de avaliar se os acidentes encontrados interferem no percurso definido para o condutor e caso isso aconteça, recalcular a rota. \\
+
+
+\section{Faseamento do projeto}
+
+É possível identificar 3 fases distintas no desenvolvimento do projeto. A primeira, fase onde é desenvolvido o esqueleto da aplicação e implementadas as funcionalidades base que servirão para suportar todo o trabalho, a segunda, onde é verificada a viabilidade de novas funcionalidades, indo assim para um âmbito para além do que é especificado no enunciado e por fim a terceira, fase onde será dado foco à interface gráfica para permitir uma melhor demonstração e uso da aplicação. \\
+
+Neste momento encontramo-nos a finalizar a primeira fase, tendo já implementado a estrutura da aplicação e a interação entre os vários componentes. Os objetivos futuros passam por terminar esta fase, implementando o mapa de estradas e de seguida abordar novas funcionalidades, como o estado atmosférico e as pré-condições de visita, antes de ser abordada a terceira fase.
+
+\chapter{Recursos}
+
+\section{Bibliografia}
+
+\begin{itemize}
+\item http://jadex-agents.informatik.uni-hamburg.de
+\item http://paginas.fe.up.pt/~eol/AIAD/aiad1112.html
+\item http://sourceforge.net/projects/jadex/
+\end{itemize}
+
+
+\section{Software}
+
+\begin{itemize}
+\item Eclipse - IDE utilizado para desenvolvimento.
+\item Jadex 2.0
+\end{itemize}
+
+
+\end{document}

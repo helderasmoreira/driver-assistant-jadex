@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+	<H3>Determinação de percursos usando agentes BDI</H3>
+	O objectivo do condutor é chegar ao seu destino, passando, ou não,
+	pelos locais de lazer disponíveis. Existem os seguinte cenários:
+	<ul>
+	<li>Visita turística - passa pelos vários pontos de interessa</li>
+	<li>Directo - desloca-se directamente para o destino final</li>
+	</ul>
+	
+-->
+<applicationtype xmlns="http://jadex.sourceforge.net/jadex"
+	xmlns:agr="http://jadex.sourceforge.net/jadex-agrspace"
+	xmlns:env="http://jadex.sourceforge.net/jadex-envspace"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://jadex.sourceforge.net/jadex 
+	                    http://jadex.sourceforge.net/jadex-application-2.0.xsd
+	                    http://jadex.sourceforge.net/jadex-agrspace 
+	                    http://jadex.sourceforge.net/jadex-agrspace-2.0.xsd
+	                    http://jadex.sourceforge.net/jadex-envspace 
+	                    http://jadex.sourceforge.net/jadex-envspace-2.0.xsd"
+	name="BDIDriveAssistant" package="application">
+	
+	<imports>
+		<import>jadex.extension.envsupport.environment.space2d.*</import>
+		<import>jadex.extension.envsupport.environment.DeltaTimeExecutor</import>
+		<import>jadex.extension.envsupport.math.*</import>
+		<import>jadex.extension.envsupport.dataview.*</import>
+		<import>java.text.SimpleDateFormat</import>
+		<import>java.util.Date</import>
+		<import>jadex.extension.envsupport.observer.perspective.*</import>
+		<import>movement.*</import>
+		<import>jadex.extension.envsupport.evaluation.*</import>
+		<import>jadex.extension.envsupport.observer.gui.plugin.*</import>
+		<import>jadex.bridge.service.clock.IClockService</import>
+		<import>jadex.commons.future.*</import>
+		<import>jadex.bridge.service.*</import>
+	</imports>
+	
+	<extensiontypes>
+		<agr:agrspacetype name="mundo">
+			<agr:grouptype name="agents">
+				<agr:roles>
+					<agr:role name="Driver"/>
+				</agr:roles>
+			</agr:grouptype>
+		</agr:agrspacetype>
+
+		<env:envspacetype name="2dspace" class="Grid2D">
+		<env:property name="neighborhood">Grid2D.NEIGHBORHOOD_MOORE</env:property>
+		
+			<env:processtypes>
+				<env:processtype name="build_map" class="BuildMap" />
+			</env:processtypes>
+			
+		
+			<env:objecttypes>
+				<env:objecttype name="pointofinterest">
+					<env:property name="state" class="String">"notvisited"</env:property>
+				</env:objecttype>
+				<env:objecttype name="Driver">
+					<env:property name="vision" class="double">1</env:property>
+					<env:property name="speed" class="double">3</env:property>
+					<env:property name="position" class="IVector2" dynamic="true">$space.getSpaceObjectsByType("homebase")[0].getProperty("position")</env:property>
+				</env:objecttype>
+				<env:objecttype name="homebase">
+				</env:objecttype>
+				<env:objecttype name="accident">
+					<env:property name="state" class="String">"notavoid"</env:property>
+				</env:objecttype>
+				<env:objecttype name="finaldestination">
+				</env:objecttype>
+				
+				<env:objecttype name="cell">
+					<env:property name="road"></env:property>
+				</env:objecttype>
+				
+			</env:objecttypes>
+			
+		
+		
+			<env:tasktypes>
+				<env:tasktype name="move" class="MoveTask" />
+			</env:tasktypes>			
+						
+			<env:dataviews>
+				<env:dataview name="mapa" class="GeneralDataView2D" />
+			</env:dataviews>
+			
+		
+						
+			<env:avatarmappings>
+				<env:avatarmapping componenttype="Driver" objecttype="Driver"/>
+			</env:avatarmappings>
+			
+			<env:perspectives>
+				<env:perspective name="icons" class="Perspective2D" opengl="true">
+				
+
+					<!-- Driver -->
+					<env:drawable objecttype="Driver" width="1" height="1">
+						<env:property name="visionsize" dynamic="true">new Vector2Double($object.getProperty("vision").doubleValue()*2)</env:property>
+						<env:ellipse layer="1" size="visionsize" abssize="true" color="#FAFA1E32" />
+						<env:texturedrectangle layer="2" imagepath="images/sentry.png" />
+					</env:drawable>
+					
+					<env:drawable objecttype="pointofinterest" width="1" height="1">			
+						<env:ellipse layer="1" width="0.8" height="0.8" color="#C8000096">
+						</env:ellipse>
+					</env:drawable>
+					
+					<env:drawable objecttype="accident" width="0.1" height="0.1">			
+						<env:ellipse layer="1" width="0.8" height="0.8" color="#FFFFFFFF">
+						</env:ellipse>
+					</env:drawable>
+					
+					<!-- Homebase -->
+					<env:drawable objecttype="homebase" width="1" height="1">
+						<env:rectangle layer="1" width="1" height="1" color="#1e1e1e46" />
+					</env:drawable>
+					
+					<!-- Destination -->
+					<env:drawable objecttype="finaldestination" width="1" height="1">
+						<env:rectangle layer="1" width="1" height="1" color="#1e1e1e46" />
+					</env:drawable>
+					<env:drawable objecttype="cell" width="1.0" height="1.0">
+						<env:rectangle color="yellow">
+							<env:drawcondition>!$object.road</env:drawcondition> 
+						</env:rectangle>
+						<env:rectangle color="white">
+							<env:drawcondition>$object.road</env:drawcondition> 
+						</env:rectangle>
+					</env:drawable>
+					
+				</env:perspective>
+			</env:perspectives>
+
+			<!-- executor -->
+			<env:spaceexecutor class="DeltaTimeExecutor">
+				<env:property name="space">$space</env:property>
+				<env:property name="tick">true</env:property>
+			</env:spaceexecutor>
+		</env:envspacetype>
+	</extensiontypes>
+
+	<componenttypes>
+		<componenttype name="Driver" filename="/driver/Driver.agent.xml"/>
+	</componenttypes>
+	
+	<properties>
+		<property name="clock" class="IFuture">
+			SServiceProvider.getService($component.getServiceProvider(), IClockService.class, RequiredServiceInfo.SCOPE_PLATFORM)
+		</property>
+		<property name="turistica" class ="boolean">
+			true
+		</property>
+	</properties>
+
+	<configurations>
+	
+		<configuration name="20x20">
+			<extensions>
+			<agr:agrspace name="mundo" type="mundo">
+					<agr:group name="agents" type="agents">
+						<agr:position role="Driver" componenttype="Driver" />
+					</agr:group>
+				</agr:agrspace>
+				<env:envspace name="2dspace" type="2dspace" width="20" height="20">
+					<env:processes>
+						<env:process type="build_map"/>
+					</env:processes>
+					<env:objects>
+						<env:object type="homebase">
+							<env:property name="position">new Vector2Double(1, 1)</env:property>
+						</env:object>
+						
+						<env:object type="finaldestination">
+							<env:property name="position">new Vector2Double(17, 18)</env:property>
+							<env:property name="space">$space</env:property>
+						</env:object>
+						
+						<env:object type="pointofinterest">
+							<env:property name="position">new Vector2Double(15, 5)</env:property>
+						</env:object>
+					</env:objects>
+					<env:observers>
+						<env:observer name="Espectador" dataview="view_all" perspective="icons">
+						</env:observer>
+					</env:observers>
+				</env:envspace>
+			</extensions>
+			<components>
+				<component type="Driver" number="1" configuration="turistica"/>
+			</components>
+		</configuration>
+	
+	
+		<configuration name="Visita turística">
+			<extensions>
+				<agr:agrspace name="mundo" type="mundo">
+					<agr:group name="agents" type="agents">
+						<agr:position role="Driver" componenttype="Driver" />
+					</agr:group>
+				</agr:agrspace>
+				<env:envspace name="2dspace" type="2dspace">
+					<env:objects>
+						<env:object type="homebase">
+							<env:property name="position">new Vector2Double(0.3, 0.3)</env:property>
+							<env:property name="space">$space</env:property><!-- hack!!! -->
+							<env:property name="missiontime">
+								90000 + $properties.clock.getTime()
+							</env:property>
+						</env:object>
+						<env:object type="pointofinterest">
+							<env:property name="position">new Vector2Double(0.1, 0.2)</env:property>
+						</env:object>
+						<env:object type="pointofinterest">
+							<env:property name="position">new Vector2Double(0.4, 0.2)</env:property>
+						</env:object>
+						<env:object type="pointofinterest">
+							<env:property name="position">new Vector2Double(0.05, 0.7)</env:property>
+						</env:object>
+						
+						<env:object type="pointofinterest">
+							<env:property name="position">new Vector2Double(0.05, 0.8)</env:property>
+						</env:object>
+						
+						<env:object type="pointofinterest">
+							<env:property name="position">new Vector2Double(0.05, 0.9)</env:property>
+						</env:object>
+						
+						<env:object type="pointofinterest">
+							<env:property name="position">new Vector2Double(0.2, 0.7)</env:property>
+						</env:object>
+						 
+						<env:object type="accident">
+							<env:property name="position">new Vector2Double(0.05, 0.4)</env:property>
+						</env:object>
+						
+						
+						<env:object type="finaldestination">
+							<env:property name="position">new Vector2Double(0.9, 0.9)</env:property>
+							<env:property name="space">$space</env:property>
+						</env:object>
+					</env:objects>
+					<env:dataproviders>
+					</env:dataproviders>
+					<env:observers>
+						<env:observer name="Espectador" dataview="view_all" perspective="icons">
+						</env:observer>
+					</env:observers>
+	 			</env:envspace>
+			</extensions>
+			<components>
+				<component type="Driver" number="1" configuration="turistica"/>
+			</components>
+ 		</configuration>
+ 		
+ 		<configuration name="Directo">
+			<extensions>
+				<agr:agrspace name="mundo" type="mundo">
+					<agr:group name="agents" type="agents">
+						<agr:position role="Driver" componenttype="Driver" />
+					</agr:group>
+				</agr:agrspace>
+				<env:envspace name="2dspace" type="2dspace">
+					<env:objects>
+						
+						<env:object type="homebase">
+							<env:property name="position">new Vector2Double(0.3, 0.3)</env:property>
+							<env:property name="space">$space</env:property><!-- hack!!! -->
+							<env:property name="missiontime">
+								90000 + $properties.clock.getTime()
+							</env:property>
+						</env:object>
+						<env:object type="pointofinterest">
+							<env:property name="position">new Vector2Double(0.1, 0.2)</env:property>
+						</env:object>
+						<env:object type="pointofinterest">
+							<env:property name="position">new Vector2Double(0.05, 0.7)</env:property>
+						</env:object>
+						
+							<env:object type="pointofinterest">
+							<env:property name="position">new Vector2Double(0.5, 0.8)</env:property>
+						</env:object>
+						 
+						<env:object type="accident">
+							<env:property name="position">new Vector2Double(0.05, 0.4)</env:property>
+						</env:object>
+						
+						<env:object type="finaldestination">
+							<env:property name="position">new Vector2Double(0.9, 0.9)</env:property>
+							<env:property name="space">$space</env:property>
+						</env:object>
+					</env:objects>
+					
+					<env:dataproviders>
+					</env:dataproviders>
+					<env:observers>
+						<env:observer name="Espectador" dataview="view_all" perspective="icons">
+						</env:observer>
+					</env:observers>
+	 			</env:envspace>
+			</extensions>
+			<components>
+				<component type="Driver" number="1" configuration="direto"/>
+			</components>
+ 		</configuration>
+	</configurations>
+
+</applicationtype>
