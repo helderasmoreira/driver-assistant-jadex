@@ -15,6 +15,10 @@ import jadex.extension.envsupport.math.IVector2;
 
 public class GoDestiny  extends Plan {
 
+		protected boolean equal(Node node, Node end){
+			return (node.x == end.x) && (node.y == end.y);
+		}
+	
 		@Override
 		public void body() {
 			
@@ -39,6 +43,7 @@ public class GoDestiny  extends Plan {
 					
 					for(int i=0; i<poi.length; i++)
 					{
+						
 						if((poi[i].getProperty("state")).equals("notvisited"))
 						{
 							
@@ -53,16 +58,14 @@ public class GoDestiny  extends Plan {
 									((IVector2)myself.getProperty(Space2D.PROPERTY_POSITION)).getYAsInteger()), 
 									new PathFinder.Node(newpos.getXAsInteger(), 
 											newpos.getYAsInteger()));
-							
-							
-							
+
 							System.out.println(nodes);
 							if(target == null)
 							{
 								target = poi[i];
 								size = nodes.size();
 							}
-							else if(nodes.size() < size)
+							else if(nodes.size() < size )
 							{
 								target	= poi[i];
 								size = nodes.size();

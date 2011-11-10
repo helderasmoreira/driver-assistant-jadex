@@ -168,6 +168,12 @@ public class PathFinder
 			return (node.x == end.x) && (node.y == end.y);
 	}
 		
+		public void markAccident(Node n) {
+			
+			map[n.y][n.x] = 0;
+			
+		}
+		
 		protected boolean contains(List<Node> list, Node n){
 			for(Node x : list)
 				if(equal(x, n)) return true;

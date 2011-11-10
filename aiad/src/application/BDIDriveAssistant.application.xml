@@ -109,8 +109,8 @@
 						</env:ellipse>
 					</env:drawable>
 					
-					<env:drawable objecttype="accident" width="0.1" height="0.1">			
-						<env:ellipse layer="1" width="0.8" height="0.8" color="#FFFFFFFF">
+					<env:drawable objecttype="accident" width="1" height="1">			
+						<env:ellipse layer="1" width="0.8" height="0.8" color="#000000">
 						</env:ellipse>
 					</env:drawable>
 					
@@ -186,6 +186,17 @@
 						<env:object type="pointofinterest">
 							<env:property name="position">new Vector2Double(6, 10)</env:property>
 						</env:object>
+						
+						<env:object type="accident">
+							<env:property name="position">new Vector2Double(7, 8)</env:property>
+						</env:object>
+						<env:object type="accident">
+							<env:property name="position">new Vector2Double(9, 10)</env:property>
+						</env:object>
+						<env:object type="accident">
+							<env:property name="position">new Vector2Double(14,5)</env:property>
+						</env:object>
+						
 					</env:objects>
 					<env:observers>
 						<env:observer name="Espectador" dataview="view_all" perspective="icons">

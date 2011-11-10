@@ -1,5 +1,8 @@
 package driver;
 
+import algorithms.PathFinder;
+import algorithms.PathFinder.Node;
+import application.Utils;
 import jadex.bdi.runtime.IBDIInternalAccess;
 import jadex.bdi.runtime.IBelief;
 import jadex.bdi.runtime.IGoal;
@@ -20,10 +23,13 @@ public class AvoidAccident  extends Plan {
 			
 			acidente.setProperty("state", "avoid");
 			
+			PathFinder pf = new PathFinder(Utils.map);
+			pf.markAccident(new Node(vacidente.getXAsInteger(), vacidente.getYAsInteger()));
+			
 			IGoal go_target = createGoal("goDestiny");
-			go_target.getParameter("poi").setValue(vpoi);
-			go_target.getParameter("acidente").setValue(vacidente);
-			go_target.getParameter("avoidAccident").setValue(true);
+		//	go_target.getParameter("poi").setValue(vpoi);
+		//	go_target.getParameter("acidente").setValue(vacidente);
+		//	go_target.getParameter("avoidAccident").setValue(true);
 		
 			dispatchTopLevelGoal(go_target);
 }
