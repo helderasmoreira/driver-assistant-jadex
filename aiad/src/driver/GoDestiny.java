@@ -1,5 +1,6 @@
 package driver;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import algorithms.PathFinder;
@@ -15,9 +16,22 @@ import jadex.extension.envsupport.math.IVector2;
 
 public class GoDestiny  extends Plan {
 
-		protected boolean equal(Node node, Node end){
-			return (node.x == end.x) && (node.y == end.y);
+		public ISpaceObject[] filter(ISpaceObject[] poi, String weather) {
+		    List<ISpaceObject> result = new ArrayList<ISpaceObject> ();
+		    for (ISpaceObject p : poi) {
+		        if (p.getProperty("weather").equals(weather) || p.getProperty("weather").equals("any")) {
+		            result.add(p);
+		        }
+		    }
+	
+		    ISpaceObject[] toReturn = new ISpaceObject[result.size()];
+		    for (int i=0; i<result.size(); i++) {
+		        toReturn[i] = result.get(i);
+		    }
+	
+		    return toReturn;
 		}
+
 	
 		@Override
 		public void body() {
@@ -41,6 +55,8 @@ public class GoDestiny  extends Plan {
 					int size = 0;
 					ISpaceObject[]	poi	= space.getSpaceObjectsByType("pointofinterest");
 					
+					poi = filter(poi, "chuva");
+					
 					for(int i=0; i<poi.length; i++)
 					{
 						
@@ -52,8 +68,7 @@ public class GoDestiny  extends Plan {
 							
 							System.out.println(((IVector2)myself.getProperty(Space2D.PROPERTY_POSITION)).getXAsInteger() + " " +((IVector2)myself.getProperty(Space2D.PROPERTY_POSITION)).getYAsInteger() );
 							System.out.println(newpos.getXAsInteger() + " " + newpos.getYAsInteger());
-							
-							
+
 							List<Node> nodes = pf.compute(new PathFinder.Node(((IVector2)myself.getProperty(Space2D.PROPERTY_POSITION)).getXAsInteger(),
 									((IVector2)myself.getProperty(Space2D.PROPERTY_POSITION)).getYAsInteger()), 
 									new PathFinder.Node(newpos.getXAsInteger(), 

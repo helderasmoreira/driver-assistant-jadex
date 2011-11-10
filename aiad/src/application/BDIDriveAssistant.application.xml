@@ -48,6 +48,7 @@
 
 		<env:envspacetype name="2dspace" class="Grid2D">
 		<env:property name="neighborhood">Grid2D.NEIGHBORHOOD_MOORE</env:property>
+		<env:property name="weather">"chuva"</env:property>
 		
 			<env:processtypes>
 				<env:processtype name="build_map" class="BuildMap" />
@@ -57,6 +58,7 @@
 			<env:objecttypes>
 				<env:objecttype name="pointofinterest">
 					<env:property name="state" class="String">"notvisited"</env:property>
+					<env:property name="weather" class="String">"any"</env:property>
 				</env:objecttype>
 				<env:objecttype name="Driver">
 					<env:property name="vision" class="double">1</env:property>
@@ -181,10 +183,12 @@
 						
 						<env:object type="pointofinterest">
 							<env:property name="position">new Vector2Double(15, 4)</env:property>
+							<env:property name="weather">"any"</env:property>
 						</env:object>
 						
 						<env:object type="pointofinterest">
 							<env:property name="position">new Vector2Double(6, 10)</env:property>
+							<env:property name="weather">"sol"</env:property>
 						</env:object>
 						
 						<env:object type="accident">
