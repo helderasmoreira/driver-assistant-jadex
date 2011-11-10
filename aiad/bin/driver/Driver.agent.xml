@@ -40,6 +40,9 @@
     	<belief name="timerCount" class="double">
         	<fact>0</fact>
     	</belief>
+    	<belief name="weather" class="String">
+        	<fact>"sol"</fact>
+    	</belief>
     	<belief name="turistica" class="boolean">
     		<fact>true</fact>
     	</belief>

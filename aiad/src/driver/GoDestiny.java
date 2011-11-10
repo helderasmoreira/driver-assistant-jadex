@@ -7,6 +7,7 @@ import algorithms.PathFinder;
 import algorithms.PathFinder.Node;
 import application.Utils;
 import jadex.bdi.runtime.IBelief;
+import jadex.bdi.runtime.IBeliefbase;
 import jadex.bdi.runtime.IGoal;
 import jadex.bdi.runtime.Plan;
 import jadex.extension.envsupport.environment.IEnvironmentSpace;
@@ -55,7 +56,8 @@ public class GoDestiny  extends Plan {
 					int size = 0;
 					ISpaceObject[]	poi	= space.getSpaceObjectsByType("pointofinterest");
 					
-					poi = filter(poi, "chuva"); 
+					
+					poi = filter(poi, (String)getBeliefbase().getBelief("weather").getFact()); 
 					
 					for(int i=0; i<poi.length; i++)
 					{

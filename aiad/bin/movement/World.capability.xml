@@ -29,6 +29,7 @@
  		</belief>
  		<belief name="poi" class="IVector2" exported="true"/>
  		<belief name="acidente" class="ISpaceObject" exported="true" />
+
 	</beliefs>
 
 	<goals>

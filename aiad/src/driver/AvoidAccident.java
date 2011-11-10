@@ -23,8 +23,10 @@ public class AvoidAccident  extends Plan {
 			
 			acidente.setProperty("state", "avoid");
 			
-			PathFinder pf = new PathFinder(Utils.map);
-			pf.markAccident(new Node(vacidente.getXAsInteger(), vacidente.getYAsInteger()));
+			if(acidente.getProperty("weather").equals((String)getBeliefbase().getBelief("weather").getFact()) || acidente.getProperty("weather").equals("any")) {
+				PathFinder pf = new PathFinder(Utils.map);
+				pf.markAccident(new Node(vacidente.getXAsInteger(), vacidente.getYAsInteger()));
+			}
 			
 			IGoal go_target = createGoal("goDestiny");
 		//	go_target.getParameter("poi").setValue(vpoi);
