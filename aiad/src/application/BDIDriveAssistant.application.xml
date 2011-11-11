@@ -35,6 +35,8 @@
 		<import>jadex.bridge.service.clock.IClockService</import>
 		<import>jadex.commons.future.*</import>
 		<import>jadex.bridge.service.*</import>
+		<import>java.util.ArrayList</import>
+		<import>java.util.List</import>
 	</imports>
 	
 	<extensiontypes>
@@ -58,6 +60,8 @@
 				<env:objecttype name="pointofinterest">
 					<env:property name="state" class="String">"notvisited"</env:property>
 					<env:property name="weather" class="String">"any"</env:property>
+					<env:property name="id" class="Integer"></env:property>
+					<env:property name="preconditions" class="String">""</env:property>
 				</env:objecttype>
 				<env:objecttype name="Driver">
 					<env:property name="vision" class="double">1</env:property>
@@ -183,18 +187,25 @@
 						
 						<env:object type="pointofinterest">
 							<env:property name="position">new Vector2Double(15, 4)</env:property>
-							<env:property name="weather">"chuva"</env:property>
+							<env:property name="weather">"any"</env:property>
+							<env:property name="id">1</env:property>
+							<env:property name="preconditions">""</env:property>
 						</env:object>
 						
 						<env:object type="pointofinterest">
 							<env:property name="position">new Vector2Double(6, 10)</env:property>
-							<env:property name="weather">"sol"</env:property>
+							<env:property name="weather">"any"</env:property>
+							<env:property name="id">2</env:property>
+							<env:property name="preconditions">""</env:property>
 						</env:object>
 						
-						<env:object type="accident">
-							<env:property name="position">new Vector2Double(7, 8)</env:property>
-							<env:property name="weather">"chuva"</env:property>
+						<env:object type="pointofinterest">
+							<env:property name="position">new Vector2Double(7, 13)</env:property>
+							<env:property name="weather">"any"</env:property>
+							<env:property name="id">3</env:property>
+							<env:property name="preconditions">"1,2"</env:property>
 						</env:object>
+						
 						<env:object type="accident">
 							<env:property name="position">new Vector2Double(9, 10)</env:property>
 							<env:property name="weather">"any"</env:property>

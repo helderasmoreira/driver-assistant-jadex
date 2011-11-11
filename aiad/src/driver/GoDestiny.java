@@ -17,23 +17,6 @@ import jadex.extension.envsupport.math.IVector2;
 
 public class GoDestiny  extends Plan {
 
-		public ISpaceObject[] filter(ISpaceObject[] poi, String weather) {
-		    List<ISpaceObject> result = new ArrayList<ISpaceObject> ();
-		    for (ISpaceObject p : poi) {
-		        if (p.getProperty("weather").equals(weather) || p.getProperty("weather").equals("any")) {
-		            result.add(p);
-		        }
-		    }
-	
-		    ISpaceObject[] toReturn = new ISpaceObject[result.size()];
-		    for (int i=0; i<result.size(); i++) {
-		        toReturn[i] = result.get(i);
-		    }
-	
-		    return toReturn;
-		}
-
-	
 		@Override
 		public void body() {
 			
@@ -134,5 +117,43 @@ public class GoDestiny  extends Plan {
 				dispatchSubgoalAndWait(go_target);
 				return;
 			}
-}
 		}
+		
+		public ISpaceObject[] filter(ISpaceObject[] poi, String weather) {
+		    List<ISpaceObject> result = new ArrayList<ISpaceObject> ();
+		    for (ISpaceObject p : poi)
+		        if ((p.getProperty("weather").equals(weather) || p.getProperty("weather").equals("any")) && checkPreConditions(p, poi))
+		            result.add(p);
+		        
+		    ISpaceObject[] toReturn = new ISpaceObject[result.size()];
+		    for (int i=0; i<result.size(); i++)
+		        toReturn[i] = result.get(i);
+		    
+		    return toReturn;
+		}
+
+		private ISpaceObject getPOIByID(ISpaceObject[] poi, String id) {
+			for(ISpaceObject x : poi)
+				if(id.equals(x.getProperty("id").toString()))
+					return x;
+			return null;
+		}
+	
+		private boolean checkPreConditions(ISpaceObject p, ISpaceObject[] poi) {	
+			String[] preconditions;
+			preconditions = p.getProperty("preconditions").toString().split(",");
+		
+			ISpaceObject x = null;			
+			for(String s : preconditions) {
+				if (s.equals(""))
+					continue;
+				x = getPOIByID(poi, s); 
+				if(x != null && x.getProperty("state").toString().equals("visited"))
+					continue;
+				else
+					return false;
+			}
+			return true;
+		}
+
+}
