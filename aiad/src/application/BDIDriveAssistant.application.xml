@@ -198,7 +198,7 @@
 							<env:property name="id">2</env:property>
 							<env:property name="preconditions">""</env:property>
 						</env:object>
-						
+						 
 						<env:object type="pointofinterest">
 							<env:property name="position">new Vector2Double(7, 13)</env:property>
 							<env:property name="weather">"any"</env:property>
