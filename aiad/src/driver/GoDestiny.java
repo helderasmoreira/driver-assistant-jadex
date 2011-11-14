@@ -1,19 +1,18 @@
 package driver;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import algorithms.PathFinder;
-import algorithms.PathFinder.Node;
-import application.Utils;
-import jadex.bdi.runtime.IBelief;
-import jadex.bdi.runtime.IBeliefbase;
 import jadex.bdi.runtime.IGoal;
 import jadex.bdi.runtime.Plan;
 import jadex.extension.envsupport.environment.IEnvironmentSpace;
 import jadex.extension.envsupport.environment.ISpaceObject;
 import jadex.extension.envsupport.environment.space2d.Space2D;
 import jadex.extension.envsupport.math.IVector2;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import algorithms.PathFinder;
+import algorithms.PathFinder.Node;
+import application.Utils;
 
 public class GoDestiny  extends Plan {
 
@@ -34,7 +33,6 @@ public class GoDestiny  extends Plan {
 				{
 					
 					// Procura o point of interest mais proximo e ainda nao visitado
-					IVector2	mypos	= (IVector2)myself.getProperty(Space2D.PROPERTY_POSITION);
 					ISpaceObject	target	= null;
 					int size = 0;
 					ISpaceObject[]	poi	= space.getSpaceObjectsByType("pointofinterest");
@@ -51,15 +49,15 @@ public class GoDestiny  extends Plan {
 							IVector2	newpos	= (IVector2)poi[i].getProperty(Space2D.PROPERTY_POSITION);
 							PathFinder pf = new PathFinder(Utils.map);
 							
-							System.out.println(((IVector2)myself.getProperty(Space2D.PROPERTY_POSITION)).getXAsInteger() + " " +((IVector2)myself.getProperty(Space2D.PROPERTY_POSITION)).getYAsInteger() );
-							System.out.println(newpos.getXAsInteger() + " " + newpos.getYAsInteger());
+							//System.out.println(((IVector2)myself.getProperty(Space2D.PROPERTY_POSITION)).getXAsInteger() + " " +((IVector2)myself.getProperty(Space2D.PROPERTY_POSITION)).getYAsInteger() );
+							//System.out.println(newpos.getXAsInteger() + " " + newpos.getYAsInteger());
 
 							List<Node> nodes = pf.compute(new PathFinder.Node(((IVector2)myself.getProperty(Space2D.PROPERTY_POSITION)).getXAsInteger(),
 									((IVector2)myself.getProperty(Space2D.PROPERTY_POSITION)).getYAsInteger()), 
 									new PathFinder.Node(newpos.getXAsInteger(), 
 											newpos.getYAsInteger()));
 
-							System.out.println(nodes);
+							//System.out.println(nodes);
 							if(target == null)
 							{
 								target = poi[i];
@@ -77,7 +75,6 @@ public class GoDestiny  extends Plan {
 					if(target!=null)
 					{
 						IEnvironmentSpace env = (IEnvironmentSpace)getBeliefbase().getBelief("move.environment").getFact();
-						ISpaceObject	fd	= env.getSpaceObjectsByType("finaldestination")[0];
 	
 						// Move-se para o POI
 						go_target = createGoal("move.move_dest");

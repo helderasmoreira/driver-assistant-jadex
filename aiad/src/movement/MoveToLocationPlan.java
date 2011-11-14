@@ -51,10 +51,10 @@ public class MoveToLocationPlan extends Plan
 				new PathFinder.Node(dest.getXAsInteger(), 
 						dest.getYAsInteger()));
 		
-		System.out.println(((IVector2)myself.getProperty(Space2D.PROPERTY_POSITION)).getXAsInteger() +  " " + 
+		/*System.out.println(((IVector2)myself.getProperty(Space2D.PROPERTY_POSITION)).getXAsInteger() +  " " + 
 				((IVector2)myself.getProperty(Space2D.PROPERTY_POSITION)).getYAsInteger());
 		System.out.println(dest.getXAsInteger()+ " "+ 
-						dest.getYAsInteger());
+						dest.getYAsInteger());*/
 		
 		if(nodes == null)
 		{
@@ -62,13 +62,12 @@ public class MoveToLocationPlan extends Plan
 			return;
 		}
 		else{
-			System.out.println(nodes.toString());
+			//System.out.println(nodes.toString());
 			nodes.remove(0);
 			props.put("path", nodes);
 		}
 		
-		
-		
+
 		Object taskid = space.createObjectTask(MoveTask.PROPERTY_TYPENAME, props, myself.getId());
 //		move	= new MoveTask(dest, res, getExternalAccess());
 //		myself.addTask(move);

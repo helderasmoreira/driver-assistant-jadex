@@ -117,8 +117,23 @@
 				<goal ref="analyze_target"/>
 			</trigger>
 		</plan>
+		<plan name="accident_inform">
+			<body class="AccidentInform"/>
+			<trigger>
+				<messageevent ref="accident_inform"/>
+			</trigger>
+		</plan>
 	</plans>
-  
+  	<events>
+	  	<messageevent name="accident_inform" type="fipa" direction="receive">
+				<parameter name="performative" class="String" direction="fixed">
+					<value>SFipa.INFORM</value>
+				</parameter>
+				<parameter name="language" class="String" direction="fixed">
+					<value>SFipa.JADEX_XML</value>
+ 				</parameter>
+		</messageevent>
+	</events>
 	<configurations>
   		<configuration name="turistica">
   			<beliefs>
@@ -143,7 +158,6 @@
       		</beliefs>
   			<goals>
   				<initialgoal ref="goDestiny"/>
-  				<!--<initialgoal cref="move.walk_around"/>-->
   			</goals>
   		
   		</configuration>

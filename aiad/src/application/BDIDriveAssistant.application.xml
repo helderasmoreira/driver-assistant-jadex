@@ -54,8 +54,6 @@
 			<env:processtypes>
 				<env:processtype name="build_map" class="BuildMap" />
 			</env:processtypes>
-			
-		
 			<env:objecttypes>
 				<env:objecttype name="pointofinterest">
 					<env:property name="state" class="String">"notvisited"</env:property>
@@ -151,6 +149,7 @@
 
 	<componenttypes>
 		<componenttype name="Driver" filename="/driver/Driver.agent.xml"/>
+		<componenttype name="Radio" filename="/radio/Radio.agent.xml"/>
 	</componenttypes>
 	
 	<properties>
@@ -169,6 +168,7 @@
 			<agr:agrspace name="mundo" type="mundo">
 					<agr:group name="agents" type="agents">
 						<agr:position role="Driver" componenttype="Driver" />
+						<agr:position role="Radio" componenttype="Radio" />
 					</agr:group>
 				</agr:agrspace>
 				<env:envspace name="2dspace" type="2dspace" width="20" height="20">
@@ -217,13 +217,14 @@
 						
 					</env:objects>
 					<env:observers>
-						<env:observer name="Espectador" dataview="view_all" perspective="icons">
+						<env:observer name="BDI Drive Assistant" dataview="view_all" perspective="icons">
 						</env:observer>
 					</env:observers>
 				</env:envspace>
 			</extensions>
 			<components>
 				<component type="Driver" number="1" configuration="turistica"/>
+				<component type="Radio" number="1" configuration="radio"/>
 			</components>
 		</configuration>
 	
