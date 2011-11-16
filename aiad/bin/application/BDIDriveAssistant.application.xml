@@ -37,6 +37,11 @@
 		<import>jadex.bridge.service.*</import>
 		<import>java.util.ArrayList</import>
 		<import>java.util.List</import>
+		<import>jadex.commons.SimplePropertyObject</import>
+		<import>jadex.extension.envsupport.environment.*</import>
+		<import>jadex.extension.envsupport.observer.perspective.*</import>
+		<import>jadex.extension.envsupport.evaluation.*</import>
+		<import>jadex.commons.SFunction</import>
 	</imports>
 	
 	<extensiontypes>
@@ -51,46 +56,55 @@
 		<env:envspacetype name="2dspace" class="Grid2D">
 		<env:property name="neighborhood">Grid2D.NEIGHBORHOOD_MOORE</env:property>
 		
-			<env:processtypes>
-				<env:processtype name="build_map" class="BuildMap" />
-			</env:processtypes>
-			<env:objecttypes>
-				<env:objecttype name="pointofinterest">
-					<env:property name="state" class="String">"notvisited"</env:property>
-					<env:property name="weather" class="String">"any"</env:property>
-					<env:property name="id" class="Integer"></env:property>
-					<env:property name="preconditions" class="String">""</env:property>
-				</env:objecttype>
-				<env:objecttype name="Driver">
-					<env:property name="vision" class="double">1</env:property>
-					<env:property name="speed" class="double">3</env:property>
-					<env:property name="position" class="IVector2" dynamic="true">$space.getSpaceObjectsByType("homebase")[0].getProperty("position")</env:property>
-				</env:objecttype>
-				<env:objecttype name="homebase">
-				</env:objecttype>
-				<env:objecttype name="accident">
-					<env:property name="state" class="String">"notavoid"</env:property>
-					<env:property name="weather" class="String">"any"</env:property>
-				</env:objecttype>
-				<env:objecttype name="finaldestination">
-				</env:objecttype>
+	<env:processtypes>
+		<env:processtype name="build_map" class="BuildMap" />
+	</env:processtypes>
+	<env:objecttypes>
+		<env:objecttype name="pointofinterest">
+			<env:property name="state" class="String">"notvisited"</env:property>
+			<env:property name="weather" class="String">"any"</env:property>
+			<env:property name="id" class="Integer"></env:property>
+			<env:property name="preconditions" class="String">""</env:property>
+		</env:objecttype>
+		<env:objecttype name="Driver">
+			<env:property name="vision" class="double">1</env:property>
+			<env:property name="speed" class="double">3</env:property>
+			<env:property name="position" class="IVector2" dynamic="true">$space.getSpaceObjectsByType("homebase")[0].getProperty("position")</env:property>
+		</env:objecttype>
+		<env:objecttype name="homebase">
+		</env:objecttype>
+		<env:objecttype name="accident">
+			<env:property name="state" class="String">"notavoid"</env:property>
+			<env:property name="weather" class="String">"any"</env:property>
+		</env:objecttype>
+		<env:objecttype name="finaldestination">
+		</env:objecttype>
+		
+		<env:objecttype name="cell">
+			<env:property name="road"></env:property>
+		</env:objecttype>
+		<env:objecttype name="Radio"/>
+	</env:objecttypes>
+			
+
+		<env:tasktypes>
+			<env:tasktype name="move" class="MoveTask" />
+		</env:tasktypes>			
+
+		<env:processtypes>
+			<env:processtype name="create" class="DefaultObjectCreationProcess">
+				<env:property name="timerate" dynamic="true">1000</env:property>
+				<env:property name="type">"accident"</env:property>
+				<env:property name="properties" dynamic="true">
+					Accident.generateAccident()
+				</env:property>
+			</env:processtype>
+		</env:processtypes>
+							
+		<env:dataviews>
+			<env:dataview name="mapa" class="GeneralDataView2D" />
+		</env:dataviews>
 				
-				<env:objecttype name="cell">
-					<env:property name="road"></env:property>
-				</env:objecttype>
-				<env:objecttype name="Radio"/>
-			</env:objecttypes>
-			
-		
-		
-			<env:tasktypes>
-				<env:tasktype name="move" class="MoveTask" />
-			</env:tasktypes>			
-						
-			<env:dataviews>
-				<env:dataview name="mapa" class="GeneralDataView2D" />
-			</env:dataviews>
-			
 		
 						
 			<env:avatarmappings>
@@ -217,6 +231,9 @@
 						</env:object>
 						
 					</env:objects>
+					<env:processes>
+						<env:process type="create"/>
+					</env:processes>
 					<env:observers>
 						<env:observer name="BDI Drive Assistant" dataview="view_all" perspective="icons">
 						</env:observer>
