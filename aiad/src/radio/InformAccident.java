@@ -25,12 +25,13 @@ public class InformAccident extends Plan {
 		
 		Space2D	space	= (Space2D)getBeliefbase().getBelief("environment").getFact();
 		ISpaceObject[]	accidents	= space.getSpaceObjectsByType("accident");
+		System.out.println(accidents);
 		if(accidents.length != 0)
 		{
-			me.getParameterSet(SFipa.RECEIVERS).addValue(drivers);
+			me.getParameter(SFipa.RECEIVERS).setValue(drivers);
 			me.getParameter(SFipa.CONTENT).setValue(accidents); 
 			sendMessage(me);
-			System.out.println("Enviei");
+			System.out.println("Enviei " + drivers[0]);
 		}
 	}
 }

@@ -78,7 +78,7 @@
 				<env:objecttype name="cell">
 					<env:property name="road"></env:property>
 				</env:objecttype>
-				
+				<env:objecttype name="Radio"/>
 			</env:objecttypes>
 			
 		
@@ -95,6 +95,7 @@
 						
 			<env:avatarmappings>
 				<env:avatarmapping componenttype="Driver" objecttype="Driver"/>
+				<env:avatarmapping componenttype="Radio" objecttype="Radio"/>
 			</env:avatarmappings>
 			
 			<env:perspectives>
