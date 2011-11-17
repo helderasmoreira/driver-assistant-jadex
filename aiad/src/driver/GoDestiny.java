@@ -58,16 +58,19 @@ public class GoDestiny  extends Plan {
 											newpos.getYAsInteger()));
 
 							//System.out.println(nodes);
-							if(target == null)
+							if(nodes != null)
 							{
-								target = poi[i];
-								size = nodes.size();
+								if(target == null)
+								{
+									target = poi[i];
+									size = nodes.size();
+								}
+								else if(nodes.size() < size )
+								{
+									target	= poi[i];
+									size = nodes.size();
+								}
 							}
-							else if(nodes.size() < size )
-							{
-								target	= poi[i];
-								size = nodes.size();
-							}		
 						}
 					}
 					

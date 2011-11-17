@@ -92,13 +92,7 @@
 		</env:tasktypes>			
 
 		<env:processtypes>
-			<env:processtype name="create" class="DefaultObjectCreationProcess">
-				<env:property name="timerate" dynamic="true">1000</env:property>
-				<env:property name="type">"accident"</env:property>
-				<env:property name="properties" dynamic="true">
-					Accident.generateAccident()
-				</env:property>
-			</env:processtype>
+			<env:processtype name="create" class="Accident" />
 		</env:processtypes>
 							
 		<env:dataviews>
