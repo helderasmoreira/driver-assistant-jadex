@@ -65,6 +65,7 @@
 			<env:property name="weather" class="String">"any"</env:property>
 			<env:property name="id" class="Integer"></env:property>
 			<env:property name="preconditions" class="String">""</env:property>
+			<env:property name="type" class="String">""</env:property>
 		</env:objecttype>
 		<env:objecttype name="Driver">
 			<env:property name="vision" class="double">1</env:property>
@@ -114,17 +115,36 @@
 					<env:drawable objecttype="Driver" width="1" height="1">
 						<env:property name="visionsize" dynamic="true">new Vector2Double($object.getProperty("vision").doubleValue()*2)</env:property>
 						<env:ellipse layer="1" size="visionsize" abssize="true" color="#FAFA1E32" />
-						<env:texturedrectangle layer="2" imagepath="images/sentry.png" />
+						<env:texturedrectangle layer="2" height="1.5" width="1.5" imagepath="images/car.png" />
 					</env:drawable>
 					
 					<env:drawable objecttype="pointofinterest" width="1" height="1">			
-						<env:ellipse layer="1" width="0.8" height="0.8" color="#C8000096">
-						</env:ellipse>
+						
+						<env:texturedrectangle layer="2" height="1.5" width="1.5" imagepath="images/beach.png">
+							<env:drawcondition>$object.getProperty("type").equals("beach")</env:drawcondition>
+						</env:texturedrectangle>
+						<env:texturedrectangle layer="2" height="1.5" width="1.5" imagepath="images/church.png">
+							<env:drawcondition>$object.getProperty("type").equals("church")</env:drawcondition>
+						</env:texturedrectangle>
+						<env:texturedrectangle layer="2" height="1.5" width="1.5" imagepath="images/montain.png">
+							<env:drawcondition>$object.getProperty("type").equals("montain")</env:drawcondition>
+						</env:texturedrectangle>
+						<env:texturedrectangle layer="2" height="1.5" width="1.5" imagepath="images/movie.png">
+							<env:drawcondition>$object.getProperty("type").equals("movie")</env:drawcondition>
+						</env:texturedrectangle>
+						<env:texturedrectangle layer="2" height="1.5" width="1.5" imagepath="images/shopping.png">
+							<env:drawcondition>$object.getProperty("type").equals("shopping")</env:drawcondition>
+						</env:texturedrectangle>
+						<env:texturedrectangle layer="2" height="1.5" width="1.5" imagepath="images/stadium.png">
+							<env:drawcondition>$object.getProperty("type").equals("stadium")</env:drawcondition>
+						</env:texturedrectangle>
+						<env:texturedrectangle layer="2" height="1.5" width="1.5" imagepath="images/zoo.png">
+							<env:drawcondition>$object.getProperty("type").equals("zoo")</env:drawcondition>
+						</env:texturedrectangle>
 					</env:drawable>
 					
 					<env:drawable objecttype="accident" width="1" height="1">			
-						<env:ellipse layer="1" width="0.8" height="0.8" color="#000000">
-						</env:ellipse>
+						<env:texturedrectangle layer="2" height="1.5" width="1.5" imagepath="images/accident.png" />
 					</env:drawable>
 					
 					<!-- Homebase -->
@@ -199,6 +219,7 @@
 							<env:property name="weather">"any"</env:property>
 							<env:property name="id">1</env:property>
 							<env:property name="preconditions">""</env:property>
+							<env:property name="type">"zoo"</env:property>
 						</env:object>
 						
 						<env:object type="pointofinterest">
@@ -206,6 +227,7 @@
 							<env:property name="weather">"any"</env:property>
 							<env:property name="id">2</env:property>
 							<env:property name="preconditions">""</env:property>
+							<env:property name="type">"church"</env:property>
 						</env:object>
 						 
 						<env:object type="pointofinterest">
@@ -213,6 +235,7 @@
 							<env:property name="weather">"any"</env:property>
 							<env:property name="id">3</env:property>
 							<env:property name="preconditions">"1,2"</env:property>
+							<env:property name="type">"stadium"</env:property>
 						</env:object>
 						
 						<env:object type="accident">
@@ -259,24 +282,30 @@
 						</env:object>
 						<env:object type="pointofinterest">
 							<env:property name="position">new Vector2Double(0.1, 0.2)</env:property>
+							<env:property name="type">"zoo"</env:property>
 						</env:object>
 						<env:object type="pointofinterest">
 							<env:property name="position">new Vector2Double(0.4, 0.2)</env:property>
+							<env:property name="type">"church"</env:property>
 						</env:object>
 						<env:object type="pointofinterest">
 							<env:property name="position">new Vector2Double(0.05, 0.7)</env:property>
+							<env:property name="type">"stadium"</env:property>
 						</env:object>
 						
 						<env:object type="pointofinterest">
 							<env:property name="position">new Vector2Double(0.05, 0.8)</env:property>
+							<env:property name="type">"beach"</env:property>
 						</env:object>
 						
 						<env:object type="pointofinterest">
 							<env:property name="position">new Vector2Double(0.05, 0.9)</env:property>
+							<env:property name="type">"montain"</env:property>
 						</env:object>
 						
 						<env:object type="pointofinterest">
 							<env:property name="position">new Vector2Double(0.2, 0.7)</env:property>
+							<env:property name="type">"shopping"</env:property>
 						</env:object>
 						 
 						<env:object type="accident">

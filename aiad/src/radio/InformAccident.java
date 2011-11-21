@@ -15,7 +15,6 @@ public class InformAccident extends Plan {
 	@Override
 	public void body() {
 		
-		System.out.println("init");
 		IMessageEvent me = createMessageEvent("inform_accident");
 		
 		AGRSpace agrs = (AGRSpace)((IExternalAccess)getScope().getParent()).getExtension("mundo").get(this);
@@ -33,5 +32,21 @@ public class InformAccident extends Plan {
 			sendMessage(me);
 			System.out.println("Enviei " + drivers[0]);
 		}
+		
+		int acc = accidents.length;
+		
+		while(true)
+		{
+			if(space.getSpaceObjectsByType("accident").length != acc)
+			{
+				acc = space.getSpaceObjectsByType("accident").length;
+				accidents	= space.getSpaceObjectsByType("accident");
+				me = createMessageEvent("inform_accident");
+				me.getParameter(SFipa.RECEIVERS).setValue(drivers);
+				me.getParameter(SFipa.CONTENT).setValue(accidents); 
+				sendMessage(me);
+			}
+		}
+		
 	}
 }

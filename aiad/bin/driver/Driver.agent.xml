@@ -46,6 +46,9 @@
     	<belief name="turistica" class="boolean">
     		<fact>true</fact>
     	</belief>
+    	<belief name="newradiomsg" class="boolean">
+    		<fact>false</fact>
+    	</belief>
 	</beliefs>
 	
 	<goals>
@@ -74,15 +77,25 @@
 			</deliberation>
 		</achievegoal>
 		
+		<performgoal name ="recalculate" retry ="false">
+			<creationcondition language="jcl">
+				$beliefbase.newradiomsg == true 
+			</creationcondition>
+
+		</performgoal>
+		
 		<performgoal name ="goDestiny" retry="false" >
-		<parameter name="poi" class="IVector2"/>
-		<parameter name="acidente" class="IVector2"/>
-		<parameter name="avoidAccident" class="boolean"/>
-		<dropcondition language="jcl">
-				ISpaceObject $target &amp;&amp;
-				$beliefbase.acidente == $target &amp;&amp;
-				$target.state=="notavoid"
-		</dropcondition>	
+			<parameter name="poi" class="IVector2"/>
+			<parameter name="acidente" class="IVector2"/>
+			<parameter name="avoidAccident" class="boolean"/>
+			<dropcondition language="jcl">
+					ISpaceObject $target &amp;&amp;
+					$beliefbase.acidente == $target &amp;&amp;
+					$target.state=="notavoid" 
+			</dropcondition>
+			<dropcondition>
+				$beliefbase.newradiomsg == true 
+			</dropcondition>	
 		</performgoal>
 		
 	</goals>
@@ -121,6 +134,12 @@
 			<body class="AccidentInform"/>
 			<trigger>
 				<messageevent ref="accident_inform"/>
+			</trigger>
+		</plan>
+		<plan name="recalculate">
+			<body class="RecalculatePath"/>
+			<trigger>
+				<goal ref="recalculate"/>
 			</trigger>
 		</plan>
 	</plans>

@@ -45,7 +45,7 @@ public class Accident extends SimplePropertyObject implements ISpaceProcess {
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-				
+				System.out.println("Aí vai");
 				Map props = new HashMap();
 				Boolean alive = new Boolean(Math.random()>0.7);
 				props.put("state", "notavoid");
