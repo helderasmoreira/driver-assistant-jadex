@@ -1,5 +1,6 @@
 package driver;
 
+import application.Utils;
 import jadex.bdi.runtime.IGoal;
 import jadex.bdi.runtime.Plan;
 
@@ -9,7 +10,7 @@ public class RecalculatePath extends Plan {
 	public void body() {
 		
 		getBeliefbase().getBelief("newradiomsg").setFact(false);
-		
+		Utils.dialog.changeText("Nova mensagem de rádio! Recalculando caminho...");
 		IGoal go_target = createGoal("goDestiny");
 		dispatchTopLevelGoal(go_target);
 		
