@@ -13,7 +13,6 @@ import jadex.extension.envsupport.environment.space2d.Space2D;
 import jadex.extension.envsupport.math.Vector2Int;
 import visual.AccidentInterface;
 import visual.DriverLog;
-import visual.WorldOptions;
 
 public class BuildMap extends SimplePropertyObject implements ISpaceProcess {
 
