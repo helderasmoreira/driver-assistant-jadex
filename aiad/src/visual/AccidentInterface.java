@@ -10,8 +10,16 @@
  */
 package visual;
 
+import application.Utils;
 import components.ColorRenderer;
+import jadex.extension.envsupport.environment.IEnvironmentSpace;
 import java.awt.Color;
+import java.util.HashMap;
+import java.util.Map;
+
+import jadex.extension.envsupport.environment.space2d.Space2D;
+import jadex.extension.envsupport.math.Vector2Int;
+
 import javax.swing.table.AbstractTableModel;
 
 /**
@@ -20,10 +28,13 @@ import javax.swing.table.AbstractTableModel;
  */
 public class AccidentInterface extends javax.swing.JFrame {
 
+    private Space2D space;
     /** Creates new form AccidentInterface */
-    public AccidentInterface() {
+    public AccidentInterface(IEnvironmentSpace space) {
         initComponents();
+        this.space = (Space2D) space;
     }
+
 
     /** This method is called from within the constructor to
      * initialize the form.
@@ -43,8 +54,27 @@ public class AccidentInterface extends javax.swing.JFrame {
         jTable1.setShowHorizontalLines(false);
         jTable1.setShowVerticalLines(false);
         jTable1.setDefaultRenderer(Color.class, new ColorRenderer(true));
-        jTable1.setDefaultEditor(Color.class, new ColorEditor());
         jTable1.setTableHeader(null);
+
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter(){
+
+            public void mouseClicked(java.awt.event.MouseEvent e){
+                int row = jTable1.rowAtPoint(e.getPoint());
+                int col = jTable1.columnAtPoint(e.getPoint());
+
+                Space2D grid = (Space2D) space;
+                Map props = new HashMap();
+                props.put("state", "notavoid");
+                props.put(Space2D.PROPERTY_POSITION, new Vector2Int(col, row));
+                grid.createSpaceObject("accident", props, null);
+
+                // Utils.map[row][col]=0;
+                System.out.println(" col : "+ col + "row : " + row);
+                System.out.println(Utils.map[col][row]);
+
+            }
+
+        });
         jScrollPane1.setViewportView(jTable1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -66,6 +96,8 @@ public class AccidentInterface extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+
 
     
     class MyTableModel extends AbstractTableModel {
@@ -145,9 +177,10 @@ public class AccidentInterface extends javax.swing.JFrame {
      */
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
+            private IEnvironmentSpace space;
 
             public void run() {
-                new AccidentInterface().setVisible(true);
+                new AccidentInterface(space).setVisible(true);
             }
         });
     }
