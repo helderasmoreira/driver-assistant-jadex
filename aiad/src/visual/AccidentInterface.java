@@ -13,11 +13,14 @@ package visual;
 import application.Utils;
 import components.ColorRenderer;
 import jadex.extension.envsupport.environment.IEnvironmentSpace;
+import jadex.extension.envsupport.environment.ISpaceObject;
 import java.awt.Color;
 import java.util.HashMap;
 import java.util.Map;
 
 import jadex.extension.envsupport.environment.space2d.Space2D;
+import jadex.extension.envsupport.math.IVector2;
+import jadex.extension.envsupport.math.Vector1Double;
 import jadex.extension.envsupport.math.Vector2Int;
 
 import javax.swing.table.AbstractTableModel;
@@ -29,10 +32,14 @@ import javax.swing.table.AbstractTableModel;
 public class AccidentInterface extends javax.swing.JFrame {
 
     private Space2D space;
+    private ISpaceObject[] accidents = null;
     /** Creates new form AccidentInterface */
     public AccidentInterface(IEnvironmentSpace space) {
+           this.space = (Space2D) space;
         initComponents();
-        this.space = (Space2D) space;
+     
+
+     
     }
 
 
@@ -51,10 +58,18 @@ public class AccidentInterface extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jTable1.setModel(new MyTableModel());
+        jTable1.setCellSelectionEnabled(true);
         jTable1.setShowHorizontalLines(false);
         jTable1.setShowVerticalLines(false);
         jTable1.setDefaultRenderer(Color.class, new ColorRenderer(true));
         jTable1.setTableHeader(null);
+
+        accidents = space.getSpaceObjectsByType("accident");
+
+        for (int i = 0; i < accidents.length; i++) {
+            IVector2  accident = (IVector2) accidents[i].getProperty(Space2D.PROPERTY_POSITION);
+            jTable1.setValueAt(Color.red, accident.getYAsInteger(), accident.getXAsInteger());
+        }
 
         jTable1.addMouseListener(new java.awt.event.MouseAdapter(){
 
@@ -63,15 +78,29 @@ public class AccidentInterface extends javax.swing.JFrame {
                 int col = jTable1.columnAtPoint(e.getPoint());
 
                 Space2D grid = (Space2D) space;
-                Map props = new HashMap();
-                props.put("state", "notavoid");
-                props.put(Space2D.PROPERTY_POSITION, new Vector2Int(col, row));
-                grid.createSpaceObject("accident", props, null);
 
-                // Utils.map[row][col]=0;
-                System.out.println(" col : "+ col + "row : " + row);
-                System.out.println(Utils.map[col][row]);
+                if(jTable1.getValueAt(row, col).equals(Color.gray)){
 
+                    Map props = new HashMap();
+                    props.put("state", "notavoid");
+                    props.put(Space2D.PROPERTY_POSITION, new Vector2Int(col, row));
+                    grid.createSpaceObject("accident", props, null);
+
+                    jTable1.setValueAt(Color.red, row, col);
+                    // Utils.map[row][col]=0;
+                }
+                else if(jTable1.getValueAt(row, col).equals(Color.red)){
+                    jTable1.setValueAt(Color.gray, row, col);
+
+                    for(ISpaceObject so : accidents)
+                    {
+                        if(((IVector2)so.getProperty("position")).equals(new Vector2Int(col, row) ))
+                        space.destroySpaceObject(so.getId());
+                    }
+
+                    Utils.map[row][col]=1;
+                }
+                accidents = space.getSpaceObjectsByType("accident");
             }
 
         });

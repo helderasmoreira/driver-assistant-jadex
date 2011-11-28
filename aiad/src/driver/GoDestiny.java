@@ -75,8 +75,6 @@ public class GoDestiny extends Plan {
                     dispatchSubgoalAndWait(go_target);
                     target.setProperty("state", "visited");
 
-
-
                 } // Se nao existir nada a visitar, desloca-se para a posicao final
                 else {
                     IEnvironmentSpace env = (IEnvironmentSpace) getBeliefbase().getBelief("move.environment").getFact();
@@ -87,7 +85,8 @@ public class GoDestiny extends Plan {
                     go_target.getParameter("destination").setValue(fd.getProperty(Space2D.PROPERTY_POSITION));
 
                     dispatchSubgoalAndWait(go_target);
-                    return;
+                    if(fd.getProperty(Space2D.PROPERTY_POSITION).equals(myself.getProperty(Space2D.PROPERTY_POSITION)))
+                        return;
                 }
 
 
