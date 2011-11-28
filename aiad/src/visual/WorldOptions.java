@@ -173,10 +173,9 @@ private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
 
     private void loadPOI() {
         ISpaceObject[] poi = space.getSpaceObjectsByType("pointofinterest");
-        for (ISpaceObject p : poi) {
-            System.out.println(p.getProperty("type"));
+        for (ISpaceObject p : poi)
             jComboBox2.addItem(p.getProperty("type"));
-        }
+
     }
 
 }
