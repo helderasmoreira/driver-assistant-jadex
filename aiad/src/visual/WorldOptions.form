@@ -83,9 +83,10 @@
     <Component class="javax.swing.JComboBox" name="jComboBox1">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="2">
+          <StringArray count="3">
             <StringItem index="0" value="Sol"/>
             <StringItem index="1" value="Chuva"/>
+            <StringItem index="2" value="Nublado"/>
           </StringArray>
         </Property>
       </Properties>
@@ -103,7 +104,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel3">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Preced&#xea;ncias dos pontos de interesse"/>
+        <Property name="text" type="java.lang.String" value="Detalhes dos pontos de interesse"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JComboBox" name="jComboBox2">

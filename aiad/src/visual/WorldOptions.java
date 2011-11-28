@@ -50,7 +50,7 @@ public class WorldOptions extends javax.swing.JDialog {
 
         jLabel1.setText("Estado do Tempo:");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Sol", "Chuva" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Sol", "Chuva", "Nublado" }));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox1ActionPerformed(evt);
@@ -59,7 +59,7 @@ public class WorldOptions extends javax.swing.JDialog {
 
         jLabel2.setText("Configurações do Mundo");
 
-        jLabel3.setText("Precedências dos pontos de interesse");
+        jLabel3.setText("Detalhes dos pontos de interesse");
 
         jComboBox2.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -139,12 +139,13 @@ private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
     for (ISpaceObject p : poi)
         if(p.getProperty("type").equals(jComboBox2.getSelectedItem().toString())){
             preconditions = p.getProperty("preconditions").toString().split(",");
+            jTextArea1.setText("Tempo meteorológico: " + p.getProperty("weather").toString() + "\n\n");
             break;
         }
 
      for(String id : preconditions)
          if (id.equals(""))
-             jTextArea1.setText("Não existem précondições \npara este ponto de interese.");
+             jTextArea1.setText(jTextArea1.getText() + "Não existem précondições \npara este ponto de interese.");
           else
              for (ISpaceObject p : poi)
                 if (p.getProperty("id").toString().equals(id)) {
