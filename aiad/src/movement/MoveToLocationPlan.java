@@ -67,6 +67,11 @@ public class MoveToLocationPlan extends Plan
 			props.put("path", nodes);
 		}
 		
+                Utils.dialog.changeText("Vou de " + ((IVector2)myself.getProperty(Space2D.PROPERTY_POSITION)).getXAsInteger() + "," + ((IVector2)myself.getProperty(Space2D.PROPERTY_POSITION)).getYAsInteger()
+                        + " para " + nodes.get(nodes.size()-1).x + "," + nodes.get(nodes.size()-1).y + "."
+                        );
+               
+
 
 		Object taskid = space.createObjectTask(MoveTask.PROPERTY_TYPENAME, props, myself.getId());
 //		move	= new MoveTask(dest, res, getExternalAccess());

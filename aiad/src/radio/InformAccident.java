@@ -30,7 +30,7 @@ public class InformAccident extends Plan {
 			me.getParameter(SFipa.RECEIVERS).setValue(drivers);
 			me.getParameter(SFipa.CONTENT).setValue(accidents); 
 			sendMessage(me);
-			System.out.println("Enviei " + drivers[0]);
+			
 		}
 		
 		int acc = accidents.length;
