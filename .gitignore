@@ -1,3 +1,4 @@
 aiad/*.xml
-aiad/build
-aiad/bin
+aiad/build/*
+aiad/bin/*
+aiad/nbproject/*

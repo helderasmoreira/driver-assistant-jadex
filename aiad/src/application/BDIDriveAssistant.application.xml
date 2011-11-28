@@ -215,7 +215,7 @@
 						
 						<env:object type="pointofinterest">
 							<env:property name="position">new Vector2Double(15, 4)</env:property>
-							<env:property name="weather">"any"</env:property>
+							<env:property name="weather">"sol"</env:property>
 							<env:property name="id">1</env:property>
 							<env:property name="preconditions">""</env:property>
 							<env:property name="type">"Zoo"</env:property>

@@ -1,3 +1,4 @@
+
 <agent xmlns="http://jadex.sourceforge.net/jadex"
 	 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	 xsi:schemaLocation="http://jadex.sourceforge.net/jadex
@@ -5,180 +6,186 @@
 	 name="Driver"
 	 package="driver">
 	
-	<imports>
-		<import>java.util.*</import>
-		<import>java.util.logging.*</import>
-		<import>jadex.base.fipa.*</import>
-		<import>jadex.extension.envsupport.environment.*</import>
-		<import>jadex.extension.envsupport.math.*</import>
-		<import>movement.*</import>
-	</imports>
+    <imports>
+        <import>java.util.*</import>
+        <import>java.util.logging.*</import>
+        <import>jadex.base.fipa.*</import>
+        <import>jadex.extension.envsupport.environment.*</import>
+        <import>jadex.extension.envsupport.math.*</import>
+        <import>movement.*</import>
+        <import>visual.*</import>
+    </imports>
 	
-	<capabilities>
+    <capabilities>
 		<!-- Inclui a capacidade Mundo, para pedir percursos -->
-		<capability name="move" file="World" />
-	</capabilities>
+        <capability name="move" file="World" />
+    </capabilities>
 	
-	<beliefs>
+    <beliefs>
 		<!-- The agent's avatar in the environment. -->
-		<beliefref name="myself">
-			<concrete ref="move.myself"/>
-		</beliefref>
-		<beliefref name="environment">
-  			<concrete ref="move.environment" /> 
-  		</beliefref>
+        <beliefref name="myself">
+            <concrete ref="move.myself"/>
+        </beliefref>
+        <beliefref name="environment">
+            <concrete ref="move.environment" /> 
+        </beliefref>
   		
-  		<beliefref name="acidente">
-			<concrete ref="move.acidente"/>
-		</beliefref>
-		<beliefref name="poi">
-			<concrete ref="move.poi"/>
-		</beliefref>
-		<belief name="timer" class="boolean" updaterate="1000" >
-        	<fact>true</fact>
-    	</belief>
-    	<belief name="timerCount" class="double">
-        	<fact>0</fact>
-    	</belief>
-    	<belief name="weather" class="String">
-        	<fact>"sol"</fact>
-    	</belief>
-    	<belief name="turistica" class="boolean">
-    		<fact>true</fact>
-    	</belief>
-    	<belief name="newradiomsg" class="boolean">
-    		<fact>false</fact>
-    	</belief>
-	</beliefs>
+        <beliefref name="acidente">
+            <concrete ref="move.acidente"/>
+        </beliefref>
+        <beliefref name="poi">
+            <concrete ref="move.poi"/>
+        </beliefref>
+        <belief name="timer" class="boolean" updaterate="1000" >
+            <fact>true</fact>
+        </belief>
+        <belief name="timerCount" class="double">
+            <fact>0</fact>
+        </belief>
+        <belief name="weather" class="String">
+            <fact>"sol"</fact>
+        </belief>
+        <belief name="turistica" class="boolean">
+            <fact>true</fact>
+        </belief>
+        <belief name="newradiomsg" class="boolean">
+            <fact>false</fact>
+        </belief>
+    </beliefs>
 	
-	<goals>
-		<achievegoal name="analyze_target" retry="false">
-			<parameter name="target" class="ISpaceObject">
-				<value>
+    <goals>
+        <achievegoal name="analyze_target" retry="false">
+            <parameter name="target" class="ISpaceObject">
+                <value>
 					$target
-				</value>
-			</parameter>
-			<parameter name="poi" class="IVector2">
-				<value>
+                </value>
+            </parameter>
+            <parameter name="poi" class="IVector2">
+                <value>
 					$beliefbase.poi
-				</value>
-			</parameter>
-			<unique/>
+                </value>
+            </parameter>
+            <unique/>
 			<!-- Create a new goal when a target was added
 				and the mission is going on. -->
-			<creationcondition language="jcl">
+            <creationcondition language="jcl">
 				ISpaceObject $target &amp;&amp;
 				$beliefbase.acidente == $target &amp;&amp;
 				$target.state=="notavoid" 
-			</creationcondition>
-			<deliberation>
-				<inhibits ref="goDestiny"/>
-				<inhibits ref="analyze_target"/>
-			</deliberation>
-		</achievegoal>
+            </creationcondition>
+            <deliberation>
+                <inhibits ref="goDestiny"/>
+                <inhibits ref="analyze_target"/>
+            </deliberation>
+        </achievegoal>
 		
-		<performgoal name ="recalculate" retry ="false">
-			<creationcondition language="jcl">
+        <performgoal name ="recalculate" retry ="false">
+            <creationcondition language="jcl">
 				$beliefbase.newradiomsg == true 
-			</creationcondition>
+            </creationcondition>
 
-		</performgoal>
+        </performgoal>
 		
-		<performgoal name ="goDestiny" retry="false" >
-			<parameter name="poi" class="IVector2"/>
-			<parameter name="acidente" class="IVector2"/>
-			<parameter name="avoidAccident" class="boolean"/>
-			<dropcondition language="jcl">
+        <performgoal name ="goDestiny" retry="false" >
+            <parameter name="poi" class="IVector2"/>
+            <parameter name="acidente" class="IVector2"/>
+            <parameter name="avoidAccident" class="boolean"/>
+            <dropcondition language="jcl">
 					ISpaceObject $target &amp;&amp;
 					$beliefbase.acidente == $target &amp;&amp;
 					$target.state=="notavoid" 
-			</dropcondition>
-			<dropcondition>
+            </dropcondition>
+            <dropcondition>
 				$beliefbase.newradiomsg == true 
-			</dropcondition>	
-		</performgoal>
+            </dropcondition>	
+        </performgoal>
 		
-	</goals>
+    </goals>
 	
 	
-	<plans>
-    	<plan name="goDestiny">
-    		<parameter name="poi" class="ISpaceObject">
-    			<goalmapping ref="goDestiny.poi"/>
-    		</parameter>
-    		<parameter name="acidente" class="ISpaceObject">
-    			<goalmapping ref="goDestiny.acidente"/>
-    		</parameter>
-    		<parameter name="avoidAccident" class="boolean">
-    			<goalmapping ref="goDestiny.avoidAccident"/>
-    		</parameter>
-      		<body class="GoDestiny" />
-      		<trigger>
-            	<goal ref="goDestiny"/>
-       		</trigger>
-    	</plan>
+    <plans>
+        <plan name="goDestiny">
+            <parameter name="poi" class="ISpaceObject">
+                <goalmapping ref="goDestiny.poi"/>
+            </parameter>
+            <parameter name="acidente" class="ISpaceObject">
+                <goalmapping ref="goDestiny.acidente"/>
+            </parameter>
+            <parameter name="avoidAccident" class="boolean">
+                <goalmapping ref="goDestiny.avoidAccident"/>
+            </parameter>
+            <body class="GoDestiny" />
+            <trigger>
+                <goal ref="goDestiny"/>
+            </trigger>
+        </plan>
     	
-    	<plan name="avoidAccident">
-			<parameter name="target" class="ISpaceObject">
-				<goalmapping ref="analyze_target.target"/>
-			</parameter>
-			<parameter name="poi" class="IVector2">
-				<goalmapping ref="analyze_target.poi"/>
-			</parameter>
-			<body class="AvoidAccident"/>
-			<trigger>
-				<goal ref="analyze_target"/>
-			</trigger>
-		</plan>
-		<plan name="accident_inform">
-			<body class="AccidentInform"/>
-			<trigger>
-				<messageevent ref="accident_inform"/>
-			</trigger>
-		</plan>
-		<plan name="recalculate">
-			<body class="RecalculatePath"/>
-			<trigger>
-				<goal ref="recalculate"/>
-			</trigger>
-		</plan>
-	</plans>
-  	<events>
-	  	<messageevent name="accident_inform" type="fipa" direction="receive">
-				<parameter name="performative" class="String" direction="fixed">
-					<value>SFipa.INFORM</value>
-				</parameter>
-				<parameter name="language" class="String" direction="fixed">
-					<value>SFipa.JADEX_XML</value>
- 				</parameter>
-		</messageevent>
-	</events>
-	<configurations>
-  		<configuration name="turistica">
-  			<beliefs>
-        		<initialbelief ref="timer">
-          			<fact>true</fact>
-        		</initialbelief>
-      		</beliefs>
-  			<goals>
-  				<initialgoal ref="goDestiny"/>
+        <plan name="avoidAccident">
+            <parameter name="target" class="ISpaceObject">
+                <goalmapping ref="analyze_target.target"/>
+            </parameter>
+            <parameter name="poi" class="IVector2">
+                <goalmapping ref="analyze_target.poi"/>
+            </parameter>
+            <body class="AvoidAccident"/>
+            <trigger>
+                <goal ref="analyze_target"/>
+            </trigger>
+        </plan>
+        <plan name="accident_inform">
+            <body class="AccidentInform"/>
+            <trigger>
+                <messageevent ref="accident_inform"/>
+            </trigger>
+        </plan>
+        <plan name="recalculate">
+            <body class="RecalculatePath"/>
+            <trigger>
+                <goal ref="recalculate"/>
+            </trigger>
+        </plan>
+        <plan name="configplan">
+            <body class="InitialConfigs" />
+        </plan>
+    </plans>
+    <events>
+        <messageevent name="accident_inform" type="fipa" direction="receive">
+            <parameter name="performative" class="String" direction="fixed">
+                <value>SFipa.INFORM</value>
+            </parameter>
+            <parameter name="language" class="String" direction="fixed">
+                <value>SFipa.JADEX_XML</value>
+            </parameter>
+        </messageevent>
+    </events>
+    <configurations>
+        <configuration name="turistica">
+            <beliefs>
+                <initialbelief ref="timer">
+                    <fact>true</fact>
+                </initialbelief>
+            </beliefs>
+            <goals>
+                <initialgoal ref="goDestiny"/>
   				<!--<initialgoal cref="move.walk_around"/>-->
-  			</goals>
+            </goals>
+            <plans>
+                <initialplan ref="configplan"/>
+            </plans>
+        </configuration>
+        <configuration name="direto">
+            <beliefs>
+                <initialbelief ref="timer">
+                    <fact>true</fact>
+                </initialbelief>
+                <initialbelief ref="turistica">
+                    <fact>false</fact>
+                </initialbelief>
+            </beliefs>
+            <goals>
+                <initialgoal ref="goDestiny"/>
+            </goals>
   		
-  		</configuration>
-  		<configuration name="direto">
-  			<beliefs>
-        		<initialbelief ref="timer">
-          			<fact>true</fact>
-        		</initialbelief>
-        		<initialbelief ref="turistica">
-          			<fact>false</fact>
-        		</initialbelief>
-      		</beliefs>
-  			<goals>
-  				<initialgoal ref="goDestiny"/>
-  			</goals>
-  		
-  		</configuration>
-	</configurations>
+        </configuration>
+    </configurations>
 </agent>
