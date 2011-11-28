@@ -11,12 +11,6 @@
 package visual;
 
 import jadex.bdi.runtime.IBDIExternalAccess;
-import jadex.bdi.runtime.IBDIInternalAccess;
-import jadex.bdi.runtime.IBeliefbase;
-import jadex.bdi.runtime.Plan;
-import jadex.bridge.IComponentStep;
-import jadex.bridge.IInternalAccess;
-import jadex.commons.future.IFuture;
 import jadex.extension.envsupport.environment.IEnvironmentSpace;
 import jadex.extension.envsupport.environment.ISpaceObject;
 
@@ -27,18 +21,13 @@ import jadex.extension.envsupport.environment.ISpaceObject;
 public class WorldOptions extends javax.swing.JDialog {
 
     
-    IBDIExternalAccess externalAccess = null;
+    
     public WorldOptions(IEnvironmentSpace space) {
-        this.space = space;
         initComponents();
-    }
 
-    public WorldOptions(IBDIExternalAccess ae) {
-        initComponents();
-        externalAccess = ae;
+        this.space = space;
+        loadPOI();
     }
-    
-    
 
     /** This method is called from within the constructor to
      * initialize the form.
@@ -72,7 +61,6 @@ public class WorldOptions extends javax.swing.JDialog {
 
         jLabel3.setText("Precedências dos pontos de interesse");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jComboBox2.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 jComboBox2ItemStateChanged(evt);
@@ -141,21 +129,15 @@ private void jComboBox2ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIR
     
 private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
     
-    
-    externalAccess.scheduleStep(new IComponentStep<Void>() {
-        
-        public IFuture<Void> execute(IInternalAccess ia) {
-            IBDIInternalAccess bia = (IBDIInternalAccess) ia;
-            
-            bia.getBeliefbase().getBelief("weather").setFact(jComboBox1.getSelectedItem().toString());
-            return IFuture.DONE;
-        }
-    });
+
+    space.setProperty("weather", jComboBox1.getSelectedItem().toString());
+  
 }//GEN-LAST:event_jComboBox1ActionPerformed
 
 
 
     IEnvironmentSpace space = null;
+    IBDIExternalAccess externalAccess = null;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JComboBox jComboBox1;
     private javax.swing.JComboBox jComboBox2;
@@ -165,5 +147,13 @@ private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
     private javax.swing.JList jList1;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
+
+    private void loadPOI() {
+        ISpaceObject[] poi = space.getSpaceObjectsByType("pointofinterest");
+        for (ISpaceObject p : poi) {
+            System.out.println(p.getProperty("type"));
+            jComboBox2.addItem(p.getProperty("type"));
+        }
+    }
 
 }

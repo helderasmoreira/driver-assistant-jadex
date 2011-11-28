@@ -15,10 +15,10 @@ public class AvoidAccident  extends Plan {
 		public void body() {
 			ISpaceObject acidente = (ISpaceObject)getParameter("target").getValue(); 
 			IVector2 vacidente = (IVector2) acidente.getProperty(Space2D.PROPERTY_POSITION);
-			
+			Space2D space = (Space2D) getBeliefbase().getBelief("environment").getFact();
 			acidente.setProperty("state", "avoid");
 			
-			if(acidente.getProperty("weather").equals((String)getBeliefbase().getBelief("weather").getFact()) || acidente.getProperty("weather").equals("any")) {
+			if(acidente.getProperty("weather").equals((String)space.getProperty("weather")) || acidente.getProperty("weather").equals("any")) {
 				Utils.markAccident(new Node(vacidente.getXAsInteger(), vacidente.getYAsInteger()));
 			}
 			

@@ -55,7 +55,7 @@
 
         <env:envspacetype name="2dspace" class="Grid2D">
             <env:property name="neighborhood">Grid2D.NEIGHBORHOOD_MOORE</env:property>
-		
+            <env:property name="weather">"sol"</env:property>
 	
             <env:objecttypes>
                 <env:objecttype name="pointofinterest">

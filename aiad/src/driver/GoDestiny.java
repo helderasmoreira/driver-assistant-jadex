@@ -36,8 +36,8 @@ public class GoDestiny extends Plan {
                 int size = 0;
                 ISpaceObject[] poi = space.getSpaceObjectsByType("pointofinterest");
 
-
-                poi = filter(poi, (String) getBeliefbase().getBelief("weather").getFact());
+                System.out.println("WEATHER: " + (String)space.getProperty("weather"));
+                poi = filter(poi, (String)space.getProperty("weather"));
 
                 for (int i = 0; i < poi.length; i++) {
 

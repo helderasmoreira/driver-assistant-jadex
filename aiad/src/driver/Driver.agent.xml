@@ -42,9 +42,6 @@
         <belief name="timerCount" class="double">
             <fact>0</fact>
         </belief>
-        <belief name="weather" class="String">
-            <fact>"sol"</fact>
-        </belief>
         <belief name="turistica" class="boolean">
             <fact>true</fact>
         </belief>
@@ -144,9 +141,6 @@
                 <goal ref="recalculate"/>
             </trigger>
         </plan>
-        <plan name="configplan">
-            <body class="InitialConfigs" />
-        </plan>
     </plans>
     <events>
         <messageevent name="accident_inform" type="fipa" direction="receive">
@@ -169,9 +163,6 @@
                 <initialgoal ref="goDestiny"/>
   				<!--<initialgoal cref="move.walk_around"/>-->
             </goals>
-            <plans>
-                <initialplan ref="configplan"/>
-            </plans>
         </configuration>
         <configuration name="direto">
             <beliefs>

@@ -13,6 +13,7 @@ import jadex.extension.envsupport.environment.space2d.Space2D;
 import jadex.extension.envsupport.math.Vector2Int;
 import visual.AccidentInterface;
 import visual.DriverLog;
+import visual.WorldOptions;
 
 public class BuildMap extends SimplePropertyObject implements ISpaceProcess {
 
@@ -108,14 +109,15 @@ public class BuildMap extends SimplePropertyObject implements ISpaceProcess {
         }
 
         Utils.dialog = new DriverLog();
-        //Utils.worldOptionsDialog = new WorldOptions(space);
+        Utils.worldOptionsDialog = new WorldOptions(space);
         
         java.awt.EventQueue.invokeLater(new Runnable() {
 
             public void run() {
                 new AccidentInterface(space).setVisible(true);
                 Utils.dialog.setVisible(true);
-               // Utils.worldOptionsDialog.setVisible(true);
+                Utils.worldOptionsDialog.setVisible(true);
+              
 
             }
         });
