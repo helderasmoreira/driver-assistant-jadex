@@ -139,7 +139,10 @@ private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
     for (ISpaceObject p : poi)
         if(p.getProperty("type").equals(jComboBox2.getSelectedItem().toString())){
             preconditions = p.getProperty("preconditions").toString().split(",");
-            jTextArea1.setText("Tempo meteorológico: " + p.getProperty("weather").toString() + "\n\n");
+            if (p.getProperty("weather").toString().equals("any"))
+                jTextArea1.setText("Tempo meteorológico: todos\n\n");
+            else
+                jTextArea1.setText("Tempo meteorológico: " + p.getProperty("weather").toString() + "\n\n");
             break;
         }
 
