@@ -91,7 +91,6 @@
             </env:tasktypes>			
 
             <env:processtypes>
-                <env:processtype name="create" class="Accident" />
                 <env:processtype name="build_map" class="BuildMap" />
             </env:processtypes>
                 
@@ -247,9 +246,6 @@
                         </env:object>
 						
                     </env:objects>
-                    <env:processes>
-                        <env:process type="create"/>
-                    </env:processes>
                     <env:observers>
                         <env:observer name="BDI Drive Assistant" dataview="view_all" perspective="icons">
                         </env:observer>
