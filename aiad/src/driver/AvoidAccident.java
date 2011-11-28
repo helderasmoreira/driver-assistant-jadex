@@ -22,6 +22,9 @@ public class AvoidAccident  extends Plan {
 				Utils.markAccident(new Node(vacidente.getXAsInteger(), vacidente.getYAsInteger()));
 			}
 			
+                        Utils.dialog.changeText("Encontrei um acidente!");
+                        Utils.dialog.changeText("Recalculando caminho...");
+
 			IGoal go_target = createGoal("goDestiny");
 		
 			dispatchTopLevelGoal(go_target);

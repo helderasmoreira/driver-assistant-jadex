@@ -17,6 +17,8 @@ import java.util.Map;
 import algorithms.PathFinder;
 import algorithms.PathFinder.Node;
 import application.Utils;
+import java.util.Iterator;
+import java.util.Set;
 
 /**
  *  The move to a location plan.
@@ -66,12 +68,19 @@ public class MoveToLocationPlan extends Plan
 			nodes.remove(0);
 			props.put("path", nodes);
 		}
-		
-                Utils.dialog.changeText("Vou de " + ((IVector2)myself.getProperty(Space2D.PROPERTY_POSITION)).getXAsInteger() + "," + ((IVector2)myself.getProperty(Space2D.PROPERTY_POSITION)).getYAsInteger()
-                        + " para " + nodes.get(nodes.size()-1).x + "," + nodes.get(nodes.size()-1).y + "."
-                        );
-               
 
+               boolean fim = true;
+               final Set objects = ((Space2D)space).getNearObjects(new Vector2Int(nodes.get(nodes.size()-1).x, nodes.get(nodes.size()-1).y), new Vector1Double(1.0));
+               for (Iterator it = objects.iterator(); it.hasNext();) {
+                final ISpaceObject so = (ISpaceObject) it.next();
+                if (so.getType().equals("pointofinterest")) {
+                    Utils.dialog.changeText("Vou para: " + so.getProperty("type") + ".");
+                    fim = false;
+                    break;
+                    }
+                }
+
+                if(fim) Utils.dialog.changeText("Vou para o ponto final.");
 
 		Object taskid = space.createObjectTask(MoveTask.PROPERTY_TYPENAME, props, myself.getId());
 //		move	= new MoveTask(dest, res, getExternalAccess());

@@ -4,15 +4,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import algorithms.PathFinder;
 
 import jadex.bridge.service.clock.IClockService;
 import jadex.commons.SimplePropertyObject;
 import jadex.extension.envsupport.environment.IEnvironmentSpace;
-import jadex.extension.envsupport.environment.ISpaceObject;
 import jadex.extension.envsupport.environment.ISpaceProcess;
 import jadex.extension.envsupport.environment.space2d.Space2D;
-import jadex.extension.envsupport.math.Vector1Double;
 import jadex.extension.envsupport.math.Vector2Int;
 import visual.AccidentInterface;
 import visual.DriverLog;
@@ -110,16 +107,6 @@ public class BuildMap extends SimplePropertyObject implements ISpaceProcess {
             }
         }
 
-        /*
-
-        for(int i = 0; i < estradas.length; i++){
-        for(int j = 0; j < estradas[0].length; j++)
-        System.out.print(estradas[i][j] + " ");
-        System.out.println();
-        }*/
-
-
-
         Utils.dialog = new DriverLog();
 
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -130,6 +117,8 @@ public class BuildMap extends SimplePropertyObject implements ISpaceProcess {
 
             }
         });
+
+        Utils.dialog.changeText("Início");
 
     }
 }
