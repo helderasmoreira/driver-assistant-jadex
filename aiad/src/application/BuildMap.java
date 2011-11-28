@@ -51,7 +51,7 @@ public class BuildMap extends SimplePropertyObject implements ISpaceProcess {
     }
 
     @Override
-    public void start(IClockService arg0, IEnvironmentSpace space) {
+    public void start(IClockService arg0, final IEnvironmentSpace space) {
         // TODO Auto-generated method stub
         // Initialize the field.
         Space2D grid = (Space2D) space;
@@ -114,7 +114,7 @@ public class BuildMap extends SimplePropertyObject implements ISpaceProcess {
         java.awt.EventQueue.invokeLater(new Runnable() {
 
             public void run() {
-                new AccidentInterface().setVisible(true);
+                new AccidentInterface(space).setVisible(true);
                 Utils.dialog.setVisible(true);
                // Utils.worldOptionsDialog.setVisible(true);
 
