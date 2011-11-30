@@ -33,15 +33,16 @@ public class AccidentInterface extends javax.swing.JFrame {
 
     private Space2D space;
     private ISpaceObject[] accidents = null;
+    private ISpaceObject[] cells = null;
+   
     /** Creates new form AccidentInterface */
     public AccidentInterface(IEnvironmentSpace space) {
-           this.space = (Space2D) space;
+        this.space = (Space2D) space;
         initComponents();
-     
 
-     
+
+
     }
-
 
     /** This method is called from within the constructor to
      * initialize the form.
@@ -58,6 +59,15 @@ public class AccidentInterface extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jTable1.setModel(new MyTableModel());
+        for (int x = 0; x < jTable1.getColumnCount(); x++) {
+            for (int y = 0; y < jTable1.getRowCount(); y++) {
+                if (jTable1.getValueAt(x, y) == 1) {
+                    jTable1.setValueAt(Color.gray, x, y);
+                }
+                else
+                jTable1.setValueAt(Color.lightGray, x, y);
+            }
+        }
         jTable1.setCellSelectionEnabled(true);
         jTable1.setShowHorizontalLines(false);
         jTable1.setShowVerticalLines(false);
@@ -65,6 +75,7 @@ public class AccidentInterface extends javax.swing.JFrame {
         jTable1.setTableHeader(null);
 
         accidents = space.getSpaceObjectsByType("accident");
+        cells = space.getSpaceObjectsByType("cell");
 
         for (int i = 0; i < accidents.length; i++) {
             IVector2  accident = (IVector2) accidents[i].getProperty(Space2D.PROPERTY_POSITION);
@@ -90,17 +101,35 @@ public class AccidentInterface extends javax.swing.JFrame {
                     // Utils.map[row][col]=0;
                 }
                 else if(jTable1.getValueAt(row, col).equals(Color.red)){
-                    jTable1.setValueAt(Color.gray, row, col);
+                    jTable1.setValueAt(Color.lightGray, row, col);
 
                     for(ISpaceObject so : accidents)
                     {
-                        if(((IVector2)so.getProperty("position")).equals(new Vector2Int(col, row) ))
-                        space.destroySpaceObject(so.getId());
+                        if(((IVector2)so.getProperty("position")).equals(new Vector2Int(col, row) )){
+                            space.destroySpaceObject(so.getId());
+                            Utils.map[row][col]=1;
+                        }
                     }
 
+                    for(ISpaceObject ro : cells)
+                    {
+                        System.out.println(ro.getProperty("position"));
+                        if(((IVector2)ro.getProperty("position")).equals(new Vector2Int(col, row) )){
+                            space.destroySpaceObject(ro.getId());
+                            Utils.map[row][col]=0;}
+                    }
+
+                }
+                else if(jTable1.getValueAt(row, col).equals(Color.lightGray)){
+                    Map props = new HashMap();
+                    props.put("road", true);
+                    props.put(Space2D.PROPERTY_POSITION, new Vector2Int(col, row));
+                    grid.createSpaceObject("cell", props, null);
+                    jTable1.setValueAt(Color.gray, row, col);
                     Utils.map[row][col]=1;
                 }
                 accidents = space.getSpaceObjectsByType("accident");
+                cells = space.getSpaceObjectsByType("cell");
             }
 
         });
@@ -126,37 +155,32 @@ public class AccidentInterface extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-
-
-    
     class MyTableModel extends AbstractTableModel {
-       
-        private String[] columnNames = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10",
-                                        "11", "12", "13", "14", "15", "16", "17", "18", "19", "20" };
-        private Object[][] data = {
-            { Color.green, Color.green, Color.green, Color.green, Color.green, Color.green, Color.green, Color.green, Color.green, Color.green, Color.green, Color.green, Color.green, Color.green, Color.green, Color.green, Color.green, Color.green, Color.green, Color.green },
-        {Color.green, Color.gray, Color.gray, Color.gray, Color.gray, Color.gray, Color.gray, Color.gray, Color.green, Color.green, Color.green, Color.green, Color.green, Color.green, Color.green, Color.green, Color.green, Color.green, Color.green, Color.green },
-        {Color.green, Color.green, Color.green, Color.green, Color.green, Color.green, Color.green, Color.gray, Color.green, Color.green, Color.green, Color.green, Color.green, Color.green, Color.green, Color.green, Color.green, Color.green, Color.green, Color.green },
-        {Color.green, Color.green, Color.green, Color.green, Color.green, Color.green, Color.green, Color.gray, Color.green, Color.green, Color.green, Color.green, Color.green, Color.green, Color.green, Color.green, Color.green, Color.green, Color.green, Color.green },
-        {Color.green, Color.green, Color.green, Color.green, Color.green, Color.green, Color.green, Color.gray, Color.green, Color.green, Color.green, Color.green, Color.green, Color.green, Color.green, Color.gray, Color.green, Color.green, Color.green, Color.green },
-        {Color.green, Color.green, Color.green, Color.green, Color.green, Color.green, Color.green, Color.gray, Color.gray, Color.gray, Color.gray, Color.gray, Color.gray, Color.gray, Color.gray, Color.gray, Color.gray, Color.gray, Color.green, Color.green },
-        {Color.green, Color.green, Color.green, Color.green, Color.green, Color.green, Color.green, Color.gray, Color.green, Color.green, Color.green, Color.green, Color.gray, Color.green, Color.green, Color.green, Color.green, Color.gray, Color.green, Color.green },
-        {Color.green, Color.green, Color.green, Color.green, Color.green, Color.green, Color.green, Color.gray, Color.green, Color.green, Color.green, Color.green, Color.gray, Color.green, Color.green, Color.green, Color.green, Color.gray, Color.green, Color.green },
-        {Color.green, Color.green, Color.green, Color.green, Color.green, Color.green, Color.green, Color.gray, Color.green, Color.green, Color.green, Color.green, Color.gray, Color.green, Color.green, Color.green, Color.green, Color.gray, Color.green, Color.green },
-        {Color.green, Color.green, Color.green, Color.green, Color.green, Color.green, Color.green, Color.gray, Color.green, Color.green, Color.green, Color.green, Color.gray, Color.green, Color.green, Color.green, Color.green, Color.gray, Color.green, Color.green },
-        {Color.green, Color.green, Color.green, Color.gray, Color.gray, Color.gray, Color.gray, Color.gray, Color.gray, Color.gray, Color.gray, Color.gray, Color.gray, Color.gray, Color.gray, Color.gray, Color.gray, Color.gray, Color.green, Color.green },
-        {Color.green, Color.green, Color.green, Color.green, Color.gray, Color.green, Color.green, Color.gray, Color.green, Color.green, Color.green, Color.green, Color.gray, Color.green, Color.green, Color.green, Color.green, Color.gray, Color.green, Color.green },
-        {Color.green, Color.green, Color.green, Color.green, Color.gray, Color.green, Color.green, Color.gray, Color.green, Color.green, Color.green, Color.green, Color.gray, Color.green, Color.green, Color.green, Color.green, Color.gray, Color.green, Color.green },
-        {Color.green, Color.green, Color.green, Color.green, Color.gray, Color.green, Color.green, Color.gray, Color.green, Color.green, Color.green, Color.green, Color.gray, Color.green, Color.green, Color.green, Color.green, Color.gray, Color.green, Color.green },
-        {Color.green, Color.green, Color.green, Color.green, Color.gray, Color.green, Color.green, Color.green, Color.green, Color.green, Color.green, Color.green, Color.gray, Color.green, Color.green, Color.green, Color.green, Color.gray, Color.green, Color.green },
-        {Color.green, Color.green, Color.green, Color.green, Color.gray, Color.green, Color.green, Color.green, Color.green, Color.green, Color.green, Color.green, Color.gray, Color.green, Color.green, Color.green, Color.green, Color.gray, Color.green, Color.green },
-        {Color.green, Color.green, Color.green, Color.gray, Color.gray, Color.gray, Color.gray, Color.gray, Color.gray, Color.gray, Color.gray, Color.gray, Color.gray, Color.gray, Color.gray, Color.gray, Color.gray, Color.gray, Color.green, Color.green },
-        {Color.green, Color.green, Color.green, Color.green, Color.green, Color.green, Color.green, Color.green, Color.green, Color.green, Color.green, Color.green, Color.green, Color.green, Color.green, Color.green, Color.green, Color.gray, Color.green, Color.green },
-        {Color.green, Color.green, Color.green, Color.green, Color.green, Color.green, Color.green, Color.green, Color.green, Color.green, Color.green, Color.green, Color.green, Color.green, Color.green, Color.green, Color.green, Color.gray, Color.green, Color.green },
-        {Color.green, Color.green, Color.green, Color.green, Color.green, Color.green, Color.green, Color.green, Color.green, Color.green, Color.green, Color.green, Color.green, Color.green, Color.green, Color.green, Color.green, Color.green, Color.green, Color.green},
-    
-        };
 
+        private String[] columnNames = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10",
+            "11", "12", "13", "14", "15", "16", "17", "18", "19", "20"};
+        private Object[][] data = {
+                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                    {0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                    {0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                    {0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                    {0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0},
+                    {0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0},
+                    {0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0},
+                    {0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0},
+                    {0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0},
+                    {0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0},
+                    {0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0},
+                    {0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0},
+                    {0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0},
+                    {0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0},
+                    {0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0},
+                    {0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0},
+                    {0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0},
+                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0},
+                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0},
+                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},};
+        
         public int getColumnCount() {
             return columnNames.length;
         }
@@ -186,9 +210,9 @@ public class AccidentInterface extends javax.swing.JFrame {
         public boolean isCellEditable(int row, int col) {
             //Note that the data/cell address is constant,
             //no matter where the cell appears onscreen.
-          
-                return true;
-            
+
+            return true;
+
         }
 
         public void setValueAt(Object value, int row, int col) {
@@ -197,8 +221,6 @@ public class AccidentInterface extends javax.swing.JFrame {
             fireTableCellUpdated(row, col);
 
         }
-
-       
     }
 
     /**
@@ -206,6 +228,7 @@ public class AccidentInterface extends javax.swing.JFrame {
      */
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
+
             private IEnvironmentSpace space;
 
             public void run() {
