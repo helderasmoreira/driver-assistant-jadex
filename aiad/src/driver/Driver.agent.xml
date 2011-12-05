@@ -17,8 +17,8 @@
     </imports>
 	
     <capabilities>
-		<!-- Inclui a capacidade Mundo, para pedir percursos -->
-        <capability name="move" file="World" />
+	<!-- Inclui a capacidade GPS, para pedir percursos -->
+        <capability name="move" file="GPS" />
     </capabilities>
 	
     <beliefs>
@@ -36,12 +36,6 @@
         <beliefref name="poi">
             <concrete ref="move.poi"/>
         </beliefref>
-        <belief name="timer" class="boolean" updaterate="1000" >
-            <fact>true</fact>
-        </belief>
-        <belief name="timerCount" class="double">
-            <fact>0</fact>
-        </belief>
         <belief name="turistica" class="boolean">
             <fact>true</fact>
         </belief>
@@ -54,21 +48,19 @@
         <achievegoal name="analyze_target" retry="false">
             <parameter name="target" class="ISpaceObject">
                 <value>
-					$target
+                    $target
                 </value>
             </parameter>
             <parameter name="poi" class="IVector2">
                 <value>
-					$beliefbase.poi
+                    $beliefbase.poi
                 </value>
             </parameter>
             <unique/>
-			<!-- Create a new goal when a target was added
-				and the mission is going on. -->
             <creationcondition language="jcl">
-				ISpaceObject $target &amp;&amp;
-				$beliefbase.acidente == $target &amp;&amp;
-				$target.state=="notavoid" 
+                    ISpaceObject $target &amp;&amp;
+                    $beliefbase.acidente == $target &amp;&amp;
+                    $target.state=="notavoid" 
             </creationcondition>
             <deliberation>
                 <inhibits ref="goDestiny"/>
@@ -78,7 +70,7 @@
 		
         <performgoal name ="recalculate" retry ="false">
             <creationcondition language="jcl">
-				$beliefbase.newradiomsg == true 
+                $beliefbase.newradiomsg == true 
             </creationcondition>
 
         </performgoal>
@@ -88,17 +80,15 @@
             <parameter name="acidente" class="IVector2"/>
             <parameter name="avoidAccident" class="boolean"/>
             <dropcondition language="jcl">
-					ISpaceObject $target &amp;&amp;
-					$beliefbase.acidente == $target &amp;&amp;
-					$target.state=="notavoid" 
+                ISpaceObject $target &amp;&amp;
+                $beliefbase.acidente == $target &amp;&amp;
+                $target.state=="notavoid" 
             </dropcondition>
             <dropcondition>
-				$beliefbase.newradiomsg == true 
+                $beliefbase.newradiomsg == true 
             </dropcondition>	
-        </performgoal>
-		
+        </performgoal>	
     </goals>
-	
 	
     <plans>
         <plan name="goDestiny">
@@ -141,6 +131,8 @@
                 <goal ref="recalculate"/>
             </trigger>
         </plan>
+      
+        
     </plans>
     <events>
         <messageevent name="accident_inform" type="fipa" direction="receive">
@@ -163,6 +155,7 @@
                 <initialgoal ref="goDestiny"/>
   				<!--<initialgoal cref="move.walk_around"/>-->
             </goals>
+             
         </configuration>
         <configuration name="direto">
             <beliefs>
@@ -176,7 +169,7 @@
             <goals>
                 <initialgoal ref="goDestiny"/>
             </goals>
-  		
+            
         </configuration>
     </configurations>
 </agent>

@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Set;
 
 import algorithms.PathFinder.Node;
+import application.Utils;
 
 /**
  *  Move an object towards a destination.
@@ -70,6 +71,8 @@ public class MoveTask extends AbstractTask {
                 ? interdestination : interdestination.copy().subtract(loc).normalize().multiply(maxdist).add(loc);
 
         ((Space2D) space).setPosition(obj.getId(), newloc);
+        
+        Utils.dialog.jTable1.setValueAt(newloc.getX() + ", " + newloc.getY(), 0, 1);
 
         if (newloc == interdestination) {
             path.remove(0);

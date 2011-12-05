@@ -9,24 +9,33 @@ import algorithms.PathFinder;
 import algorithms.PathFinder.Node;
 import application.Utils;
 
-public class AvoidAccident  extends Plan {
+public class AvoidAccident extends Plan {
 
-		@Override
-		public void body() {
-			ISpaceObject acidente = (ISpaceObject)getParameter("target").getValue(); 
-			IVector2 vacidente = (IVector2) acidente.getProperty(Space2D.PROPERTY_POSITION);
-			Space2D space = (Space2D) getBeliefbase().getBelief("environment").getFact();
-			acidente.setProperty("state", "avoid");
-			
-			if(acidente.getProperty("weather").equals((String)space.getProperty("weather")) || acidente.getProperty("weather").equals("any")) {
-				Utils.markAccident(new Node(vacidente.getXAsInteger(), vacidente.getYAsInteger()));
-			}
-			
-                        Utils.dialog.changeText("Encontrei um acidente!");
-                        Utils.dialog.changeText("Recalculando caminho...");
+    @Override
+    public void body() {
+        ISpaceObject acidente = (ISpaceObject) getParameter("target").getValue();
+        IVector2 vacidente = (IVector2) acidente.getProperty(Space2D.PROPERTY_POSITION);
+        Space2D space = (Space2D) getBeliefbase().getBelief("environment").getFact();
+        acidente.setProperty("state", "avoid");
 
-			IGoal go_target = createGoal("goDestiny");
-		
-			dispatchTopLevelGoal(go_target);
+        if (acidente.getProperty("weather").equals((String) space.getProperty("weather")) || acidente.getProperty("weather").equals("any")) {
+
+            if (Utils.map[vacidente.getXAsInteger()][vacidente.getYAsInteger()] != 0) {
+                if (Utils.dialog.jTable1.getValueAt(1, 1) != null) {
+                    Utils.dialog.jTable1.setValueAt(Utils.dialog.jTable1.getValueAt(1, 1) + " | " + ((IVector2) acidente.getProperty(Space2D.PROPERTY_POSITION)).getX() + "," + ((IVector2) acidente.getProperty(Space2D.PROPERTY_POSITION)).getY(), 1, 1);
+                } else {
+                    Utils.dialog.jTable1.setValueAt(((IVector2) acidente.getProperty(Space2D.PROPERTY_POSITION)).getX() + "," + ((IVector2) acidente.getProperty(Space2D.PROPERTY_POSITION)).getY(), 1, 1);
+                }
+            }
+            Utils.markAccident(new Node(vacidente.getXAsInteger(), vacidente.getYAsInteger()));
+        }
+
+
+        Utils.dialog.changeText("Encontrei um acidente!");
+        Utils.dialog.changeText("Recalculando caminho...");
+
+        IGoal go_target = createGoal("goDestiny");
+
+        dispatchTopLevelGoal(go_target);
+    }
 }
-		}

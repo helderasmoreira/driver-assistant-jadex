@@ -15,8 +15,16 @@ package visual;
  *
  * @author Babo
  */
-public class DriverLog extends javax.swing.JDialog {
-
+public class DriverLog extends javax.swing.JFrame {
+    
+    public Object[][] driverBeliefs = new Object [][] {
+        {"Posição", null},
+        {"Acidentes Conhecidos", null},
+        {"Tipo de rota", null},
+        {"Destino", null},
+        {"Última Mensagem Rádio", null}
+    };
+    
     /** Creates new form DriverLog */
     public DriverLog() {  
         initComponents();
@@ -34,35 +42,44 @@ public class DriverLog extends javax.swing.JDialog {
 
         textArea1 = new java.awt.TextArea();
         label1 = new java.awt.Label();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         textArea1.setEditable(false);
-        textArea1.setEnabled(false);
 
         label1.setText("Log das ações do condutor");
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(label1, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
-            .addComponent(textArea1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(label1, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
-                .addGap(1, 1, 1)
-                .addComponent(textArea1, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(driverBeliefs,
+            new String [] {
+                "Belief", "Valor"
+            }));
+            jScrollPane1.setViewportView(jTable1);
 
-        textArea1.getAccessibleContext().setAccessibleName("driverlog");
-        textArea1.getAccessibleContext().setAccessibleDescription("driverlog");
-        textArea1.getAccessibleContext().setAccessibleParent(null);
+            javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+            getContentPane().setLayout(layout);
+            layout.setHorizontalGroup(
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(label1, javax.swing.GroupLayout.DEFAULT_SIZE, 505, Short.MAX_VALUE)
+                .addComponent(textArea1, javax.swing.GroupLayout.DEFAULT_SIZE, 505, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 505, Short.MAX_VALUE)
+            );
+            layout.setVerticalGroup(
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addComponent(label1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(textArea1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+            );
 
-        pack();
-    }// </editor-fold>//GEN-END:initComponents
+            textArea1.getAccessibleContext().setAccessibleName("driverlog");
+            textArea1.getAccessibleContext().setAccessibleDescription("driverlog");
+
+            pack();
+        }// </editor-fold>//GEN-END:initComponents
 
 
     public void changeText(String add)
@@ -75,6 +92,8 @@ public class DriverLog extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JScrollPane jScrollPane1;
+    public javax.swing.JTable jTable1;
     private java.awt.Label label1;
     private java.awt.TextArea textArea1;
     // End of variables declaration//GEN-END:variables

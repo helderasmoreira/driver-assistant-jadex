@@ -18,7 +18,7 @@ import jadex.extension.envsupport.environment.ISpaceObject;
  *
  * @author ei08170
  */
-public class WorldOptions extends javax.swing.JDialog {
+public class WorldOptions extends javax.swing.JFrame {
 
     
     

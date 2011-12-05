@@ -10,6 +10,7 @@ public class RecalculatePath extends Plan {
 	public void body() {
 		
 		getBeliefbase().getBelief("newradiomsg").setFact(false);
+               
 		Utils.dialog.changeText("Nova mensagem de rádio!");
                 Utils.dialog.changeText("Recalculando caminho...");
 		IGoal go_target = createGoal("goDestiny");

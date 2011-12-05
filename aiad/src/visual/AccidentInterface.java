@@ -113,7 +113,6 @@ public class AccidentInterface extends javax.swing.JFrame {
 
                     for(ISpaceObject ro : cells)
                     {
-                        System.out.println(ro.getProperty("position"));
                         if(((IVector2)ro.getProperty("position")).equals(new Vector2Int(col, row) )){
                             space.destroySpaceObject(ro.getId());
                             Utils.map[row][col]=0;}

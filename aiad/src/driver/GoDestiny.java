@@ -27,6 +27,10 @@ public class GoDestiny extends Plan {
         Space2D space = (Space2D) getBeliefbase().getBelief("environment").getFact();
 
         boolean turistica = (Boolean) getBeliefbase().getBelief("turistica").getFact();
+        if(turistica)
+            Utils.dialog.jTable1.setValueAt("Turística", 2,1);
+        else
+            Utils.dialog.jTable1.setValueAt("Direta", 2,1);
 
         if (turistica) {
             while (true) {
@@ -71,6 +75,7 @@ public class GoDestiny extends Plan {
                     // Move-se para o POI
                     go_target = createGoal("move.move_dest");
                     go_target.getParameter("destination").setValue(target.getProperty(Space2D.PROPERTY_POSITION));
+                    Utils.dialog.jTable1.setValueAt(((IVector2) target.getProperty(Space2D.PROPERTY_POSITION)).getX() + "," + ((IVector2) target.getProperty(Space2D.PROPERTY_POSITION)).getY(), 3, 1);
                     dispatchSubgoalAndWait(go_target);
                     target.setProperty("state", "visited");
 
