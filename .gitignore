@@ -2,3 +2,7 @@ aiad/*.xml
 aiad/build/
 aiad/bin/
 aiad/nbproject/
+*.aux
+*.log
+*.toc
+*.synctex.gz
