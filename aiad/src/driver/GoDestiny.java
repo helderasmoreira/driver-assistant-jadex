@@ -34,7 +34,7 @@ public class GoDestiny extends Plan {
 
         if (turistica) {
             while (true) {
-
+              
                 // Procura o point of interest mais proximo e ainda nao visitado
                 ISpaceObject target = null;
                 int size = 0;
