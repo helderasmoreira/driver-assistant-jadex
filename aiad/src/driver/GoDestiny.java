@@ -18,7 +18,6 @@ public class GoDestiny extends Plan {
 
     @Override
     public void body() {
-
         
         // Inicializacao de variaveis
         IGoal go_target = createGoal("move.move_dest");
@@ -27,20 +26,21 @@ public class GoDestiny extends Plan {
         Space2D space = (Space2D) getBeliefbase().getBelief("environment").getFact();
 
         boolean turistica = (Boolean) getBeliefbase().getBelief("turistica").getFact();
-        if(turistica)
-            Utils.dialog.jTable1.setValueAt("Turística", 2,1);
-        else
-            Utils.dialog.jTable1.setValueAt("Direta", 2,1);
+        if (turistica) {
+            Utils.dialog.jTable1.setValueAt("Turística", 2, 1);
+        } else {
+            Utils.dialog.jTable1.setValueAt("Direta", 2, 1);
+        }
 
         if (turistica) {
             while (true) {
-              
+
                 // Procura o point of interest mais proximo e ainda nao visitado
                 ISpaceObject target = null;
                 int size = 0;
                 ISpaceObject[] poi = space.getSpaceObjectsByType("pointofinterest");
 
-                poi = filter(poi, (String)space.getProperty("weather"));
+                poi = filter(poi, (String) space.getProperty("weather"));
 
                 for (int i = 0; i < poi.length; i++) {
 
@@ -89,22 +89,28 @@ public class GoDestiny extends Plan {
                     go_target.getParameter("destination").setValue(fd.getProperty(Space2D.PROPERTY_POSITION));
 
                     dispatchSubgoalAndWait(go_target);
-                    if(fd.getProperty(Space2D.PROPERTY_POSITION).equals(myself.getProperty(Space2D.PROPERTY_POSITION)))
+                    if (fd.getProperty(Space2D.PROPERTY_POSITION).equals(myself.getProperty(Space2D.PROPERTY_POSITION))) {
                         return;
+                    }
                 }
 
 
             }
         } else {
-            IEnvironmentSpace env = (IEnvironmentSpace) getBeliefbase().getBelief("move.environment").getFact();
-            ISpaceObject fd = env.getSpaceObjectsByType("finaldestination")[0];
+            while(true)
+            {
+                IEnvironmentSpace env = (IEnvironmentSpace) getBeliefbase().getBelief("move.environment").getFact();
+                ISpaceObject fd = env.getSpaceObjectsByType("finaldestination")[0];
 
-            // Move-se para a posicao final
-            go_target = createGoal("move.move_dest");
-            go_target.getParameter("destination").setValue(fd.getProperty(Space2D.PROPERTY_POSITION));
+                // Move-se para a posicao final
+                go_target = createGoal("move.move_dest");
+                go_target.getParameter("destination").setValue(fd.getProperty(Space2D.PROPERTY_POSITION));
 
-            dispatchSubgoalAndWait(go_target);
-            return;
+                dispatchSubgoalAndWait(go_target);
+                   if(fd.getProperty("position").equals(myself.getProperty("position")))
+                       break;
+            }
+            
         }
     }
 
