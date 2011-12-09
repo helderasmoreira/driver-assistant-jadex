@@ -66,7 +66,7 @@
                     <env:property name="type" class="String">""</env:property>
                 </env:objecttype>
                 <env:objecttype name="Driver">
-                    <env:property name="vision" class="double">1</env:property>
+                    <env:property name="vision" class="double">1.5</env:property>
                     <env:property name="speed" class="double">3</env:property>
                     <env:property name="position" class="IVector2" dynamic="true">$space.getSpaceObjectsByType("homebase")[0].getProperty("position")</env:property>
                 </env:objecttype>
