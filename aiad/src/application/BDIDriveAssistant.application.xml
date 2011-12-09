@@ -190,7 +190,7 @@
 
     <configurations>
 	
-        <configuration name="30x30">
+        <configuration name="Visita Turística">
             <extensions>
                 <agr:agrspace name="mundo" type="mundo">
                     <agr:group name="agents" type="agents">
@@ -266,124 +266,82 @@
             </components>
         </configuration>
 	
-	
-        <configuration name="Visita turística">
+	  <configuration name="Direto">
             <extensions>
                 <agr:agrspace name="mundo" type="mundo">
                     <agr:group name="agents" type="agents">
                         <agr:position role="Driver" componenttype="Driver" />
+                        <agr:position role="Radio" componenttype="Radio" />
                     </agr:group>
                 </agr:agrspace>
-                <env:envspace name="2dspace" type="2dspace">
+                <env:envspace name="2dspace" type="2dspace" width="30" height="30">
+                    <env:processes>
+                        <env:process type="build_map"/>
+                    </env:processes>
                     <env:objects>
                         <env:object type="homebase">
-                            <env:property name="position">new Vector2Double(0.3, 0.3)</env:property>
-                            <env:property name="space">$space</env:property><!-- hack!!! -->
-                            <env:property name="missiontime">
-								90000 + $properties.clock.getTime()
-                            </env:property>
+                            <env:property name="position">new Vector2Double(1, 1)</env:property>
                         </env:object>
-                        <env:object type="pointofinterest">
-                            <env:property name="position">new Vector2Double(0.1, 0.2)</env:property>
-                            <env:property name="type">"zoo"</env:property>
-                        </env:object>
-                        <env:object type="pointofinterest">
-                            <env:property name="position">new Vector2Double(0.4, 0.2)</env:property>
-                            <env:property name="type">"church"</env:property>
-                        </env:object>
-                        <env:object type="pointofinterest">
-                            <env:property name="position">new Vector2Double(0.05, 0.7)</env:property>
-                            <env:property name="type">"stadium"</env:property>
-                        </env:object>
-						
-                        <env:object type="pointofinterest">
-                            <env:property name="position">new Vector2Double(0.05, 0.8)</env:property>
-                            <env:property name="type">"beach"</env:property>
-                        </env:object>
-						
-                        <env:object type="pointofinterest">
-                            <env:property name="position">new Vector2Double(0.05, 0.9)</env:property>
-                            <env:property name="type">"montain"</env:property>
-                        </env:object>
-						
-                        <env:object type="pointofinterest">
-                            <env:property name="position">new Vector2Double(0.2, 0.7)</env:property>
-                            <env:property name="type">"shopping"</env:property>
-                        </env:object>
-						 
-                        <env:object type="accident">
-                            <env:property name="position">new Vector2Double(0.05, 0.4)</env:property>
-                        </env:object>
-						
-						
+
                         <env:object type="finaldestination">
-                            <env:property name="position">new Vector2Double(0.9, 0.9)</env:property>
+                            <env:property name="position">new Vector2Double(17, 18)</env:property>
                             <env:property name="space">$space</env:property>
                         </env:object>
-                    </env:objects>
-                    <env:dataproviders>
-                    </env:dataproviders>
-                    <env:observers>
-                        <env:observer name="Espectador" dataview="view_all" perspective="icons">
-                        </env:observer>
-                    </env:observers>
-                </env:envspace>
-            </extensions>
-            <components>
-                <component type="Driver" number="1" configuration="turistica"/>
-            </components>
-        </configuration>
- 		
-        <configuration name="Directo">
-            <extensions>
-                <agr:agrspace name="mundo" type="mundo">
-                    <agr:group name="agents" type="agents">
-                        <agr:position role="Driver" componenttype="Driver" />
-                    </agr:group>
-                </agr:agrspace>
-                <env:envspace name="2dspace" type="2dspace">
-                    <env:objects>
-						
-                        <env:object type="homebase">
-                            <env:property name="position">new Vector2Double(0.3, 0.3)</env:property>
-                            <env:property name="space">$space</env:property><!-- hack!!! -->
-                            <env:property name="missiontime">
-								90000 + $properties.clock.getTime()
-                            </env:property>
-                        </env:object>
+
                         <env:object type="pointofinterest">
-                            <env:property name="position">new Vector2Double(0.1, 0.2)</env:property>
+                            <env:property name="position">new Vector2Double(15, 4)</env:property>
+                            <env:property name="weather">"sol"</env:property>
+                            <env:property name="id">1</env:property>
+                            <env:property name="preconditions">""</env:property>
+                            <env:property name="type">"Zoo"</env:property>
                         </env:object>
+
                         <env:object type="pointofinterest">
-                            <env:property name="position">new Vector2Double(0.05, 0.7)</env:property>
+                            <env:property name="position">new Vector2Double(6, 10)</env:property>
+                            <env:property name="weather">"any"</env:property>
+                            <env:property name="id">2</env:property>
+                            <env:property name="preconditions">""</env:property>
+                            <env:property name="type">"Igreja"</env:property>
                         </env:object>
-						
+
                         <env:object type="pointofinterest">
-                            <env:property name="position">new Vector2Double(0.5, 0.8)</env:property>
+                            <env:property name="position">new Vector2Double(7, 13)</env:property>
+                            <env:property name="weather">"any"</env:property>
+                            <env:property name="id">3</env:property>
+                            <env:property name="preconditions">"1,2"</env:property>
+                            <env:property name="type">"Estádio"</env:property>
                         </env:object>
-						 
+
+                        <env:object type="pointofinterest">
+                            <env:property name="position">new Vector2Double(29, 25)</env:property>
+                            <env:property name="weather">"sol"</env:property>
+                            <env:property name="id">4</env:property>
+                            <env:property name="preconditions">""</env:property>
+                            <env:property name="type">"Praia"</env:property>
+                        </env:object>
+
                         <env:object type="accident">
-                            <env:property name="position">new Vector2Double(0.05, 0.4)</env:property>
+                            <env:property name="position">new Vector2Double(9, 10)</env:property>
+                            <env:property name="weather">"any"</env:property>
                         </env:object>
-						
-                        <env:object type="finaldestination">
-                            <env:property name="position">new Vector2Double(0.9, 0.9)</env:property>
-                            <env:property name="space">$space</env:property>
+                        <env:object type="accident">
+                            <env:property name="position">new Vector2Double(14,5)</env:property>
+                            <env:property name="weather">"any"</env:property>
                         </env:object>
+
                     </env:objects>
-					
-                    <env:dataproviders>
-                    </env:dataproviders>
                     <env:observers>
-                        <env:observer name="Espectador" dataview="view_all" perspective="icons">
+                        <env:observer name="BDI Drive Assistant" dataview="view_all" perspective="icons">
                         </env:observer>
                     </env:observers>
                 </env:envspace>
             </extensions>
             <components>
                 <component type="Driver" number="1" configuration="direto"/>
+                <component type="Radio" number="1" configuration="radio"/>
             </components>
         </configuration>
+       
     </configurations>
 
 </applicationtype>
