@@ -47,6 +47,7 @@ public class WorldOptions extends javax.swing.JFrame {
         jTextArea1 = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
 
         jLabel1.setText("Estado do Tempo:");
 
@@ -128,7 +129,7 @@ private void jComboBox2ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIR
     
 private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
 
-    space.setProperty("weather", jComboBox1.getSelectedItem().toString());
+    space.setProperty("weather", jComboBox1.getSelectedItem().toString().toLowerCase());
 }//GEN-LAST:event_jComboBox1ActionPerformed
 
 private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed

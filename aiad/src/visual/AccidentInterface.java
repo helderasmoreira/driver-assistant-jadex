@@ -32,6 +32,9 @@ public class AccidentInterface extends javax.swing.JFrame {
     private Space2D space;
     private ISpaceObject[] accidents = null;
     private ISpaceObject[] cells = null;
+    private ISpaceObject[] homes = null;
+    private ISpaceObject[] dests = null;
+    private ISpaceObject[] pois = null;
    
     /** Creates new form AccidentInterface */
     public AccidentInterface(IEnvironmentSpace space) {
@@ -59,6 +62,7 @@ public class AccidentInterface extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Interface Principal");
+        setResizable(false);
 
         jTable1.setModel(new MyTableModel());
         for (int x = 0; x < Utils.map.length; x++) {
@@ -78,10 +82,28 @@ public class AccidentInterface extends javax.swing.JFrame {
 
         accidents = space.getSpaceObjectsByType("accident");
         cells = space.getSpaceObjectsByType("cell");
+        homes = space.getSpaceObjectsByType("homebase");
+        dests = space.getSpaceObjectsByType("finaldestination");
+        pois = space.getSpaceObjectsByType("pointofinterest");
 
         for (int i = 0; i < accidents.length; i++) {
             IVector2  accident = (IVector2) accidents[i].getProperty(Space2D.PROPERTY_POSITION);
             jTable1.setValueAt(Color.red, accident.getYAsInteger(), accident.getXAsInteger());
+        }
+
+        for (int j = 0; j < homes.length; j++) {
+            IVector2  home = (IVector2) homes[j].getProperty(Space2D.PROPERTY_POSITION);
+            jTable1.setValueAt(Color.yellow, home.getYAsInteger(), home.getXAsInteger());
+        }
+
+        for (int a = 0; a < dests.length; a++) {
+            IVector2  dest = (IVector2) dests[a].getProperty(Space2D.PROPERTY_POSITION);
+            jTable1.setValueAt(Color.green, dest.getYAsInteger(), dest.getXAsInteger());
+        }
+
+        for (int b = 0; b < pois.length; b++) {
+            IVector2  poi = (IVector2) pois[b].getProperty(Space2D.PROPERTY_POSITION);
+            jTable1.setValueAt(Color.blue, poi.getYAsInteger(), poi.getXAsInteger());
         }
 
         jTable1.addMouseListener(new java.awt.event.MouseAdapter(){
@@ -115,7 +137,7 @@ public class AccidentInterface extends javax.swing.JFrame {
 
                     for(ISpaceObject ro : cells)
                     {
-                        System.out.println(ro.getProperty("position"));
+
                         if(((IVector2)ro.getProperty("position")).equals(new Vector2Int(col, row) )){
                             space.destroySpaceObject(ro.getId());
                             Utils.map[row][col]=0;}
@@ -160,10 +182,10 @@ public class AccidentInterface extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 406, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 533, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 200, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
                         .addComponent(jButton2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel1)))
@@ -171,15 +193,15 @@ public class AccidentInterface extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(19, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton2)
                     .addComponent(jLabel1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 323, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 483, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();

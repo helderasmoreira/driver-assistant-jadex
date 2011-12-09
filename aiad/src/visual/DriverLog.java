@@ -46,6 +46,7 @@ public class DriverLog extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
 
         textArea1.setEditable(false);
 
