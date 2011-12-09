@@ -11,7 +11,6 @@
 package visual;
 
 import application.Utils;
-import visual.ColorRenderer;
 import jadex.extension.envsupport.environment.IEnvironmentSpace;
 import jadex.extension.envsupport.environment.ISpaceObject;
 import java.awt.Color;
