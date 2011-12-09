@@ -74,7 +74,7 @@
                 </env:objecttype>
                 <env:objecttype name="Driver2">
                     <env:property name="vision" class="double">1.5</env:property>
-                    <env:property name="speed" class="double">3</env:property>
+                    <env:property name="speed" class="double">5</env:property>
                     <env:property name="position" class="IVector2" dynamic="true">$space.getSpaceObjectsByType("homebase")[1].getProperty("position")</env:property>
                 </env:objecttype>
                 <env:objecttype name="homebase">
@@ -347,7 +347,7 @@
                             <env:property name="position">new Vector2Double(1, 1)</env:property>
                         </env:object>
                          <env:object type="homebase">
-                            <env:property name="position">new Vector2Double(19, 1)</env:property>
+                            <env:property name="position">new Vector2Double(1, 26)</env:property>
                         </env:object>
                        
                         <env:object type="finaldestination">
@@ -355,7 +355,7 @@
                             <env:property name="space">$space</env:property>
                         </env:object>
 
-                        <env:object type="pointofinterest">
+                       <env:object type="pointofinterest">
                             <env:property name="position">new Vector2Double(15, 4)</env:property>
                             <env:property name="weather">"sol"</env:property>
                             <env:property name="id">1</env:property>
@@ -364,7 +364,7 @@
                         </env:object>
 
                         <env:object type="pointofinterest">
-                            <env:property name="position">new Vector2Double(6, 10)</env:property>
+                            <env:property name="position">new Vector2Double(2, 7)</env:property>
                             <env:property name="weather">"any"</env:property>
                             <env:property name="id">2</env:property>
                             <env:property name="preconditions">""</env:property>
@@ -383,6 +383,46 @@
                             <env:property name="position">new Vector2Double(29, 25)</env:property>
                             <env:property name="weather">"sol"</env:property>
                             <env:property name="id">4</env:property>
+                            <env:property name="preconditions">""</env:property>
+                            <env:property name="type">"Forest"</env:property>
+                        </env:object>
+
+                        <env:object type="pointofinterest">
+                            <env:property name="position">new Vector2Double(1, 28)</env:property>
+                            <env:property name="weather">"sol"</env:property>
+                            <env:property name="id">5</env:property>
+                            <env:property name="preconditions">""</env:property>
+                            <env:property name="type">"Montanha"</env:property>
+                        </env:object>
+
+                        <env:object type="pointofinterest">
+                            <env:property name="position">new Vector2Double(24, 11)</env:property>
+                            <env:property name="weather">"any"</env:property>
+                            <env:property name="id">6</env:property>
+                            <env:property name="preconditions">""</env:property>
+                            <env:property name="type">"Shopping"</env:property>
+                        </env:object>
+
+                        <env:object type="pointofinterest">
+                            <env:property name="position">new Vector2Double(11, 20)</env:property>
+                            <env:property name="weather">"any"</env:property>
+                            <env:property name="id">7</env:property>
+                            <env:property name="preconditions">""</env:property>
+                            <env:property name="type">"Theater"</env:property>
+                        </env:object>
+
+                        <env:object type="pointofinterest">
+                            <env:property name="position">new Vector2Double(21, 2)</env:property>
+                            <env:property name="weather">"any"</env:property>
+                            <env:property name="id">8</env:property>
+                            <env:property name="preconditions">""</env:property>
+                            <env:property name="type">"Cinema"</env:property>
+                        </env:object>
+
+                        <env:object type="pointofinterest">
+                            <env:property name="position">new Vector2Double(27, 18)</env:property>
+                            <env:property name="weather">"sol"</env:property>
+                            <env:property name="id">9</env:property>
                             <env:property name="preconditions">""</env:property>
                             <env:property name="type">"Praia"</env:property>
                         </env:object>
@@ -434,7 +474,7 @@
                             <env:property name="space">$space</env:property>
                         </env:object>
 
-                        <env:object type="pointofinterest">
+                       <env:object type="pointofinterest">
                             <env:property name="position">new Vector2Double(15, 4)</env:property>
                             <env:property name="weather">"sol"</env:property>
                             <env:property name="id">1</env:property>
@@ -443,7 +483,7 @@
                         </env:object>
 
                         <env:object type="pointofinterest">
-                            <env:property name="position">new Vector2Double(6, 10)</env:property>
+                            <env:property name="position">new Vector2Double(2, 7)</env:property>
                             <env:property name="weather">"any"</env:property>
                             <env:property name="id">2</env:property>
                             <env:property name="preconditions">""</env:property>
@@ -462,6 +502,46 @@
                             <env:property name="position">new Vector2Double(29, 25)</env:property>
                             <env:property name="weather">"sol"</env:property>
                             <env:property name="id">4</env:property>
+                            <env:property name="preconditions">""</env:property>
+                            <env:property name="type">"Forest"</env:property>
+                        </env:object>
+
+                        <env:object type="pointofinterest">
+                            <env:property name="position">new Vector2Double(1, 28)</env:property>
+                            <env:property name="weather">"sol"</env:property>
+                            <env:property name="id">5</env:property>
+                            <env:property name="preconditions">""</env:property>
+                            <env:property name="type">"Montanha"</env:property>
+                        </env:object>
+
+                        <env:object type="pointofinterest">
+                            <env:property name="position">new Vector2Double(24, 11)</env:property>
+                            <env:property name="weather">"any"</env:property>
+                            <env:property name="id">6</env:property>
+                            <env:property name="preconditions">""</env:property>
+                            <env:property name="type">"Shopping"</env:property>
+                        </env:object>
+
+                        <env:object type="pointofinterest">
+                            <env:property name="position">new Vector2Double(11, 20)</env:property>
+                            <env:property name="weather">"any"</env:property>
+                            <env:property name="id">7</env:property>
+                            <env:property name="preconditions">""</env:property>
+                            <env:property name="type">"Theater"</env:property>
+                        </env:object>
+
+                        <env:object type="pointofinterest">
+                            <env:property name="position">new Vector2Double(21, 2)</env:property>
+                            <env:property name="weather">"any"</env:property>
+                            <env:property name="id">8</env:property>
+                            <env:property name="preconditions">""</env:property>
+                            <env:property name="type">"Cinema"</env:property>
+                        </env:object>
+
+                        <env:object type="pointofinterest">
+                            <env:property name="position">new Vector2Double(27, 18)</env:property>
+                            <env:property name="weather">"sol"</env:property>
+                            <env:property name="id">9</env:property>
                             <env:property name="preconditions">""</env:property>
                             <env:property name="type">"Praia"</env:property>
                         </env:object>
