@@ -1,0 +1,194 @@
+\documentclass[11pt,a4paper]{report}
+ 
+\usepackage[portuguese]{babel}
+\usepackage{indentfirst}
+%Em windows
+ 
+\usepackage[latin1]{inputenc} 
+\usepackage[T1]{fontenc}
+\usepackage[tt]{titlepic}
+
+\usepackage{listings}
+\usepackage{graphicx}
+
+\begin{document}
+
+\begin{titlepage}
+
+\begin{center}
+
+\begin{figure}[htp]
+  \centering
+  \includegraphics{feup}
+ 
+\end{figure}
+
+\vspace{10 mm}
+
+\textsc{\large Mestrado Integrado em Engenharia Informática e Computação} \\
+\textsc{\large Agentes e Inteligência Artificial Distribuída} \\
+\textsc{\normalsize 4º Ano} \\ 
+\vspace{10 mm}
+\textsc{\LARGE Determinação de percursos usando agentes BDI} \\
+\textsc{\normalsize Relatório Final} \\
+
+% Title
+\vspace{30 mm}
+% Author and supervisor
+\emph{Autores:}\\
+Bruno Filipe Neves Ferreira - 080509088 - ei08088@fe.up.pt \\
+Carlos Tiago da Rocha Babo - 080509118 - ei08118@fe.up.pt \\
+Hélder Alexandre dos Santos Moreira - 080509170 - ei08170@fe.up.pt
+
+\vfill
+
+% Bottom of the page
+{\large \today}
+
+\end{center}
+
+\end{titlepage}
+
+\newpage
+
+\tableofcontents
+\setcounter{tocdepth}{1}
+
+
+\chapter{Objetivo}
+
+\section{Descrição do cenário}
+
+Numa viagem de automóvel o condutor tem que tomar várias decisões até chegar ao seu destino. Tendo em mente que o agente condutor pode ter várias intenções sobre o percurso a realizar, a escolha do caminho tem como base essas intenções. \\
+
+Independentemente da intenção do condutor (chegar rapidamente a um local ou realizar um percurso turístico), o agente não conhece antecipadamente as condições do percurso escolhido. Apenas toma conhecimento dessas condições quando estas se encontram no seu campo de visão, ou então quando o rádio informa da ocorrência de um acidente. \\
+
+
+\section{Objetivos do trabalho}
+
+No âmbito da Unidade Curricular de Agentes e Inteligência Artificial Distribuída, o objetivo deste trabalho é criar um sistema multi-agente que consiga recolher informações sobre o espaço e indicar ao condutor qual o percurso que este deve tomar, tendo em conta os vários estímulos possíveis: acidentes, pontos de interesse, estado do tempo, rádio, entre outros.
+O sistema deve avaliar os estímulos (condições do percurso), bem como as condições pré-definidas de modo a que o condutor chegue ao destino do modo pretendido. \\
+
+\chapter{Especificação}
+
+\section{Identificação e caraterização dos agentes}
+
+A aplicação contempla um agente, Driver, e duas \emph{capabilities}, GPS e Rádio. \\
+
+\subsection{GPS}
+
+O GPS contém como \emph{beliefs} o ambiente em que o condutor se encontra, tendo assim a informação sobre vários componentes do espaço, isto é, pontos de interesse, ponto inicial e final da viagem, o mapa de estradas (caminhos possíveis), entre outros. O GPS tem como \emph{goals} mover o condutor, Driver, até um destino a determinar quando recebe um pedido do mesmo e também recalcular a nova rota quando toma conhecimento de um acidente no percurso estabelecido. \\ 
+
+O GPS procura assim nas pontos de interesse nas imediações do agente e encaminha-o para lá. Em caso de acidente, é recalculada a rota para um próximo ponto de interesse e o que iria ser visitado fica guardado para ser visitado novamente. Quando todos os pontos estiverem visitados, ou não houver caminho possível para nenhum outro, o GPS encaminha o agente para o ponto final da viagem. \\
+
+\subsection{Driver}
+
+O agente Driver inclui a \emph{capability} GPS para interagir com a mesma e possui como \emph{beliefs} o próximo ponto turístico para onde se está a dirigir e eventualmente algum acidente que esteja a evitar.  O condutor não tem desta forma acesso aos restantes componentes do espaço, indicando apenas que tipo de viagem pretende realizar (turística, rápida, etc) e deixando as decisões a cabo do GPS, tal como acontece num ambiente real. O agente tem assim como \emph{goals} analisar o seu espaço circundante (radar) e avisar o GPS caso encontre alguma acidente no seu percurso. \\
+ 
+\subsection{Rádio} 
+ 
+A informação relativa aos acidentes é guardada ao nível do Rádio, não sendo assim conhecida previamente nem pelo condutor, nem pelo GPS, e será transmitida ao GPS através da troca de eventos por mensagem com o agente quando o rádio se encontrar ativo ou detetados pelo campo de visão do condutor. \\
+
+\subsection{Aplicação} 
+
+A aplicação recorre às funcionalidades disponibilizadas pelo \emph{Jadex} 2.0 e tem como elemento principal um espaço 2D da classe \emph{ContinuousSpace2D} que aloja vários elementos:
+
+\begin{itemize}
+
+\item {\bf Mapa de estradas} \\
+Representa os caminhos onde o condutor pode movimentar-se e será representado pelo meio de arestas. Esta representação tem como objetivo permitir o mapeamento do mapa num grafo, facilitando a determinação de percursos.
+
+\item {\bf Pontos de interesse} \\
+São os pontos de interesse que o condutor deve visitar caso faça uma visita turística. Podem conter propriedades específicas, tais como o facto de só permitir visitas num determinado estado atmosférico ou também uma pré-condição para a visita (a visita de outro ponto de interesse por exemplo).
+
+\item {\bf Acidentes}  \\
+Representam um obstáculo incontornável na estrada e que obrigará o condutor a procurar outro caminho. Tal como os pontos de interesse, podem conter propriedades específicas de acordo com o estado atmosférico (só se encontra ativo em tempo de chuva por exemplo).
+
+\item {\bf Ponto inicial da viagem}  \\
+Representa o ponto inicial da viagem a partir do qual o condutor partirá.
+
+\item {\bf Ponto final da viagem}  \\
+Representa o ponto final da viagem para o qual o condutor tem como objetivo dirigir-se.
+
+\end{itemize}
+
+\begin{figure}[htp]
+  \centering
+  \includegraphics[width=0.8\textwidth]{aplicacao}
+  \caption{Esquema representativo da estrutura da aplicação.}
+\end{figure}
+
+\section{Protocolos de interação}
+
+
+\begin{figure}[htp]
+  \centering
+  \includegraphics[width=0.8\textwidth]{interacao}
+  \caption{Esquema representativo das interações entre os vários componentes.}
+\end{figure}
+
+
+Hierarquicamente, o GPS encontra-se numa camada superior ao agente Driver e é esta que, com conhecimento do ambiente e com um pedido do agente, o move até à localização desejada. De acordo com a pesquisa que fizemos sobre a tecnologia \emph{Jadex} e sobre as possíveis abordagens ao problema esta pareceu-nos a mais correta e viável. \\
+
+Assim o processo de interação entre os vários componentes começa pelo agente que comunicará ao GPS a sua intenção de realizar uma viagem e visitar os pontos turísticos conhecidos. O GPS calcula o caminho que o agente deve seguir e move-o de acordo. Ao mover-se o condutor comunicará ao GPS caso encontre algum acidente no seu caminho e este recalculará a nova rota. \\
+
+Caso o modo rádio esteja ativado, este comunica através de eventos por mensagem com o GPS, indicando-lhe os acidentes que estão presentes ao longo do mapa e este terá a responsabilidade de avaliar se os acidentes encontrados interferem no percurso definido para o condutor e caso isso aconteça, recalcular a rota. \\
+
+
+
+\chapter{Desenvolvimento}
+
+\section{Ferramenta utilizada}
+
+O \emph{Jadex} BDI 2.0 é um motor que permite especificar agentes inteligentes baseado no modelo \emph{Belief-Desire-Intention} com recurso a \emph{XML} e Java. Uma das principais vantagens da ferramenta é não introduzir nenhuma linguagem de programação nova, permitindo usar \emph{IDEs} focados no desenvolvimento orientado a objetos, como o Eclipse. 
+
+\subsection{Características Principais}
+
+Os agentes racionais têm uma representação explícita no ambiente e dos objetivos que estão a tentar atingir. Estes são racionais, pois escolhem sempre a ação mais promissora (de acordo com a base de conhecimento do mundo) para atingir os seus objetivos. Dado que normalmente não têm conhecimento dos efeitos de cada ação previamente, os agentes deliberam sempre sobre as opções disponíveis.\\
+
+Em 1987, Bratman introduziu uma arquitetura para descrever os agentes racionais. Esta  consiste em explorar as atitudes mentais que geram as ações do homem - crenças, desejos e intenções. Assim, as crenças captam as atitudes de informação, os desejos as atitudes de motivação, e as intenções as atitudes de deliberação dos agentes. Mais tarde, Rao e Geoff adotaram este modelo e transformaram-no numa teoria mais formal e num modelo de execução para software de agentes, baseado na noção de crenças, objetivos e planos (\emph{beliefs}, \emph{goals} e \emph{plans}).\\
+
+Deste modo, o \emph{Jadex} reaproveitou o modelo de Rao e Geoff e portou-o para o contexto da programação orientada a objetos. Assim, os \emph{beliefs}, \emph{goals} e \emph{plans} representam objetos de classes que são criadas e manipuladas no contexto de cada agente. Os agentes comportam  \emph{beliefs}, representados por qualquer tipo de objeto Java e que pertencem à sua \emph{beliefbase}. Os \emph{goals} representam motivações concretas (estados a atingir) e que influenciam o comportamento do agente. Para atingir os seus objetivos (\emph{goals}), o agente executa planos (\emph{plans}), que são descritos em Java.\\
+
+Este modelo comporta, desta forma, duas componentes essenciais. Por um lado, o agente reage a mensagens, eventos internos e \emph{goals} selecionando e executando \emph{plans}. Por outro lado, o agente delibera continuamente sobre os seus \emph{goals} atuais, adaptando-se às condições de cada momento.\\
+
+\subsection{Ambiente de desenvolvimento}
+
+
+\section{Estrutura da aplicação}
+
+\section{Detalhes relevantes da implementação}
+
+\chapter{Experiências}
+
+\section{Objetivo de cada experiência}
+
+\section{Resultados}
+
+\chapter{Conclusões}
+
+\chapter{Melhoramentos}
+
+\chapter{Recursos}
+\section{Bibliografia}
+
+\begin{itemize}
+\item http://jadex-agents.informatik.uni-hamburg.de
+\item http://paginas.fe.up.pt/~eol/AIAD/aiad1112.html
+\item http://sourceforge.net/projects/jadex/
+\end{itemize}
+
+
+\section{Software}
+
+\begin{itemize}
+\item Eclipse - IDE utilizado para desenvolvimento.
+\item Jadex 2.0
+\end{itemize}
+
+\section{Elementos do grupo}
+
+\chapter{Apêndice}
+\section{Manual do utilizador}
+
+\end{document}

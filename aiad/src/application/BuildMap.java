@@ -3,8 +3,6 @@ package application;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-
-
 import jadex.bridge.service.clock.IClockService;
 import jadex.commons.SimplePropertyObject;
 import jadex.extension.envsupport.environment.IEnvironmentSpace;
@@ -117,26 +115,31 @@ public class BuildMap extends SimplePropertyObject implements ISpaceProcess {
                 Utils.map[j][i] = temp;
             }
         }
-        
-    
+
+
         Utils.dialog = new DriverLog();
         Utils.worldOptionsDialog = new WorldOptions(space);
-        
+
         java.awt.EventQueue.invokeLater(new Runnable() {
 
             public void run() {
 
-                
                 new AccidentInterface(space).setVisible(true);
-                Utils.dialog.setVisible(true);
-                Utils.worldOptionsDialog.setVisible(true);
-              
+                if (space.getProperty("dois").equals("false")) {
+                    Utils.dialog.setVisible(true);
+                    Utils.worldOptionsDialog.setVisible(true);
+                } else {
+                    Utils.dialog.setVisible(false);
+                    Utils.worldOptionsDialog.setVisible(false);
+                }
+
 
             }
         });
 
         Utils.dialog.changeText("Início");
-        while(!Utils.start){}
+        while (!Utils.start) {
+        }
 
     }
 }

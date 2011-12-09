@@ -27,7 +27,7 @@
             <concrete ref="move.myself"/>
         </beliefref>
         <beliefref name="environment">
-            <concrete ref="move.environment" /> 
+            <concrete ref="move.environment" />
         </beliefref>
   		
         <beliefref name="acidente">
@@ -86,8 +86,8 @@
             </dropcondition>
             <dropcondition>
                 $beliefbase.newradiomsg == true 
-            </dropcondition>	
-        </performgoal>	
+            </dropcondition>
+        </performgoal>
     </goals>
 	
     <plans>

@@ -40,9 +40,6 @@ public class AccidentInterface extends javax.swing.JFrame {
     public AccidentInterface(IEnvironmentSpace space) {
         this.space = (Space2D) space;
         initComponents();
-
-
-
     }
 
     /** This method is called from within the constructor to

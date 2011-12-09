@@ -13,7 +13,6 @@ import jadex.extension.envsupport.environment.space2d.Space2D;
 import jadex.extension.envsupport.math.IVector2;
 import jadex.extension.envsupport.math.Vector1Double;
 import jadex.extension.envsupport.math.Vector2Double;
-import jadex.extension.envsupport.math.Vector2Int;
 import jadex.xml.annotation.XMLClassname;
 
 import java.util.Iterator;
@@ -71,21 +70,22 @@ public class MoveTask extends AbstractTask {
                 ? interdestination : interdestination.copy().subtract(loc).normalize().multiply(maxdist).add(loc);
 
         ((Space2D) space).setPosition(obj.getId(), newloc);
-        
+
         Utils.dialog.jTable1.setValueAt(newloc.getX() + ", " + newloc.getY(), 0, 1);
 
-      
+
 
         if (newloc == interdestination) {
             path.remove(0);
         }
 
+       
         // Process vision at new location.
         double vision = ((Number) obj.getProperty(PROPERTY_VISION)).doubleValue();
         final Set objects = ((Space2D) space).getNearObjects((IVector2) obj.getProperty(Space2D.PROPERTY_POSITION), new Vector1Double(vision));
         if (objects != null) {
 
-            agent.scheduleStep(new IComponentStep<Void>() {
+            agent.scheduleStep((IComponentStep) new IComponentStep<Void>() {
 
                 @XMLClassname("add")
                 public IFuture<Void> execute(IInternalAccess ia) {
@@ -94,11 +94,14 @@ public class MoveTask extends AbstractTask {
                     for (Iterator it = objects.iterator(); it.hasNext();) {
                         final ISpaceObject so = (ISpaceObject) it.next();
                         if (so.getType().equals("accident")) {
-                            if (bia.getBeliefbase().getBelief("acidente").getFact() != so) {
+                            if (bia.getBeliefbase().getBelief("acidente").getFact() != so && 
+                                    Utils.map[((IVector2)so.getProperty("position")).getYAsInteger()]
+                                               [((IVector2)so.getProperty("position")).getXAsInteger()] == 1)
+                            {
                                 so.setProperty("state", "notavoid");
                                 bia.getBeliefbase().getBelief("acidente").setFact(so);
+                                Utils.acidente = so;
                             }
-
                         }
                     }
                     return IFuture.DONE;
@@ -106,9 +109,11 @@ public class MoveTask extends AbstractTask {
             });
 
         }
-
+        
         if (newloc == destination) {
             setFinished(space, obj, true);
         }
+
+       
     }
 }

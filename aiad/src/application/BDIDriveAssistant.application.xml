@@ -49,6 +49,7 @@
             <agr:grouptype name="agents">
                 <agr:roles>
                     <agr:role name="Driver"/>
+                     <agr:role name="Driver2"/>
                 </agr:roles>
             </agr:grouptype>
         </agr:agrspacetype>
@@ -56,6 +57,7 @@
         <env:envspacetype name="2dspace" class="Grid2D">
             <env:property name="neighborhood">Grid2D.NEIGHBORHOOD_MOORE</env:property>
             <env:property name="weather">"sol"</env:property>
+            <env:property name="dois">"false"</env:property>
 	
             <env:objecttypes>
                 <env:objecttype name="pointofinterest">
@@ -69,6 +71,11 @@
                     <env:property name="vision" class="double">1.5</env:property>
                     <env:property name="speed" class="double">3</env:property>
                     <env:property name="position" class="IVector2" dynamic="true">$space.getSpaceObjectsByType("homebase")[0].getProperty("position")</env:property>
+                </env:objecttype>
+                <env:objecttype name="Driver2">
+                    <env:property name="vision" class="double">1.5</env:property>
+                    <env:property name="speed" class="double">3</env:property>
+                    <env:property name="position" class="IVector2" dynamic="true">$space.getSpaceObjectsByType("homebase")[1].getProperty("position")</env:property>
                 </env:objecttype>
                 <env:objecttype name="homebase">
                 </env:objecttype>
@@ -88,7 +95,7 @@
 
             <env:tasktypes>
                 <env:tasktype name="move" class="MoveTask" />
-            </env:tasktypes>			
+            </env:tasktypes>
 
             <env:processtypes>
                 <env:processtype name="build_map" class="BuildMap" />
@@ -102,21 +109,25 @@
 						
             <env:avatarmappings>
                 <env:avatarmapping componenttype="Driver" objecttype="Driver"/>
+                <env:avatarmapping componenttype="Driver2" objecttype="Driver2"/>
                 <env:avatarmapping componenttype="Radio" objecttype="Radio"/>
             </env:avatarmappings>
 			
             <env:perspectives>
                 <env:perspective name="icons" class="Perspective2D" opengl="true">
-				
-
-					<!-- Driver -->
                     <env:drawable objecttype="Driver" width="1" height="1">
                         <env:property name="visionsize" dynamic="true">new Vector2Double($object.getProperty("vision").doubleValue()*2)</env:property>
                         <env:ellipse layer="1" size="visionsize" abssize="true" color="#FAFA1E32" />
                         <env:texturedrectangle layer="2" height="1.5" width="1.5" imagepath="images/car.png" />
                     </env:drawable>
+
+                    <env:drawable objecttype="Driver2" width="1" height="1">
+                        <env:property name="visionsize" dynamic="true">new Vector2Double($object.getProperty("vision").doubleValue()*2)</env:property>
+                        <env:ellipse layer="1" size="visionsize" abssize="true" color="#FAFA1E32" />
+                        <env:texturedrectangle layer="2" height="1.5" width="1.5" imagepath="images/car.png" />
+                    </env:drawable>
 					
-                    <env:drawable objecttype="pointofinterest" width="1" height="1">			
+                    <env:drawable objecttype="pointofinterest" width="1" height="1">
 						
                         <env:texturedrectangle layer="2" height="1.5" width="1.5" imagepath="images/beach.png">
                             <env:drawcondition>$object.getProperty("type").equals("Praia")</env:drawcondition>
@@ -147,7 +158,7 @@
                         </env:texturedrectangle>
                     </env:drawable>
 					
-                    <env:drawable objecttype="accident" width="1" height="1">			
+                    <env:drawable objecttype="accident" width="1" height="1">
                         <env:texturedrectangle layer="2" height="1.5" width="1.5" imagepath="images/accident.png" />
                     </env:drawable>
 					
@@ -162,10 +173,10 @@
                     </env:drawable>
                     <env:drawable objecttype="cell" width="1.0" height="1.0">
                         <env:rectangle color="yellow">
-                            <env:drawcondition>!$object.road</env:drawcondition> 
+                            <env:drawcondition>!$object.road</env:drawcondition>
                         </env:rectangle>
                         <env:rectangle color="white">
-                            <env:drawcondition>$object.road</env:drawcondition> 
+                            <env:drawcondition>$object.road</env:drawcondition>
                         </env:rectangle>
                     </env:drawable>
 					
@@ -182,6 +193,7 @@
 
     <componenttypes>
         <componenttype name="Driver" filename="/driver/Driver.agent.xml"/>
+        <componenttype name="Driver2" filename="/driver/Driver.agent.xml"/>
         <componenttype name="Radio" filename="/radio/Radio.agent.xml"/>
     </componenttypes>
 	
@@ -201,6 +213,7 @@
                 <agr:agrspace name="mundo" type="mundo">
                     <agr:group name="agents" type="agents">
                         <agr:position role="Driver" componenttype="Driver" />
+                        
                         <agr:position role="Radio" componenttype="Radio" />
                     </agr:group>
                 </agr:agrspace>
@@ -311,8 +324,95 @@
                 <component type="Radio" number="1" configuration="radio"/>
             </components>
         </configuration>
-	
-	  <configuration name="Direto">
+
+        <configuration name="Visita Turística com dois condutores">
+            <extensions>
+                 
+                <agr:agrspace name="mundo" type="mundo">
+                    <agr:group name="agents" type="agents">
+                        <agr:position role="Driver" componenttype="Driver" />
+                        <agr:position role="Driver2" componenttype="Driver2" />
+                        <agr:position role="Radio" componenttype="Radio" />
+                    </agr:group>
+                </agr:agrspace>
+                <env:envspace name="2dspace" type="2dspace" width="30" height="30">
+                    
+                    <env:property name="dois">"true"</env:property>
+                    
+                    <env:processes>
+                        <env:process type="build_map"/>
+                    </env:processes>
+                    <env:objects>
+                        <env:object type="homebase">
+                            <env:property name="position">new Vector2Double(1, 1)</env:property>
+                        </env:object>
+                         <env:object type="homebase">
+                            <env:property name="position">new Vector2Double(19, 1)</env:property>
+                        </env:object>
+                       
+                        <env:object type="finaldestination">
+                            <env:property name="position">new Vector2Double(17, 18)</env:property>
+                            <env:property name="space">$space</env:property>
+                        </env:object>
+
+                        <env:object type="pointofinterest">
+                            <env:property name="position">new Vector2Double(15, 4)</env:property>
+                            <env:property name="weather">"sol"</env:property>
+                            <env:property name="id">1</env:property>
+                            <env:property name="preconditions">""</env:property>
+                            <env:property name="type">"Zoo"</env:property>
+                        </env:object>
+
+                        <env:object type="pointofinterest">
+                            <env:property name="position">new Vector2Double(6, 10)</env:property>
+                            <env:property name="weather">"any"</env:property>
+                            <env:property name="id">2</env:property>
+                            <env:property name="preconditions">""</env:property>
+                            <env:property name="type">"Igreja"</env:property>
+                        </env:object>
+
+                        <env:object type="pointofinterest">
+                            <env:property name="position">new Vector2Double(7, 13)</env:property>
+                            <env:property name="weather">"any"</env:property>
+                            <env:property name="id">3</env:property>
+                            <env:property name="preconditions">"1,2"</env:property>
+                            <env:property name="type">"Estádio"</env:property>
+                        </env:object>
+
+                        <env:object type="pointofinterest">
+                            <env:property name="position">new Vector2Double(29, 25)</env:property>
+                            <env:property name="weather">"sol"</env:property>
+                            <env:property name="id">4</env:property>
+                            <env:property name="preconditions">""</env:property>
+                            <env:property name="type">"Praia"</env:property>
+                        </env:object>
+
+                        <env:object type="accident">
+                            <env:property name="position">new Vector2Double(9, 10)</env:property>
+                            <env:property name="weather">"any"</env:property>
+                        </env:object>
+                        <env:object type="accident">
+                            <env:property name="position">new Vector2Double(14,5)</env:property>
+                            <env:property name="weather">"any"</env:property>
+                        </env:object>
+
+                    </env:objects>
+                    <env:observers>
+                        <env:observer name="BDI Drive Assistant" dataview="view_all" perspective="icons">
+                        </env:observer>
+                    </env:observers>
+                </env:envspace>
+            </extensions>
+            <components>
+                <component type="Driver" number="1" configuration="turistica"/>
+                <component type="Driver2" number="1" configuration="turistica"/>
+                <component type="Radio" number="1" configuration="radio"/>
+            </components>
+        </configuration>
+
+
+
+        <configuration name="Direto">
             <extensions>
                 <agr:agrspace name="mundo" type="mundo">
                     <agr:group name="agents" type="agents">
