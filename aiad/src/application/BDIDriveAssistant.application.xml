@@ -190,7 +190,7 @@
 
     <configurations>
 	
-        <configuration name="20x20">
+        <configuration name="30x30">
             <extensions>
                 <agr:agrspace name="mundo" type="mundo">
                     <agr:group name="agents" type="agents">
@@ -198,7 +198,7 @@
                         <agr:position role="Radio" componenttype="Radio" />
                     </agr:group>
                 </agr:agrspace>
-                <env:envspace name="2dspace" type="2dspace" width="20" height="20">
+                <env:envspace name="2dspace" type="2dspace" width="30" height="30">
                     <env:processes>
                         <env:process type="build_map"/>
                     </env:processes>
@@ -234,6 +234,14 @@
                             <env:property name="id">3</env:property>
                             <env:property name="preconditions">"1,2"</env:property>
                             <env:property name="type">"Estádio"</env:property>
+                        </env:object>
+                        
+                        <env:object type="pointofinterest">
+                            <env:property name="position">new Vector2Double(29, 25)</env:property>
+                            <env:property name="weather">"sol"</env:property>
+                            <env:property name="id">4</env:property>
+                            <env:property name="preconditions">""</env:property>
+                            <env:property name="type">"Praia"</env:property>
                         </env:object>
 						
                         <env:object type="accident">
