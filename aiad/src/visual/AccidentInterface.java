@@ -19,7 +19,6 @@ import java.util.Map;
 
 import jadex.extension.envsupport.environment.space2d.Space2D;
 import jadex.extension.envsupport.math.IVector2;
-import jadex.extension.envsupport.math.Vector1Double;
 import jadex.extension.envsupport.math.Vector2Int;
 
 import javax.swing.table.AbstractTableModel;
