@@ -19,12 +19,15 @@ public class AvoidAccident extends Plan {
         acidente.setProperty("state", "avoid");
 
         if (acidente.getProperty("weather").equals((String) space.getProperty("weather")) || acidente.getProperty("weather").equals("any")) {
-
-            if (Utils.map[vacidente.getXAsInteger()][vacidente.getYAsInteger()] != 0) {
+            
+            if (Utils.map[vacidente.getYAsInteger()][vacidente.getXAsInteger()] != 0) {
+              
                 if (Utils.dialog.jTable1.getValueAt(1, 1) != null) {
                     Utils.dialog.jTable1.setValueAt(Utils.dialog.jTable1.getValueAt(1, 1) + " | " + ((IVector2) acidente.getProperty(Space2D.PROPERTY_POSITION)).getX() + "," + ((IVector2) acidente.getProperty(Space2D.PROPERTY_POSITION)).getY(), 1, 1);
+                   
                 } else {
                     Utils.dialog.jTable1.setValueAt(((IVector2) acidente.getProperty(Space2D.PROPERTY_POSITION)).getX() + "," + ((IVector2) acidente.getProperty(Space2D.PROPERTY_POSITION)).getY(), 1, 1);
+                   
                 }
             }
             Utils.markAccident(new Node(vacidente.getXAsInteger(), vacidente.getYAsInteger()));

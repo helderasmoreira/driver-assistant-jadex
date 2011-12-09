@@ -1,5 +1,6 @@
 package radio;
 
+import application.Utils;
 import jadex.base.fipa.SFipa;
 import jadex.bdi.runtime.IMessageEvent;
 import jadex.bdi.runtime.Plan;
@@ -25,7 +26,7 @@ public class InformAccident extends Plan {
 		Space2D	space	= (Space2D)getBeliefbase().getBelief("environment").getFact();
 		ISpaceObject[]	accidents	= space.getSpaceObjectsByType("accident");
 		System.out.println(accidents);
-		if(accidents.length != 0)
+		if(accidents.length != 0 && Utils.radio)
 		{
 			me.getParameter(SFipa.RECEIVERS).setValue(drivers);
 			me.getParameter(SFipa.CONTENT).setValue(accidents); 
@@ -36,8 +37,10 @@ public class InformAccident extends Plan {
 		
 		while(true)
 		{
-			if(space.getSpaceObjectsByType("accident").length != acc)
+                    if (Utils.radio) {
+			if(space.getSpaceObjectsByType("accident").length != acc || Utils.firstRadio)
 			{
+                                Utils.firstRadio = false;
 				acc = space.getSpaceObjectsByType("accident").length;
 				accidents	= space.getSpaceObjectsByType("accident");
 				me = createMessageEvent("inform_accident");
@@ -45,6 +48,7 @@ public class InformAccident extends Plan {
 				me.getParameter(SFipa.CONTENT).setValue(accidents); 
 				sendMessage(me);
 			}
+                    }
 		}
 		
 	}
