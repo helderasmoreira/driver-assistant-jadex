@@ -81,7 +81,7 @@ public class MoveToLocationPlan extends Plan
                 }
 
                 if(fim) Utils.dialog.changeText("Vou para o ponto final.");
-
+             
 		Object taskid = space.createObjectTask(MoveTask.PROPERTY_TYPENAME, props, myself.getId());
 //		move	= new MoveTask(dest, res, getExternalAccess());
 //		myself.addTask(move);

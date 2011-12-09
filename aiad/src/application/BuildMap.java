@@ -125,6 +125,8 @@ public class BuildMap extends SimplePropertyObject implements ISpaceProcess {
         java.awt.EventQueue.invokeLater(new Runnable() {
 
             public void run() {
+
+                
                 new AccidentInterface(space).setVisible(true);
                 Utils.dialog.setVisible(true);
                 Utils.worldOptionsDialog.setVisible(true);
@@ -134,6 +136,7 @@ public class BuildMap extends SimplePropertyObject implements ISpaceProcess {
         });
 
         Utils.dialog.changeText("Início");
+        while(!Utils.start){}
 
     }
 }

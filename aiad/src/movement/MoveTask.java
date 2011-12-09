@@ -74,6 +74,8 @@ public class MoveTask extends AbstractTask {
         
         Utils.dialog.jTable1.setValueAt(newloc.getX() + ", " + newloc.getY(), 0, 1);
 
+      
+
         if (newloc == interdestination) {
             path.remove(0);
         }
