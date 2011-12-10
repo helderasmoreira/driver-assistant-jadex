@@ -186,9 +186,9 @@ Tendo em conta os objetivos do projeto, podemos identificar quatro estruturas pr
 
 \begin{itemize}
 \item{\textit{Myself (referência)} - objeto que o representa no espaço}
-\item{POI (ponto de interesse) (referência) - ponto de interesse a visitar atualmente}
-\item{Acidente (referência) - acidente que a tentar evitar no momento (quando não há nenhum, o belief não contém qualquer informação}
-\item{Turística - booleano que permite saber se está em modo turístico ou modo direto)}
+\item{\textit{POI} (ponto de interesse) (referência) - ponto de interesse a visitar atualmente}
+\item{Acidente (referência) - acidente que a tentar evitar no momento (quando não há nenhum, o belief não contém qualquer informação)}
+\item{Turística - booleano que permite saber se está em modo turístico ou modo direto}
 \item{\textit{Newradiomsg} - booleano que indica se há alguma mensagem de rádio nova para analisar}
 \end{itemize}
 
@@ -224,7 +224,7 @@ Tendo em conta os objetivos do projeto, podemos identificar quatro estruturas pr
 
 \begin{itemize}
 \item{\textit{Myself} - objeto que o representa no espaço}
-\item{POI - ponto de interesse a visitar atualmente}
+\item{\textit{POI} - ponto de interesse a visitar atualmente}
 \item{Acidente - acidente que a tentar evitar no momento (quando não há nenhum, o \textit{belief} não contém qualquer informação}
 \item{\textit{Environment} - ambiente em que se insere com a informação dos pontos de interesse e estradas}
 \end{itemize}
@@ -266,10 +266,24 @@ Tendo em conta os objetivos do projeto, podemos identificar quatro estruturas pr
 
 \end{itemize}
 
-Mundo \\
+\textbf{Mundo}
+
 \begin{itemize}
 \item{Objetos}
+
+\begin{itemize}
+\item{\textit{Driver} - objeto que representa um agente do tipo \textit{Driver}}
+\item{\textit{POI} - objeto que representa os pontos de interesse}
+\item{\textit{Cell} - objeto que no seu conjunto representa as estradas}
+\end{itemize}
+
 \item{Agentes}
+
+\begin{itemize}
+\item{\textit{Driver} - agente do tipo condutor}
+\item{\textit{Radio} - agente do tipo rádio}
+\end{itemize}
+
 \end{itemize}
 
 \section{Detalhes relevantes da implementação}
