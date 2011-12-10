@@ -42,6 +42,7 @@ public class InformAccident extends Plan {
         int acc = accidents.length;
 
         while (true) {
+            System.out.flush();
             if (Utils.radio) {
                 if (space.getSpaceObjectsByType("accident").length != acc || Utils.firstRadio) {
                     Utils.firstRadio = false;
