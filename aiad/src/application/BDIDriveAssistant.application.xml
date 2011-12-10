@@ -151,10 +151,10 @@
                             <env:drawcondition>$object.getProperty("type").equals("Zoo")</env:drawcondition>
                         </env:texturedrectangle>
                         <env:texturedrectangle layer="2" height="1.5" width="1.5" imagepath="images/theater.png">
-                            <env:drawcondition>$object.getProperty("type").equals("Theater")</env:drawcondition>
+                            <env:drawcondition>$object.getProperty("type").equals("Teatro")</env:drawcondition>
                         </env:texturedrectangle>
                         <env:texturedrectangle layer="2" height="1.5" width="1.5" imagepath="images/forest.png">
-                            <env:drawcondition>$object.getProperty("type").equals("Forest")</env:drawcondition>
+                            <env:drawcondition>$object.getProperty("type").equals("Floresta")</env:drawcondition>
                         </env:texturedrectangle>
                     </env:drawable>
 					
@@ -260,7 +260,7 @@
                             <env:property name="weather">"sol"</env:property>
                             <env:property name="id">4</env:property>
                             <env:property name="preconditions">""</env:property>
-                            <env:property name="type">"Forest"</env:property>
+                            <env:property name="type">"Floresta"</env:property>
                         </env:object>
                         
                         <env:object type="pointofinterest">
@@ -284,7 +284,7 @@
                             <env:property name="weather">"any"</env:property>
                             <env:property name="id">7</env:property>
                             <env:property name="preconditions">""</env:property>
-                            <env:property name="type">"Theater"</env:property>
+                            <env:property name="type">"Teatro"</env:property>
                         </env:object>
                         
                         <env:object type="pointofinterest">
@@ -384,7 +384,7 @@
                             <env:property name="weather">"sol"</env:property>
                             <env:property name="id">4</env:property>
                             <env:property name="preconditions">""</env:property>
-                            <env:property name="type">"Forest"</env:property>
+                            <env:property name="type">"Floresta"</env:property>
                         </env:object>
 
                         <env:object type="pointofinterest">
@@ -408,7 +408,7 @@
                             <env:property name="weather">"any"</env:property>
                             <env:property name="id">7</env:property>
                             <env:property name="preconditions">""</env:property>
-                            <env:property name="type">"Theater"</env:property>
+                            <env:property name="type">"Teatro"</env:property>
                         </env:object>
 
                         <env:object type="pointofinterest">
@@ -503,7 +503,7 @@
                             <env:property name="weather">"sol"</env:property>
                             <env:property name="id">4</env:property>
                             <env:property name="preconditions">""</env:property>
-                            <env:property name="type">"Forest"</env:property>
+                            <env:property name="type">"Floresta"</env:property>
                         </env:object>
 
                         <env:object type="pointofinterest">
@@ -527,7 +527,7 @@
                             <env:property name="weather">"any"</env:property>
                             <env:property name="id">7</env:property>
                             <env:property name="preconditions">""</env:property>
-                            <env:property name="type">"Theater"</env:property>
+                            <env:property name="type">"Teatro"</env:property>
                         </env:object>
 
                         <env:object type="pointofinterest">
