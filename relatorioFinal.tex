@@ -138,11 +138,13 @@ Caso o modo rádio esteja ativado, este comunica através de eventos por mensagem 
 
 \chapter{Desenvolvimento}
 
-\section{Ferramenta utilizada}
+\section{Ferramentas utilizadas}
 
-O \emph{Jadex} BDI 2.0 é um motor que permite especificar agentes inteligentes baseado no modelo \emph{Belief-Desire-Intention} com recurso a \emph{XML} e Java. Uma das principais vantagens da ferramenta é não introduzir nenhuma linguagem de programação nova, permitindo usar \emph{IDEs} focados no desenvolvimento orientado a objetos, como o Eclipse. 
+O \emph{Jadex} BDI 2.0 é um motor que permite especificar agentes inteligentes baseado no modelo \emph{Belief-Desire-Intention} com recurso a \emph{XML} e Java. Uma das principais vantagens da ferramenta é não introduzir nenhuma linguagem de programação nova, permitindo usar \emph{IDEs} focados no desenvolvimento orientado a objetos, como o \textit{NetBeans}. \\
 
-\subsection{Características Principais}
+Para a interface gráfica recorreu-se ao conhecido \textit{Swing}, que permite desenvolver interfaces gráficas em \textit{Java} de forma simples e versátil.
+
+\subsection{Características Principais do Jadex}
 
 Os agentes racionais têm uma representação explícita no ambiente e dos objetivos que estão a tentar atingir. Estes são racionais, pois escolhem sempre a ação mais promissora (de acordo com a base de conhecimento do mundo) para atingir os seus objetivos. Dado que normalmente não têm conhecimento dos efeitos de cada ação previamente, os agentes deliberam sempre sobre as opções disponíveis.\\
 
@@ -150,15 +152,22 @@ Em 1987, Bratman introduziu uma arquitetura para descrever os agentes racionais.
 
 Deste modo, o \emph{Jadex} reaproveitou o modelo de Rao e Geoff e portou-o para o contexto da programação orientada a objetos. Assim, os \emph{beliefs}, \emph{goals} e \emph{plans} representam objetos de classes que são criadas e manipuladas no contexto de cada agente. Os agentes comportam  \emph{beliefs}, representados por qualquer tipo de objeto Java e que pertencem à sua \emph{beliefbase}. Os \emph{goals} representam motivações concretas (estados a atingir) e que influenciam o comportamento do agente. Para atingir os seus objetivos (\emph{goals}), o agente executa planos (\emph{plans}), que são descritos em Java.\\
 
+Os agentes podem ainda comunicar entre si com recurso a eventos internos (\textit{internalevent}) ou eventos externos (\textit{messageevent}). Os eventos internos permitem que o agente comunique dentro de si. Isto é, se um plano enviar uma notificação interna, todos os outros planos que registaram interesse nesse evento serão notificados. Os eventos externos, também conhecidos por mensagens, permitem enviar e receber mensagens entre agentes. \\ 
+
 Este modelo comporta, desta forma, duas componentes essenciais. Por um lado, o agente reage a mensagens, eventos internos e \emph{goals} selecionando e executando \emph{plans}. Por outro lado, o agente delibera continuamente sobre os seus \emph{goals} atuais, adaptando-se às condições de cada momento.\\
+
+
 
 \subsection{Ambiente de desenvolvimento}
 
+O ambiente de desenvolvimento escolhido foi o \textit{NetBeans}, pois é um \textit{IDE} (\textit{Integrated development environment}) com uma excelente integração com o \textit{Swing} e que reconhece a sintaxe \textit{XML} para a declaração de agentes.  \\
+
+Para desenvolver o projeto em \textit{Jadex}, foi descarregada a versão mais recente do \textit{site} oficial (2.0), que inclui as bibliotecas em formato \textit{*.jar} necessárias. 
 
 \section{Estrutura da aplicação}
-
+Tiago
 \section{Detalhes relevantes da implementação}
-
+Tiago
 \chapter{Experiências}
 
 \section{Objetivo de cada experiência}
