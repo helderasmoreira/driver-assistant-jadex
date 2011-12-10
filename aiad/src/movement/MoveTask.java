@@ -56,7 +56,6 @@ public class MoveTask extends AbstractTask {
         }
 
         final IVector2 destination = (IVector2) getProperty(PROPERTY_DESTINATION);
-
         final IVector2 interdestination = new Vector2Double(path.get(0).x, path.get(0).y);
 
         final IBDIExternalAccess agent = (IBDIExternalAccess) getProperty(PROPERTY_SCOPE);
@@ -70,6 +69,7 @@ public class MoveTask extends AbstractTask {
                 ? interdestination : interdestination.copy().subtract(loc).normalize().multiply(maxdist).add(loc);
 
         ((Space2D) space).setPosition(obj.getId(), newloc);
+
 
         Utils.dialog.jTable1.setValueAt(newloc.getX() + ", " + newloc.getY(), 0, 1);
 

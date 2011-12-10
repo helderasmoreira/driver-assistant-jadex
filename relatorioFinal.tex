@@ -7,6 +7,7 @@
 \usepackage[latin1]{inputenc} 
 \usepackage[T1]{fontenc}
 \usepackage[tt]{titlepic}
+\usepackage[small,bf]{caption}
 
 \usepackage{listings}
 \usepackage{graphicx}
@@ -302,10 +303,43 @@ Para deslocar o condutor no espaço foi necessário implementar um algoritmo para 
 
 Desta forma, a primeira operação a fazer quando surge a intenção de um agente em ir de uma posição para a outra, é calcular o caminho entre essas duas posições. Se existir caminho, é criada uma \textit{task} (\textit{MoveTask}) que desloca o condutor até à posição pretendida. Esta \textit{Task} é executada a cada \textit{tick} de relógio da aplicação, movimentando o condutor de acordo com a velocidade definida previamente para os objetos do ambiente. \\
 
+\lstset{language=Java,breaklines=true}
+\begin{lstlisting}
+...
+final IVector2 destination = (IVector2) getProperty(PROPERTY_DESTINATION); //posição do destino final
+final IVector2 interdestination = new Vector2Double(path.get(0).x, path.get(0).y); //posição da célula intermédia adjacente
+double speed = ((Number) obj.getProperty(PROPERTY_SPEED)).doubleValue(); //valor definido para a velocidade
+double maxdist = progress * speed * 0.001; //distância máxima que pode percorrer, tendo em conta o progresso do deslocamento atual
+IVector2 loc = (IVector2) obj.getProperty(Space2D.PROPERTY_POSITION); //posição atual do condutor
+
+IVector2 newloc = ((Space2D) space).getDistance(loc, interdestination).getAsDouble() <= maxdist? interdestination : interdestination.copy().subtract(loc).normalize().multiply(maxdist).add(loc); //nova posição baseada na posição atual, posição final e distância máxima que pode percorrer
+
+((Space2D) space).setPosition(obj.getId(), newloc); //movimento para a nova localização
+
+//se a nova localização for a da posição intermédia desejada, essa célula é removida do caminho, pois estamos nela
+if (newloc == interdestination) {path.remove(0);}
+\end{lstlisting}
+
 Durante a execução desta \textit{task} é verificado a cada momento se existe algum acidente na área de visão do condutor (também definida para os objetos do ambiente). Ao encontrar um novo acidente ainda não avistado, o conhecimento do condutor é atualizado convenientemente. Tendo em conta que esta movimentação dá-se no espaço em si, o \textit{Jadex} dispões de um acesso externo (\textit{IBDIExternalAccess}) que permite aceder aos \textit{beliefs} do condutor, para serem atualizados com a nova informação.  \\
 
-Quando o condutor chega ao ponto de destino, a task 
+\lstset{language=Java,breaklines=true}
+\begin{lstlisting}
+...
+final IBDIExternalAccess agent = (IBDIExternalAccess) getProperty(PROPERTY_SCOPE); //acedendo ao scope da task é possível criar um acesso externo ao agente, pois foi este que iniciou a task
 
+//como a execução do agente não está sincronizada com a aplicação em si, é necessário registar um step que é efetuado no próximo tick do agente
+agent.scheduleStep((IComponentStep) new IComponentStep<Void>() {
+ public IFuture<Void> execute(IInternalAccess ia) {
+  IBDIInternalAccess bia = (IBDIInternalAccess) ia; //acesso interno do agente
+  ...
+  bia.getBeliefbase().getBelief("acidente").setFact(so); //acede-se ao belief acidente e atualiza-se com o novo acidente encontrado
+  ...
+  return IFuture.DONE;
+ }
+});
+\end{lstlisting}
+
+\textbf{Troca de mensagens entre o rádio e o condutor \\}
 
 \chapter{Experiências}
 
