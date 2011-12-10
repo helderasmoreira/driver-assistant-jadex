@@ -157,26 +157,26 @@ Os agentes podem ainda comunicar entre si com recurso a eventos internos (\texti
 Este modelo comporta, desta forma, duas componentes essenciais. Por um lado, o agente reage a mensagens, eventos internos e \emph{goals} selecionando e executando \emph{plans}. Por outro lado, o agente delibera continuamente sobre os seus \emph{goals} atuais, adaptando-se às condições de cada momento.\\
 
 
-
 \subsection{Ambiente de desenvolvimento}
 
 O ambiente de desenvolvimento escolhido foi o \textit{NetBeans}, pois é um \textit{IDE} (\textit{Integrated development environment}) com uma excelente integração com o \textit{Swing} e que reconhece a sintaxe \textit{XML} para a declaração de agentes.  \\
 
-Para desenvolver o projeto em \textit{Jadex}, foi descarregada a versão mais recente do \textit{site} oficial (2.0), que inclui as bibliotecas em formato \textit{*.jar} necessárias. 
+Para desenvolver o projeto em \textit{Jadex}, foi descarregada a versão mais recente do \textit{site} oficial (2.0), que inclui as bibliotecas em formato \textit{*.jar} necessárias. \\
 
 \section{Estrutura da aplicação}
 
-Diagrama de Componentes.
+A aplicação é composta por dois grandes pacotes. A Interface representa as classes \textit{Java} que implementam a interface externa ao próprio \textit{Jadex}. Nela estão incluídas a janela com o \textit{log} do utilizador e os seus \textit{beliefs}, a janela que permite adicionar novos componentes ao mapa da estrada e a janela que permite começar a simulação e consultar informação relativa ao cenário atual. \\ 
+
+Por outro lado, o pacote da Aplicação contém os agentes, a \textit{capability} GPS e o Mundo - que inclui os pontos de interesse, os acidentes e o mapa de estrada. O Condutor importa a capacidade GPS, que lhe permite movimentar pelo espaço. Por sua vez, é o GPS que tem acesso ao mundo em si, e que lhe permite calcular a rota do condutor. De acordo com a especificação, o GPS não tem acesso aos acidentes \textit{à priori}. Por último, o agente Rádio tem acesso direto aos acidentes ao aceder ao Mundo e comunica-os ao condutor, caso essa opção esteja ativa.\\ 
 
 \begin{figure}[htp]
   \centering
-  \includegraphics[width=1.2\textwidth]{components}
-  \caption{Diagrama de componentes da aplicação.}
+  \includegraphics[width=0.9\textwidth]{components}
+  \caption{Esquema representativo da estrutura da aplicação.}
 \end{figure}
 
-
 \section{Detalhes relevantes da implementação}
-Tiago
+Tiago \\
 \chapter{Experiências}
 
 \section{Objetivo de cada experiência}
