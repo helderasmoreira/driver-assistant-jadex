@@ -58,16 +58,14 @@ public class InformAccident extends Plan {
                     me.getParameter(SFipa.CONTENT).setValue(accidents);
                     sendMessage(me);
                 }
-            } else if(Utils.acidente != null)
+            } else if(Utils.acidente != null && drivers2 != null)
             {
-
                 ISpaceObject[] accs = new ISpaceObject[1];
                 accs[0] = Utils.acidente;
                 me = createMessageEvent("inform_accident");
                 me.getParameter(SFipa.RECEIVERS).setValue(drivers);
                 me.getParameter(SFipa.CONTENT).setValue(accs);
                 sendMessage(me);
-
 
                 me = createMessageEvent("inform_accident");
                 me.getParameter(SFipa.RECEIVERS).setValue(drivers2);
