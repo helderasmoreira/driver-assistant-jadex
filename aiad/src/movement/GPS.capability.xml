@@ -33,9 +33,6 @@
             <parameter name="destination" class="IVector2"/>
         </achievegoal>
 
-		<!-- Walk around without target when nothing else to do. -->
-        <performgoal name="walk_around" retry="true" exclude="never" exported="true">
-        </performgoal>
     </goals>
 
     <plans>
@@ -49,13 +46,6 @@
                 <goal ref="move_dest"/>
             </trigger>
         </plan>
-
-		<!-- Walk around randomly. -->
-        <plan name="randomwalk">
-            <body class="RandomWalkPlan"/>
-            <trigger>
-                <goal ref="walk_around"/>
-            </trigger>
-        </plan>
+	
     </plans>
 </capability>

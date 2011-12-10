@@ -164,16 +164,127 @@ O ambiente de desenvolvimento escolhido foi o \textit{NetBeans}, pois é um \text
 Para desenvolver o projeto em \textit{Jadex}, foi descarregada a versão mais recente do \textit{site} oficial (2.0), que inclui as bibliotecas em formato \textit{*.jar} necessárias. \\
 
 \section{Estrutura da aplicação}
+\subsection{Módulos da aplicação}
+A aplicação é composta por dois grandes módulos. A Interface representa as classes \textit{Java} que implementam a interface externa ao próprio \textit{Jadex}. Nela estão incluídas a janela com o \textit{log} do utilizador e os seus \textit{beliefs}, a janela que permite adicionar novos componentes ao mapa da estrada e a janela que permite começar a simulação e consultar informação relativa ao cenário atual. \\ 
 
-A aplicação é composta por dois grandes pacotes. A Interface representa as classes \textit{Java} que implementam a interface externa ao próprio \textit{Jadex}. Nela estão incluídas a janela com o \textit{log} do utilizador e os seus \textit{beliefs}, a janela que permite adicionar novos componentes ao mapa da estrada e a janela que permite começar a simulação e consultar informação relativa ao cenário atual. \\ 
-
-Por outro lado, o pacote da Aplicação contém os agentes, a \textit{capability} GPS e o Mundo - que inclui os pontos de interesse, os acidentes e o mapa de estrada. O Condutor importa a capacidade GPS, que lhe permite movimentar pelo espaço. Por sua vez, é o GPS que tem acesso ao mundo em si, e que lhe permite calcular a rota do condutor. De acordo com a especificação, o GPS não tem acesso aos acidentes \textit{à priori}. Por último, o agente Rádio tem acesso direto aos acidentes ao aceder ao Mundo e comunica-os ao condutor, caso essa opção esteja ativa.\\ 
+Por outro lado, o módulo da Aplicação contém os agentes, a \textit{capability} GPS e o Mundo - que inclui os pontos de interesse, os acidentes e o mapa de estrada. O Condutor importa a capacidade GPS, que lhe permite movimentar pelo espaço. Por sua vez, é o GPS que tem acesso ao mundo em si, e que lhe permite calcular a rota do condutor. De acordo com a especificação, o GPS não tem acesso aos acidentes \textit{à priori}. Por último, o agente Rádio tem acesso direto aos acidentes ao aceder ao Mundo e comunica-os ao condutor, caso essa opção esteja ativa.\\ 
 
 \begin{figure}[htp]
   \centering
   \includegraphics[width=0.9\textwidth]{components}
-  \caption{Esquema representativo da estrutura da aplicação.}
+  \caption{Esquema representativo dos módulos da aplicação.}
 \end{figure}
+
+\subsection{Estruturas principais}
+
+Tendo em conta os objetivos do projeto, podemos identificar quatro estruturas principais: o condutos, o GPS, o rádio e o Mundo em si. \\
+
+\textbf{Condutor}
+
+\begin{itemize}
+\item{\textit{Beliefs}}
+
+\begin{itemize}
+\item{\textit{Myself (referência)} - objeto que o representa no espaço}
+\item{\textit{POI} (ponto de interesse) (referência) - ponto de interesse a visitar atualmente}
+\item{Acidente (referência) - acidente que a tentar evitar no momento (quando não há nenhum, o belief não contém qualquer informação)}
+\item{Turística - booleano que permite saber se está em modo turístico ou modo direto}
+\item{\textit{Newradiomsg} - booleano que indica se há alguma mensagem de rádio nova para analisar}
+\end{itemize}
+
+\item{\textit{Goals}}
+
+\begin{itemize}
+\item{\textit{AnalyzeAccident} - acionado quando há um novo acidente no campo de visão e é necessário verificar se interfere com o \textit{goal} atual}
+\item{\textit{AnalyzeRadioMsg} - acionado quando há uma nova mensagem de rádio e é necessário verificar se interfere com o \textit{goal} atual}
+\item{\textit{GoDestiny} - acionado no início da execução do agente, pois é este o \textit{goal} principal do agente, chegar ao seu destino final}
+\end{itemize}
+
+\item{\textit{Plans}}
+
+\begin{itemize}
+\item{\textit{GoDestiny} - acionado quando há a intenção do agente em ir para uma dada posição}
+\item{\textit{AvoidAccident} - acionado quando há a intenção do agente em evitar um certo acidente, recalculando a rota atual}
+\item{\textit{AccidentInform} - acionado quando há uma mensagem nova do rádio por ler}
+\end{itemize}
+
+\item{\textit{Events}}
+
+\begin{itemize}
+\item{\textit{AccidentInform} - registo para a receção de mensagens de rádio com novos acidentes}
+\end{itemize}
+
+
+\end{itemize}
+
+\textbf{GPS}
+
+\begin{itemize}
+\item{Beliefs}
+
+\begin{itemize}
+\item{\textit{Myself} - objeto que o representa no espaço}
+\item{\textit{POI} - ponto de interesse a visitar atualmente}
+\item{Acidente - acidente que a tentar evitar no momento (quando não há nenhum, o \textit{belief} não contém qualquer informação}
+\item{\textit{Environment} - ambiente em que se insere com a informação dos pontos de interesse e estradas}
+\end{itemize}
+
+\item{Goals}
+
+\begin{itemize}
+\item{\textit{MoveDest} - intenção de se deslocar até um dado ponto}
+\end{itemize}
+
+\item{Plans}
+
+\begin{itemize}
+\item{\textit{GoDestination} - acionado quando há intenção de calcular a rota para um dado ponto}
+\end{itemize}
+
+\end{itemize}
+
+\textbf{Rádio}
+
+\begin{itemize}
+\item{Beliefs}
+
+\begin{itemize}
+\item{\textit{Environment} - ambiente em que se insere com a informação dos acidentes}
+\end{itemize}
+
+\item{Plans}
+
+\begin{itemize}
+\item{\textit{InformAccident} - acionado quando é necessário mandar informação relativa a novos acidentes}
+\end{itemize}
+
+\item{\textit{Events}}
+
+\begin{itemize}
+\item{\textit{InformAccident} - registo para o envio de mensagens de rádio com a informação de novos acidentes}
+\end{itemize}
+
+\end{itemize}
+
+\textbf{Mundo}
+
+\begin{itemize}
+\item{Objetos}
+
+\begin{itemize}
+\item{\textit{Driver} - objeto que representa um agente do tipo \textit{Driver}}
+\item{\textit{POI} - objeto que representa os pontos de interesse}
+\item{\textit{Cell} - objeto que no seu conjunto representa as estradas}
+\end{itemize}
+
+\item{Agentes}
+
+\begin{itemize}
+\item{\textit{Driver} - agente do tipo condutor}
+\item{\textit{Radio} - agente do tipo rádio}
+\end{itemize}
+
+\end{itemize}
 
 \section{Detalhes relevantes da implementação}
 Tiago \\
