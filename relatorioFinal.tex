@@ -363,27 +363,77 @@ Nesta configuração o condutor tem de ir do ponto inicial até ao ponto final pass
 \subsection{Condições Atmosféricas}
 
 Cada ponto de interesse tem uma condição atmosférica associada, ou seja, só pode ser visitado caso essa condição se verifique.
+
 Tendo o estado do tempo definido com "Sol", e sendo que o Zoo só é visitado quando está sol o condutor terá que visita-lo. Nesta primeira experiência foi possível comprovar que tal acontece.
+
+\begin{figure}[htp]
+  \centering
+  \includegraphics[width=0.8\textwidth]{zoo_chuva}
+  \caption{Ações do condutor com o estado do tempo "Chuva".}
+\end{figure}
+
 Alterando agora o estado do tempo para "Chuva" verificamos positivamente que o condutor não visita o Zoo, tal como pretendido.
+
+\begin{figure}[htp]
+  \centering
+  \includegraphics[width=0.8\textwidth]{zoo_sol}
+  \caption{Ações do condutor com o estado do tempo "Sol".}
+\end{figure}
+
 Com estas duas experiências conseguimos ver que as decisões são tomadas de forma correta consoante o estado do tempo.
 
 \subsection{Pré-Condições de Visita de um Ponto de Interesse}
 
 Existem pontos de interesse que só podem ser visitados depois de outros pontos de interesse, como por exemplo, o Estádio que só pode ser visitado depois do Zoo e da Igreja.
+
 Não existindo condições que impeçam a visita de nenhum dos pontos anteriores conseguimos ver que o condutor se comporta como pretendido e antes de visitar o estádio visita os outros dois pontos.
+
+\begin{figure}[htp]
+  \centering
+  \includegraphics[width=0.8\textwidth]{estadio_com_pre}
+  \caption{Ações do condutor quando visita o estádio com pré-condições.}
+\end{figure}
+
 Caso exista algum impedimento, como por exemplo, um acidente ou mais que bloqueiem por completo o acesso ao Zoo o Estádio não pode ser visitado. Nesta situação o condutor como pretendido vai para o ponto seguinte.
+
+\begin{figure}[htp]
+  \centering
+  \includegraphics[width=0.8\textwidth]{estadio_falha_pre}
+  \caption{Ações do condutor quando não visita o estádio pois falha uma pré-condição.}
+\end{figure}
+
 Neste caso podemos concluir que as pré-condições de um ponto influenciam corretamente a escolha do percurso.
 
 \subsection{Rádio e Acidentes}
 
 O rádio serve para alertar a existência dos acidentes no percurso, quando este se encontra desligado o condutor só fica a conhecer um acidente quando este se encontra no seu campo de visão, e só depois é que é calculado um caminho alternativo.
+
+\begin{figure}[htp]
+  \centering
+  \includegraphics[width=0.8\textwidth]{radio_off}
+  \caption{Ações do condutor quando o rádio se encontra desligado.}
+\end{figure}
+
 Caso o rádio esteja ligado, este informa o condutor de todos os acidentes existentes, podendo assim o percurso ser calculado sabendo já que determinada rua se encontra impedida.
+
+\begin{figure}[htp]
+  \centering
+  \includegraphics[width=0.8\textwidth]{radio_on}
+  \caption{Ações do condutor quando o rádio se encontra ligado.}
+\end{figure}
+
 Podemos então assim verificar tanto que o condutor consegue detetar os acidentes existentes no caminho, bem como processar a informação recebida pelo rádio. Em ambos os casos é calculado corretamente um caminho alternativo caso este exista, senão o condutor fica parado a espera de uma alternativa.
 
 \section{Direto}
 
+\begin{figure}[htp]
+  \centering
+  \includegraphics[width=0.8\textwidth]{direto}
+  \caption{Ações do condutor em percurso directo.}
+\end{figure}
+
 Neste modo o condutor vai do ponto inicial para o ponto final sem passar por nenhum ponto de interesse.
-Ao correr este modo verificamos positivamente que o condutor encaminha-se diretamente para o ponto final, sendo apenas influenciado pela existência ou não de acidentes. Tal como anteriormente verificamos que o condutor processa de forma correcta a informação relativa a um acidente, independentemente de estar ter vindo do rádio ou do seu raio de visão
+Ao correr este modo verificamos positivamente que o condutor encaminha-se diretamente para o ponto final, sendo apenas influenciado pela existência ou não de acidentes. Tal como anteriormente verificamos que o condutor processa de forma correcta a informação relativa a um acidente, independentemente de estar ter vindo do rádio ou do seu raio de visão.
 
 \section{Visita Turística com dois condutores}
 
