@@ -139,6 +139,7 @@ public class BuildMap extends SimplePropertyObject implements ISpaceProcess {
 
         Utils.dialog.changeText("Início");
         while (!Utils.start) {
+            System.out.print("");
         }
 
     }

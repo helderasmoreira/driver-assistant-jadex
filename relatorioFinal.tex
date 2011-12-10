@@ -175,7 +175,16 @@ Por outro lado, o módulo da Aplicação contém os agentes, a \textit{capability} G
   \caption{Esquema representativo dos módulos da aplicação.}
 \end{figure}
 
-\subsection{Estruturas principais}
+\subsection{Detalhes revelantes da implementação}
+
+\textbf{Objetos mais utilizados (e referenciados no relatório)}
+
+\begin{itemize}
+\item{\textit{ISpaceObject} - representação de um objeto do espaço. Permite aceder a várias informações, nomeadamente o seu \textit{ID}, a sua posição e as suas propriedades.}
+\item{\textit{Grid2D} - representação do espaço em si. Permite aceder a todos os objetos, assim como apaga-los ou inserir novos.}
+\item{\textit{IVector2} - representação de um vetor (com coordenadas \textit{x} e \textit{y}) do espaço 2D.}
+\end{itemize}
+
 
 Tendo em conta os objetivos do projeto, podemos identificar quatro estruturas principais: o condutos, o GPS, o rádio e o Mundo em si. \\
 
@@ -185,33 +194,33 @@ Tendo em conta os objetivos do projeto, podemos identificar quatro estruturas pr
 \item{\textit{Beliefs}}
 
 \begin{itemize}
-\item{\textit{Myself (referência)} - objeto que o representa no espaço}
-\item{\textit{POI} (ponto de interesse) (referência) - ponto de interesse a visitar atualmente}
-\item{Acidente (referência) - acidente que a tentar evitar no momento (quando não há nenhum, o belief não contém qualquer informação)}
-\item{Turística - booleano que permite saber se está em modo turístico ou modo direto}
-\item{\textit{Newradiomsg} - booleano que indica se há alguma mensagem de rádio nova para analisar}
+\item{\textit{(ISpaceObject) Myself (referência)} - objeto que o representa no espaço.}
+\item{\textit{(ISpaceObject) POI} (ponto de interesse) (referência) - ponto de interesse a visitar atualmente.}
+\item{\textit{(ISpaceObject)} Acidente (referência) - acidente a tentar evitar no momento (quando não há nenhum, o belief não contém qualquer informação).}
+\item{\textit{(Boolean)} Turística - booleano que permite saber se está em modo turístico ou modo direto.}
+\item{\textit{(Boolean)Newradiomsg} - booleano que indica se há alguma mensagem de rádio nova para analisar.}
 \end{itemize}
 
 \item{\textit{Goals}}
 
 \begin{itemize}
-\item{\textit{AnalyzeAccident} - acionado quando há um novo acidente no campo de visão e é necessário verificar se interfere com o \textit{goal} atual}
-\item{\textit{AnalyzeRadioMsg} - acionado quando há uma nova mensagem de rádio e é necessário verificar se interfere com o \textit{goal} atual}
-\item{\textit{GoDestiny} - acionado no início da execução do agente, pois é este o \textit{goal} principal do agente, chegar ao seu destino final}
+\item{\textit{AnalyzeAccident} - acionado quando há um novo acidente no campo de visão e é necessário verificar se interfere com o \textit{goal} atual.}
+\item{\textit{AnalyzeRadioMsg} - acionado quando há uma nova mensagem de rádio e é necessário verificar se interfere com o \textit{goal} atual.}
+\item{\textit{GoDestiny} - acionado no início da execução do agente, pois é este o \textit{goal} principal do agente, chegar ao seu destino final.}
 \end{itemize}
 
 \item{\textit{Plans}}
 
 \begin{itemize}
-\item{\textit{GoDestiny} - acionado quando há a intenção do agente em ir para uma dada posição}
-\item{\textit{AvoidAccident} - acionado quando há a intenção do agente em evitar um certo acidente, recalculando a rota atual}
-\item{\textit{AccidentInform} - acionado quando há uma mensagem nova do rádio por ler}
+\item{\textit{GoDestiny} - acionado quando há a intenção do agente em ir para uma dada posição.}
+\item{\textit{AvoidAccident} - acionado quando há a intenção do agente em evitar um certo acidente, recalculando a rota atual.}
+\item{\textit{AccidentInform} - acionado quando há uma mensagem nova do rádio por ler.}
 \end{itemize}
 
 \item{\textit{Events}}
 
 \begin{itemize}
-\item{\textit{AccidentInform} - registo para a receção de mensagens de rádio com novos acidentes}
+\item{\textit{AccidentInform} - registo para a receção de mensagens de rádio com novos acidentes.}
 \end{itemize}
 
 
@@ -223,22 +232,22 @@ Tendo em conta os objetivos do projeto, podemos identificar quatro estruturas pr
 \item{Beliefs}
 
 \begin{itemize}
-\item{\textit{Myself} - objeto que o representa no espaço}
-\item{\textit{POI} - ponto de interesse a visitar atualmente}
-\item{Acidente - acidente que a tentar evitar no momento (quando não há nenhum, o \textit{belief} não contém qualquer informação}
-\item{\textit{Environment} - ambiente em que se insere com a informação dos pontos de interesse e estradas}
+\item{\textit{(ISpaceObject) Myself} - objeto que o representa no espaço.}
+\item{\textit{(ISpaceObject) POI} - ponto de interesse a visitar atualmente.}
+\item{\textit{(ISpaceObject)} Acidente - acidente a tentar evitar no momento (quando não há nenhum, o \textit{belief} não contém qualquer informação.}
+\item{\textit{(Grid2D) Environment} - ambiente em que se insere com a informação dos pontos de interesse e estradas.}
 \end{itemize}
 
 \item{Goals}
 
 \begin{itemize}
-\item{\textit{MoveDest} - intenção de se deslocar até um dado ponto}
+\item{\textit{MoveDest} - intenção de se deslocar até um dado ponto.}
 \end{itemize}
 
 \item{Plans}
 
 \begin{itemize}
-\item{\textit{GoDestination} - acionado quando há intenção de calcular a rota para um dado ponto}
+\item{\textit{GoDestination} - acionado quando há intenção de calcular a rota para um dado ponto.}
 \end{itemize}
 
 \end{itemize}
@@ -249,19 +258,19 @@ Tendo em conta os objetivos do projeto, podemos identificar quatro estruturas pr
 \item{Beliefs}
 
 \begin{itemize}
-\item{\textit{Environment} - ambiente em que se insere com a informação dos acidentes}
+\item{\textit{(Grid2D) Environment} - ambiente em que se insere com a informação dos acidentes.}
 \end{itemize}
 
 \item{Plans}
 
 \begin{itemize}
-\item{\textit{InformAccident} - acionado quando é necessário mandar informação relativa a novos acidentes}
+\item{\textit{InformAccident} - acionado quando é necessário mandar informação relativa a novos acidentes.}
 \end{itemize}
 
 \item{\textit{Events}}
 
 \begin{itemize}
-\item{\textit{InformAccident} - registo para o envio de mensagens de rádio com a informação de novos acidentes}
+\item{\textit{InformAccident} - registo para o envio de mensagens de rádio com a informação de novos acidentes.}
 \end{itemize}
 
 \end{itemize}
@@ -272,22 +281,29 @@ Tendo em conta os objetivos do projeto, podemos identificar quatro estruturas pr
 \item{Objetos}
 
 \begin{itemize}
-\item{\textit{Driver} - objeto que representa um agente do tipo \textit{Driver}}
-\item{\textit{POI} - objeto que representa os pontos de interesse}
-\item{\textit{Cell} - objeto que no seu conjunto representa as estradas}
+\item{\textit{Driver} - objeto que representa um agente do tipo \textit{Driver}.}
+\item{\textit{POI} - objeto que representa os pontos de interesse.}
+\item{\textit{Cell} - objeto que no seu conjunto representa as estradas.}
 \end{itemize}
 
 \item{Agentes}
 
 \begin{itemize}
-\item{\textit{Driver} - agente do tipo condutor}
-\item{\textit{Radio} - agente do tipo rádio}
+\item{\textit{Driver} - agente do tipo condutor.}
+\item{\textit{Radio} - agente do tipo rádio.}
 \end{itemize}
 
 \end{itemize}
 
-\section{Detalhes relevantes da implementação}
-Tiago \\
+\textbf{Implementação do deslocamento do condutor \\}
+
+Para deslocar o condutor no espaço foi necessário implementar um algoritmo para encontrar o melhor caminho entre dois pontos. Assim, escolheu-se o algoritmo A*, abordado na unidade curricular de Inteligência Artificial. Dada uma matriz e dois pontos, é calculado o caminho mais curto entre eles. Na matriz, as células com caminho são representadas pelo valor um, e as restantes pelo valor zero. \\
+
+Desta forma, a primeira operação a fazer quando surge a intenção de um agente em ir de uma posição para a outra, é calcular o caminho entre essas duas posições. Se existir caminho, é criada uma \textit{Task} (\textit{MoveTask}) que desloca o condutor até à posição pretendida. Esta \textit{Task} é executada a cada \textit{tick} de relógio da aplicação, movimentando o condutor de acordo com a velocidade definida previamente para os objetos do ambiente. \\
+
+Durante a execução desta \textit{Task} é verificado a cada momento se existe algum acidente na área de visão do condutor (também definida para os objetos do ambiente). Ao encontrar um novo acidente ainda não avistado, o conhecimento do condutor é atualizado convenientemente. Tendo em conta que esta movimentação dá-se no espaço em si, o \textit{Jadex} dispões de um acesso externo (\textit{IBDIExternalAccess}) que permite aceder aos \textit{beliefs} do condutor, para atualizados com a nova informação.  \\
+
+
 \chapter{Experiências}
 
 \section{Objetivo de cada experiência}
