@@ -74,23 +74,34 @@ O sistema deve avaliar os estímulos (condições do percurso), bem como as condiçõ
 
 \section{Identificação e caraterização dos agentes}
 
-A aplicação contempla um agente, Driver, e duas \emph{capabilities}, GPS e Rádio. \\
+A aplicação contempla dois agentes, Driver e Rádio, e uma \emph{capability}, GPS. \\
 
 \subsection{GPS}
 
-O GPS contém como \emph{beliefs} o ambiente em que o condutor se encontra, tendo assim a informação sobre vários componentes do espaço, isto é, pontos de interesse, ponto inicial e final da viagem, o mapa de estradas (caminhos possíveis), entre outros. O GPS tem como \emph{goals} mover o condutor, Driver, até um destino a determinar quando recebe um pedido do mesmo e também recalcular a nova rota quando toma conhecimento de um acidente no percurso estabelecido. \\ 
+A capacidade GPS tem como objetivo indicar ao condutor qual o percurso que este deve tomar de acordo com o seu desejo de viagem (direta ou turística) e com as condições do meio externo. Estas condições do meio externo são parte integrante desta capacidade (\emph{beliefs}), tendo ela assim informação sobre os vários componentes do espaço como pontos de interesse, ponto inicial e final da viagem, o mapa das estradas, entre outros. \\
 
-O GPS procura assim nas pontos de interesse nas imediações do agente e encaminha-o para lá. Em caso de acidente, é recalculada a rota para um próximo ponto de interesse e o que iria ser visitado fica guardado para ser visitado novamente. Quando todos os pontos estiverem visitados, ou não houver caminho possível para nenhum outro, o GPS encaminha o agente para o ponto final da viagem. \\
+Em caso de viagem turística, para encontrar o caminho a seguir, começa por verificar quais os pontos de interesse que correspondem às condições presentes no momento, isto é, quais os pontos de interesse ainda não visitados que cumprem com o estado do tempo atual e que cumprem também as precedências impostas.
+São assim eliminados a priori os pontos de interesse não válidos por um qualquer motivo.
+De seguida é analisado o caminho mais curto a seguir até cada um destes pontos e escolhido o mais curto como o próximo caminho a seguir, garantindo assim a escolha do "melhor" ponto de interesse. \\
+
+Após todos os pontos de interesse estarem visitados ou não existirem condições para visitar os que ainda não estão, o GPS encaminha o Driver para o ponto final da viagem, situação que também se verifica aquando da viagem direta em que são ignorados os pontos de interesse e o Driver é encaminhado diretamente para o ponto final. \\
+
+A escolha de caminho feita pelo GPS pode ser interrompida de duas formas: o agente Driver avista um acidente no seu raio de visão ou o agente Rádio comunica através de mensagem a existência de um acidente no mapa de estradas. Em ambos os casos a estratégia seguida pelo GPS é idêntica: marca no seu mapa de estradas o acidente (ficando assim o acidente referenciado e sendo considerado em futuros cálculos) e verifica a necessidade de recalcular a rota do Driver. O procedimento para recalcular a rota é idêntico ao já explicado, visto que o acidente foi marcado no mapa pelo GPS e portanto todos os caminhos que passem pelo menos não serão considerados. \\
 
 \subsection{Driver}
 
-O agente Driver inclui a \emph{capability} GPS para interagir com a mesma e possui como \emph{beliefs} o próximo ponto turístico para onde se está a dirigir e eventualmente algum acidente que esteja a evitar.  O condutor não tem desta forma acesso aos restantes componentes do espaço, indicando apenas que tipo de viagem pretende realizar (turística, rápida, etc) e deixando as decisões a cabo do GPS, tal como acontece num ambiente real. O agente tem assim como \emph{goals} analisar o seu espaço circundante (radar) e avisar o GPS caso encontre alguma acidente no seu percurso. \\
+O agente Driver importa a capacidade GPS para fazer uso do seu conhecimento tal como acontece numa situação real de utilização de um sistema de GPS.
+Num determinado momento o Driver tem conhecimento do ponto inicial da viagem, do ponto final e do ponto de interesse para onde se está a deslocar para além de saber se está a realizar uma viagem do tipo turística ou direta. \\
+
+O objetivo principal do agente passa por analisar o ambiente circundante (raio de visão) verificando a existência de acidentes. Caso seja avistado um acidente este é marcado no mapa e o GPS que irá recalcular a nova rota a seguir.
  
 \subsection{Rádio} 
  
-A informação relativa aos acidentes é guardada ao nível do Rádio, não sendo assim conhecida previamente nem pelo condutor, nem pelo GPS, e será transmitida ao GPS através da troca de eventos por mensagem com o agente quando o rádio se encontrar ativo ou detetados pelo campo de visão do condutor. \\
+O agente Radio funciona como um rádio real, avisando o condutor de todos os acidentes que existem no mapa. O agente tem como conhecimento o próprio mapa, estando assim ciente de todos os acidentes, quer sejam os iniciais, quer os que são adicionados em runtime. \\
 
-\subsection{Aplicação} 
+O Radio comunica através de eventos por mensagem com o Driver, indicando numa primeira comunicação todos os acidentes e posteriormente aquando do aparecimento de novos acidentes, enviando uma nova comunicação em que são apenas enviados os novos acidentes.
+
+\subsection{Aplicação - a mudar} 
 
 A aplicação recorre às funcionalidades disponibilizadas pelo \emph{Jadex} 2.0 e tem como elemento principal um espaço 2D da classe \emph{ContinuousSpace2D} que aloja vários elementos:
 
