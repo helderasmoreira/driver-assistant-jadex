@@ -368,17 +368,18 @@ Tendo o estado do tempo definido com "Sol", e sendo que o Zoo só é visitado quan
 
 \begin{figure}[htp]
   \centering
-  \includegraphics[width=0.8\textwidth]{zoo_chuva}
-  \caption{Ações do condutor com o estado do tempo "Chuva".}
+  \includegraphics[width=0.8\textwidth]{zoo_sol}
+  \caption{Ações do condutor com o estado do tempo "Sol".}
 \end{figure}
 
 Alterando agora o estado do tempo para "Chuva" verificamos positivamente que o condutor não visita o Zoo, tal como pretendido.
 
 \begin{figure}[htp]
   \centering
-  \includegraphics[width=0.8\textwidth]{zoo_sol}
-  \caption{Ações do condutor com o estado do tempo "Sol".}
+  \includegraphics[width=0.8\textwidth]{zoo_chuva}
+  \caption{Ações do condutor com o estado do tempo "Chuva".}
 \end{figure}
+
 
 Com estas duas experiências conseguimos ver que as decisões são tomadas de forma correta consoante o estado do tempo.
 
@@ -414,7 +415,7 @@ O rádio serve para alertar a existência dos acidentes no percurso, quando este s
   \caption{Ações do condutor quando o rádio se encontra desligado.}
 \end{figure}
 
-Caso o rádio esteja ligado, este informa o condutor de todos os acidentes existentes, podendo assim o percurso ser calculado sabendo já que determinada rua se encontra impedida.
+Caso o rádio esteja ligado, este informa o condutor de todos os acidentes existentes, podendo assim o -percurso ser calculado sabendo já que determinada rua se encontra impedida. 
 
 \begin{figure}[htp]
   \centering
@@ -425,6 +426,10 @@ Caso o rádio esteja ligado, este informa o condutor de todos os acidentes existe
 Podemos então assim verificar tanto que o condutor consegue detetar os acidentes existentes no caminho, bem como processar a informação recebida pelo rádio. Em ambos os casos é calculado corretamente um caminho alternativo caso este exista, senão o condutor fica parado a espera de uma alternativa.
 
 \section{Direto}
+ 
+
+Neste modo o condutor vai do ponto inicial para o ponto final sem passar por nenhum ponto de interesse.
+Ao correr este modo verificamos positivamente que o condutor encaminha-se diretamente para o ponto final, sendo apenas influenciado pela existência ou não de acidentes. 
 
 \begin{figure}[htp]
   \centering
@@ -432,8 +437,7 @@ Podemos então assim verificar tanto que o condutor consegue detetar os acidentes
   \caption{Ações do condutor em percurso directo.}
 \end{figure}
 
-Neste modo o condutor vai do ponto inicial para o ponto final sem passar por nenhum ponto de interesse.
-Ao correr este modo verificamos positivamente que o condutor encaminha-se diretamente para o ponto final, sendo apenas influenciado pela existência ou não de acidentes. Tal como anteriormente verificamos que o condutor processa de forma correcta a informação relativa a um acidente, independentemente de estar ter vindo do rádio ou do seu raio de visão.
+Tal como anteriormente verificamos que o condutor processa de forma correcta a informação relativa a um acidente, independentemente de estar ter vindo do rádio ou do seu raio de visão.
 
 \section{Visita Turística com dois condutores}
 
@@ -466,5 +470,14 @@ Para testar esta comunicação foi feita uma simulação com o rádio desligado de mo
 
 \chapter{Apêndice}
 \section{Manual do utilizador}
+
+Abrir o IDE e escolhe como main class "jadex.base.Starter".
+Ao correr a aplicação abrirá a janela do Jadex Control Center, onde é necessário adicionar ao path a pasta "application" que se encontra dentro da pasta src do projecto.
+Abrir a pasta "application", selecionar "BDIDriveAssistant.application.xml" e depois consoante o pretendido escolher uma das três opções na "Configuration" e carregar no botão Start.
+Na interface principal é possível iniciar a simulação, ligar e desligar o Rádio, bem como adicionar e remover acidentes e caminhos no mapa.
+Na janela das configurações do mundo é possível alterar o estado do tempo e ver os detalhes de cada ponto de interesse, nomeadamente as suas pré-condições e as condições atmosféricas em que é visitado.
+É possível ver os beliefs do condutor e as suas ações na janela do log das ações do condutor.
+A ultima janela, BDI Drive Assistant, mostra os diferentes pontos de interesse e acidentes do percurso, o ponto inicial e final, bem como o condutor a deslocar-se ao longo do mapa.
+
 
 \end{document}
