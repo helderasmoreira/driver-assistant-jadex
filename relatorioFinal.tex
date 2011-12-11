@@ -576,7 +576,7 @@ O rádio serve para alertar a existência dos acidentes no percurso, quando este s
   \caption{Ações do condutor quando o rádio se encontra desligado.}
 \end{figure}
 
-Caso o rádio esteja ligado, este informa o condutor de todos os acidentes existentes, podendo assim o -percurso ser calculado sabendo já que determinada rua se encontra impedida. 
+Caso o rádio esteja ligado, este informa o condutor de todos os acidentes existentes, podendo assim o percurso ser calculado sabendo já que determinada rua se encontra impedida. 
 
 \begin{figure}[H]
   \centering
@@ -612,9 +612,9 @@ Ao analisar os resultados de todas as experiências podemos concluir que dados di
 
 \chapter{Conclusões}
 
-O objetivo do trabalho passou por implementar um agente BDI capaz de aconselhar o condutor sobre o melhor percurso a realizar numa viagem de automóvel. Este foi totalmente satisfeito, e foram ainda implementadas funcionalidades adicionais que aumentam o valor da aplicação final, e a aproximam mais de casos reais.   \\
+O objetivo do trabalho passou por implementar um agente \textit{BDI} capaz de aconselhar o condutor sobre o melhor percurso a realizar numa viagem de automóvel. Este foi totalmente satisfeito, e foram ainda implementadas funcionalidades adicionais que aumentam o valor da aplicação final, e a aproximam mais de casos reais.   \\
 
-Tal como proposto, existem dois modos distintos: turístico e direto. O agente BDI não conhece inicialmente as condições da estrada e apenas sabe se há alguma acidente quando este se aproxima do seu raio de visão, ou o rádio está ligado. As condições atmosféricas são também tidas em conta na visita aos diferentes pontos de interesse. \\
+Tal como proposto, existem dois modos distintos: turístico e direto. O agente \textit{BDI} não conhece inicialmente as condições da estrada e apenas sabe se há alguma acidente quando este se aproxima do seu raio de visão, ou o rádio está ligado. As condições atmosféricas são também tidas em conta na visita aos diferentes pontos de interesse. \\
 
 Para além disso, cada ponto de interesse contém uma lista de pré-condições, constituída por pontos de interesse, e que restringem a visita a estes, tal como explicado ao longo do relatório. \\
 
@@ -624,7 +624,7 @@ Durante as aulas práticas foi ainda sugerido incluir um cenário com mais do que 
 
 Para efeitos de demonstração, foram então preparados três cenários distintos - modo turístico, modo turístico com dois condutores e modo direto. Os testes efetuados permitiram verificar o correto funcionamento da aplicação em todos estes cenários, considerando igualmente a dinâmica da mudança das características do meio ambiente.  \\
 
-A arquitetura BDI enquadra-se no cenário pretendido, pois o agente condutor pode ser facilmente modelado com base em conhecimentos, desejos e intenções. Esta arquitetura permite ainda distinguir o processo de execução de uma intenção do processo de deliberação de novas intenções, que podem surgir com a mudança do seu conhecimento, ou mesmo quando surgem novos desejos. Desta forma, o agente tem a capacidade de manter um equilíbrio entre ambas, possibilitando a sua execução em paralelo. No cenário proposto isto é fulcral, pois o condutor encontra-se normalmente em viagem, mas tem de estar constantemente em alerta para as mudanças do meio, que alteram o seu conhecimento e que podem alterar os seus desejos, e, por conseguinte, haver necessidade de mudar as intenções. \\
+A arquitetura \textit{BDI} enquadra-se no cenário pretendido, pois o agente condutor pode ser facilmente modelado com base em conhecimentos, desejos e intenções. Esta arquitetura permite ainda distinguir o processo de execução de uma intenção do processo de deliberação de novas intenções, que podem surgir com a mudança do seu conhecimento, ou mesmo quando surgem novos desejos. Desta forma, o agente tem a capacidade de manter um equilíbrio entre ambas, possibilitando a sua execução em paralelo. No cenário proposto isto é fulcral, pois o condutor encontra-se normalmente em viagem, mas tem de estar constantemente em alerta para as mudanças do meio, que alteram o seu conhecimento e que podem alterar os seus desejos, e, por conseguinte, haver necessidade de mudar as intenções. \\
 
 Este projeto foi bastante enriquecedor, pois, para além de nos ter introduzido ao estudo de sistemas multi-agente, permitiu estudar, em particular, a arquitetura \textit{BDI} e a sua implementação em \textit{Jadex}. Apesar da dificuldade inicial em perceber e conseguir concretizar algumas ideias na ferramenta, os exemplos fornecidos e a documentação \textit{online} permitiram construir uma aplicação sólida e que ultrapassa os objetivos propostos. \\
 
@@ -665,13 +665,13 @@ Em segundo, a adaptação das interfaces disponíveis para alojarem vários condutor
 \chapter{Apêndice}
 \section{Manual do utilizador}
 
-Abrir o IDE e escolhe como main class "jadex.base.Starter".
+Abrir o \emph{IDE} e escolhe como main class "jadex.base.Starter".
 Ao correr a aplicação abrirá a janela do Jadex Control Center, onde é necessário adicionar ao path a pasta "application" que se encontra dentro da pasta src do projeto.
 
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.8\textwidth]{addPath}
-  \caption{Janela do Path do Jadex Control Center.}
+  \caption{Janela do \emph{Path} do \emph{Jadex Control Center}.}
 \end{figure}
 
 Abrir a pasta "application", selecionar "BDIDriveAssistant.application.xml" e depois consoante o pretendido escolher uma das três opções na "Configuration" e carregar no botão Start.
@@ -679,7 +679,7 @@ Abrir a pasta "application", selecionar "BDIDriveAssistant.application.xml" e de
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.8\textwidth]{start}
-  \caption{Janela Principal do Jadex Control Center.}
+  \caption{Janela Principal do \emph{Jadex Control Center}.}
 \end{figure}
 
 Na interface principal é possível iniciar a simulação, ligar e desligar o Rádio, bem como adicionar e remover acidentes e caminhos no mapa. Para isso deverá clicar numa célula com o botão esquerdo e ela avançará para o seu próximo estado. Existem três estados possíveis: caminho, acidente e caminho indisponível que são identificados através de diferentes cores (vermelho = acidente, cinza claro = caminho indisponível e cinza escuro = caminho disponível).
