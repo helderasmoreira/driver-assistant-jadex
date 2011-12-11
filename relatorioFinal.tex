@@ -92,20 +92,20 @@ Após todos os pontos de interesse estarem visitados ou não existirem condições p
 
 A escolha de caminho feita pelo \textit{GPS} pode ser interrompida de duas formas: o agente Driver avista um acidente no seu raio de visão ou o agente Rádio comunica através de mensagem a existência de um acidente no mapa de estradas. Em ambos os casos a estratégia seguida pelo \textit{GPS} é idêntica: marca no seu mapa de estradas o acidente (ficando assim o acidente referenciado e sendo considerado em futuros cálculos) e verifica a necessidade de recalcular a rota do Driver. O procedimento para recalcular a rota é idêntico ao já explicado, visto que o acidente foi marcado no mapa pelo \textit{GPS} e portanto todos os caminhos que passem pelo menos não serão considerados. \\
 
-\subsection{Driver}
+\subsection{\textit{Driver}}
 
 O agente Driver importa a capacidade \textit{GPS} para fazer uso do seu conhecimento tal como acontece numa situação real de utilização de um sistema de \textit{GPS}.
 Num determinado momento o Driver tem conhecimento do ponto inicial da viagem, do ponto final e do ponto de interesse para onde se está a deslocar para além de saber se está a realizar uma viagem do tipo turística ou direta. \\
 
 O objetivo principal do agente passa por analisar o ambiente circundante (raio de visão) verificando a existência de acidentes. Caso seja avistado um acidente este é marcado no mapa e o \textit{GPS} que irá recalcular a nova rota a seguir.
  
-\subsection{Rádio} 
+\subsection{\textit{Rádio}} 
  
 O agente Radio funciona como um rádio real, avisando o condutor de todos os acidentes que existem no mapa. O agente tem como conhecimento o próprio mapa, estando assim ciente de todos os acidentes, quer sejam os iniciais, quer os que são adicionados em runtime. \\
 
 O Radio comunica através de eventos por mensagem com o Driver, indicando numa primeira comunicação todos os acidentes e posteriormente aquando do aparecimento de novos acidentes, enviando uma nova comunicação em que são apenas enviados os novos acidentes.
 
-\subsection{Aplicação - a mudar} 
+\subsection{\textit{Aplicação}} 
 
 A aplicação recorre às funcionalidades disponibilizadas pelo \emph{Jadex} 2.0 e tem como elemento principal um espaço 2D da classe \emph{Grid2D} que aloja vários elementos:
 
@@ -127,12 +127,6 @@ Representa o ponto inicial da viagem a partir do qual o condutor partirá.
 Representa o ponto final da viagem para o qual o condutor tem como objetivo dirigir-se.
 
 \end{itemize}
-
-\begin{figure}[htp]
-  \centering
-  \includegraphics[width=0.8\textwidth]{aplicacao}
-  \caption{Esquema representativo da estrutura da aplicação.}
-\end{figure}
 
 \section{Protocolos de interação}
 
