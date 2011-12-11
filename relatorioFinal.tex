@@ -13,8 +13,9 @@
 \usepackage{graphicx}
 \usepackage[usenames,dvipsnames]{color}
 \definecolor{light-gray}{gray}{0.95}
-\lstset{language=Java,breaklines=true, backgroundcolor=\color{light-gray}, basicstyle=\footnotesize, xleftmargin=0pt, xrightmargin=5pt}
+\lstset{language=Java,breaklines=true, backgroundcolor=\color{light-gray}, basicstyle=\footnotesize}
 \usepackage{fullpage}
+\usepackage{float}
 
 \begin{document}
 
@@ -92,20 +93,20 @@ Após todos os pontos de interesse estarem visitados ou não existirem condições p
 
 A escolha de caminho feita pelo \textit{GPS} pode ser interrompida de duas formas: o agente Driver avista um acidente no seu raio de visão ou o agente Rádio comunica através de mensagem a existência de um acidente no mapa de estradas. Em ambos os casos a estratégia seguida pelo \textit{GPS} é idêntica: marca no seu mapa de estradas o acidente (ficando assim o acidente referenciado e sendo considerado em futuros cálculos) e verifica a necessidade de recalcular a rota do Driver. O procedimento para recalcular a rota é idêntico ao já explicado, visto que o acidente foi marcado no mapa pelo \textit{GPS} e portanto todos os caminhos que passem pelo menos não serão considerados. \\
 
-\subsection{Driver}
+\subsection{\textit{Driver}}
 
 O agente Driver importa a capacidade \textit{GPS} para fazer uso do seu conhecimento tal como acontece numa situação real de utilização de um sistema de \textit{GPS}.
 Num determinado momento o Driver tem conhecimento do ponto inicial da viagem, do ponto final e do ponto de interesse para onde se está a deslocar para além de saber se está a realizar uma viagem do tipo turística ou direta. \\
 
 O objetivo principal do agente passa por analisar o ambiente circundante (raio de visão) verificando a existência de acidentes. Caso seja avistado um acidente este é marcado no mapa e o \textit{GPS} que irá recalcular a nova rota a seguir.
  
-\subsection{Rádio} 
+\subsection{\textit{Rádio}} 
  
 O agente Radio funciona como um rádio real, avisando o condutor de todos os acidentes que existem no mapa. O agente tem como conhecimento o próprio mapa, estando assim ciente de todos os acidentes, quer sejam os iniciais, quer os que são adicionados em runtime. \\
 
 O Radio comunica através de eventos por mensagem com o Driver, indicando numa primeira comunicação todos os acidentes e posteriormente aquando do aparecimento de novos acidentes, enviando uma nova comunicação em que são apenas enviados os novos acidentes.
 
-\subsection{Aplicação - a mudar} 
+\subsection{\textit{Aplicação}} 
 
 A aplicação recorre às funcionalidades disponibilizadas pelo \emph{Jadex} 2.0 e tem como elemento principal um espaço 2D da classe \emph{Grid2D} que aloja vários elementos:
 
@@ -127,12 +128,6 @@ Representa o ponto inicial da viagem a partir do qual o condutor partirá.
 Representa o ponto final da viagem para o qual o condutor tem como objetivo dirigir-se.
 
 \end{itemize}
-
-\begin{figure}[htp]
-  \centering
-  \includegraphics[width=0.8\textwidth]{aplicacao}
-  \caption{Esquema representativo da estrutura da aplicação.}
-\end{figure}
 
 \section{Protocolos de interação}
 
@@ -181,7 +176,7 @@ A aplicação é composta por dois grandes módulos. A Interface representa as class
 
 Por outro lado, o módulo da Aplicação contém os agentes, a \textit{capability} \textit{GPS} e o Mundo - que inclui os pontos de interesse, os acidentes e o mapa de estrada. O Condutor importa a capacidade \textit{GPS}, que lhe permite movimentar pelo espaço. Por sua vez, é o \textit{GPS} que tem acesso ao mundo em si, e que lhe permite calcular a rota do condutor. De acordo com a especificação, o \textit{GPS} não tem acesso aos acidentes \textit{à priori}. Por último, o agente Rádio tem acesso direto aos acidentes ao aceder ao Mundo e comunica-os ao condutor, caso essa opção esteja ativa.\\ 
 
-\begin{figure}[htp]
+\begin{figure}[H]
   \centering
   \includegraphics[width=0.8\textwidth]{components}
   \caption{Esquema representativo dos módulos da aplicação.}
@@ -378,7 +373,7 @@ agent.scheduleStep((IComponentStep) new IComponentStep<Void>() {
 
 A troca de mensagens entre o rádio e o condutor é unidirecional. Isto é, o condutor recebe mensagens do rádio, e não o contrário. Para enviar mensagens, é necessário registar o evento na declaração \textit{XML} do rádio, especificando o protocolo de comunicação, o tipo de mensagem e a direção das mensagens. Para este processo, é usado o mecanismos de mensagens \textit{FIPA} (\textit{FIPA Agent Message Transport Service Specification}). \\
 
-\lstset{language=XML,breaklines=true, backgroundcolor=\color{light-gray}, basicstyle=\footnotesize, xleftmargin=0pt, xrightmargin=5pt}
+\lstset{language=XML,breaklines=true, backgroundcolor=\color{light-gray}, basicstyle=\footnotesize}
 \begin{lstlisting}
 ...
 <!-- A direção da mensagem é "send", pois pretende-se apenas enviar mensagens -->
@@ -397,7 +392,7 @@ A troca de mensagens entre o rádio e o condutor é unidirecional. Isto é, o condu
 
 Depois de definir o evento é necessário criar o plano que enviará as mensagem. Como podem surgir sempre novos acidentes, o plano está sempre em execução. \\
 
-\lstset{language=Java,breaklines=true, backgroundcolor=\color{light-gray}, basicstyle=\footnotesize, xleftmargin=0pt, xrightmargin=5pt}
+\lstset{language=Java,breaklines=true, backgroundcolor=\color{light-gray}, basicstyle=\footnotesize}
 \begin{lstlisting}
 ...
 //lista com todos os agentes do tipo condutor
@@ -417,7 +412,7 @@ sendMessage(me);
 Por sua vez, o processo do lado do condutor é semelhante. Depois de definir no \textit{XML} o evento de receção de mensagens (semelhante ao do rádio, mas com a direção definida como "\textit{receive}"), é necessário criar o plano que processa as mensagens recebidas. \\
 
 
-\lstset{language=Java,breaklines=true, backgroundcolor=\color{light-gray}, basicstyle=\footnotesize, xleftmargin=0pt, xrightmargin=5pt}
+\lstset{language=Java,breaklines=true, backgroundcolor=\color{light-gray}, basicstyle=\footnotesize}
 \begin{lstlisting}
 ...
 //receção da mensagem
@@ -428,6 +423,67 @@ ISpaceObject[] accidents = (ISpaceObject[]) req.getParameter(SFipa.CONTENT).getV
 
 //tratamento dos acidentes...
 ...
+\end{lstlisting}
+\vspace{5 mm}
+
+\textbf{Mecanismo de escolha do próximo \textit{POI}\\}
+
+O agente condutor age de dois modos: turístico ou direto. No turístico, tem como objetivo passar por todos os pontos de interesse, tendo em conta as suas pré-condições, estado do tempo e os acidentes antes de se dirigir para o seu destino. No direto, o objetivo é simplesmente chegar ao ponto final. Esse modo está representado no \textit{belief} "turistica" do condutor. \\
+
+\lstset{language=XML,breaklines=true, backgroundcolor=\color{light-gray}, basicstyle=\footnotesize}
+\begin{lstlisting}
+<belief name="turistica" class="boolean">
+ <fact>true</fact>
+</belief>
+\end{lstlisting}
+\vspace{5 mm}
+
+Quando o agente é executado, há, assim, a intenção de se movimentar pelo espaço com vista a chegar ao ponto final. No \textit{Jadex}, essa intenção representa um \textit{goal} inicial, que será concretizado pelo respetivo \textit{plan} (isto é, pelo plano que é acionado pela intenção). O modo direto é simples, pois só é necessário calcular o caminho, caso exista, entre a posição do condutor e a posição definida como destino. \\
+
+No caso em que o modo atual é o turístico, é necessário calcular o ponto mais próximo que satisfaz todas as pré-condições do meio (estado do tempo, pré-condições do próprio \textit{POI},...). Estas operações são processadas pelo \textit{plan} \textit{GoDestiny}.\\
+
+\lstset{language=Java,breaklines=true, backgroundcolor=\color{light-gray}, basicstyle=\footnotesize}
+\begin{lstlisting}
+//espaço em que o agente se insere, isto é, a que o GPS tem acesso
+Space2D space = (Space2D) getBeliefbase().getBelief("environment").getFact();
+
+//objeto condutor no espaço atual
+ISpaceObject myself = (ISpaceObject) getBeliefbase().getBelief("myself").getFact();
+
+//pontos de interesse do espaço
+ISpaceObject[] poi = space.getSpaceObjectsByType("pointofinterest");
+
+/*filtrados POIs que se podem visitar, de acordo com o estado do tempo e de acordo com as pré-condições de cada POI (se um POI está por visitar, mas tem como pré-condição visitar pontos ainda não visitados, este é retirado do Array)*/
+poi = filter(poi, (String) space.getProperty("weather"));
+
+...
+//se existir um ponto ainda não visitado
+ if(poi[i].getProperty("state")).equals("notvisited")) {
+ 
+ ...
+ //é calculado o caminho utilizando o A* e colocado no Array nodes
+ ...
+ 
+ //se o caminho for mais curto que o anterior
+ if (nodes.size() < sizeant)
+  target = poi[i];
+ }
+ 
+ //se existir um POI por visitar	 
+ if (target != null) {
+  //é criada a intenção de movimentar-se para o POI	
+  go_target = createGoal("move.move_dest");
+  
+  //é definido o destino, para o respetivo plano depois ter acesso ao destino
+  go_target.getParameter("destination").setValue(target.getProperty(Space2D.PROPERTY_POSITION));
+  
+  //o goal é executado e espera-se que termine
+  dispatchSubgoalAndWait(go_target);
+  
+  //só depois de terminar, o estado o POI passa a visitado
+  target.setProperty("state", "visited");
+ }
+ else {...} //no caso de não haver mais POIs, o condutor desloca-se para o final, utilizando o mesmo mecanismo descrito anteriormente
 \end{lstlisting}
 \vspace{5 mm}
 
@@ -564,11 +620,18 @@ Para testar esta comunicação foi feita uma simulação com o rádio desligado de mo
 \section{Software}
 
 \begin{itemize}
-\item Eclipse - IDE utilizado para desenvolvimento.
+\item NetBeans - IDE utilizado para desenvolvimento.
 \item Jadex 2.0
+\item Git
 \end{itemize}
 
 \section{Elementos do grupo}
+
+\begin{itemize}
+\item Carlos Tiago Rocha Babo - 080509118
+\item Bruno Filipe Neves Ferreira - 080509088
+\item Hélder Alexandre dos Santos Moreira - 080509170
+\end{itemize}
 
 \chapter{Apêndice}
 \section{Manual do utilizador}
