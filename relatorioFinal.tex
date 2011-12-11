@@ -608,7 +608,7 @@ Ao analisar os resultados de todas as experiências podemos concluir que dados di
 
 \chapter{Conclusões}
 
-O objetivo do trabalho passava por implementar um agente BDI capaz de aconselhar o condutor sobre o melhor percurso a realizar numa viagem de automóvel. Este foi totalmente satisfeito, e foram ainda implementadas funcionalidades adicionais que aumentam o valor da aplicação final, e a aproximam mais de casos reais.   \\
+O objetivo do trabalho passou por implementar um agente BDI capaz de aconselhar o condutor sobre o melhor percurso a realizar numa viagem de automóvel. Este foi totalmente satisfeito, e foram ainda implementadas funcionalidades adicionais que aumentam o valor da aplicação final, e a aproximam mais de casos reais.   \\
 
 Tal como proposto, existem dois modos distintos: turístico e direto. O agente BDI não conhece inicialmente as condições da estrada e apenas sabe se há alguma acidente quando este se aproxima do seu raio de visão, ou o rádio está ligado. As condições atmosféricas são também tidas em conta na visita aos diferentes pontos de interesse. \\
 
@@ -616,9 +616,14 @@ Para além disso, cada ponto de interesse contém uma lista de pré-condições, cons
 
 Em relação à interface, o proposto seria visualizar as decisões do condutor e vê-lo a atuar no espaço. Para melhorar a interação com o utilizador, foi ainda acrescentada uma janela com informação relativa ao condutor, uma janela que permite interagir com o mapa de estradas e outra onde é possível consultar informação relativa ao estado atmosférico e aos pontos de interesse. \\
 
-Durante as aulas práticas foi ainda sugerido incluir um cenário com mais do que um condutor e haver partilha de informação relativa a acidentes entre eles. Assim, o programa foi ligeiramente adaptado para ser possível demonstrar possíveis implementações e melhoramentos futuros, resultantes do aumentar do âmbito do projeto inicial. \\ 
+Durante as aulas práticas foi ainda sugerido incluir um cenário com mais do que um condutor e haver partilha de informação relativa a acidentes entre eles. Assim, o programa foi ligeiramente adaptado para ser possível demonstrar possíveis implementações e melhoramentos futuros, resultantes do aumento do âmbito do projeto inicial. \\ 
 
-Para efeitos de demonstração, foram então preparados três cenários distintos - modo turístico, modo turístico com dois condutores e modo direto. \\
+Para efeitos de demonstração, foram então preparados três cenários distintos - modo turístico, modo turístico com dois condutores e modo direto. Os testes efetuados permitiram verificar o correto funcionamento da aplicação em todos estes cenários, considerando igualmente a dinâmica da mudança das características do meio ambiente.  \\
+
+A arquitetura BDI enquadra-se no cenário pretendido, pois o agente condutor pode ser facilmente modelado com base em conhecimentos, desejos e intenções. Esta arquitetura permite ainda distinguir o processo de execução de uma intenção do processo de deliberação de novas intenções, que podem surgir com a mudança do seu conhecimento, ou mesmo quando surgem novos desejos. Desta forma, o agente tem a capacidade de manter um equilíbrio entre ambas, possibilitando a sua execução em paralelo. No cenário proposto isto é fulcral, pois o condutor encontra-se normalmente em viagem, mas tem de estar constantemente em alerta para as mudanças do meio, que alteram o seu conhecimento e que podem alterar os seus desejos, e, por conseguinte, haver necessidade de mudar as intenções. \\
+
+
+Consequently, BDI agents are able to balance the time spent on deliberating about plans (choosing what to do) and executing those plans (doing it). \\
 
 Este projeto foi bastante enriquecedor, pois, para além de nos ter introduzido ao estudo de sistemas multi-agente, permitiu estudar, em particular, a arquitetura \textit{BDI} e a sua implementação em \textit{Jadex}. Apesar da dificuldade inicial em perceber e conseguir concretizar algumas ideias na ferramenta, os exemplos fornecidos e a documentação \textit{online} permitiram construir uma aplicação sólida e que ultrapassa os objetivos propostos. \\
 
