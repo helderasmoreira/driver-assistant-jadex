@@ -11,6 +11,10 @@
 
 \usepackage{listings}
 \usepackage{graphicx}
+\usepackage[usenames,dvipsnames]{color}
+\definecolor{light-gray}{gray}{0.95}
+\lstset{language=Java,breaklines=true, backgroundcolor=\color{light-gray}, basicstyle=\footnotesize, xleftmargin=0pt, xrightmargin=5pt}
+\usepackage{fullpage}
 
 \begin{document}
 
@@ -74,26 +78,26 @@ O sistema deve avaliar os estímulos (condições do percurso), bem como as condiçõ
 
 \section{Identificação e caraterização dos agentes}
 
-A aplicação contempla dois agentes, Driver e Rádio, e uma \emph{capability}, GPS. \\
+A aplicação contempla dois agentes, Driver e Rádio, e uma \emph{capability}, \textit{GPS}. \\
 
-\subsection{GPS}
+\subsection{\textit{GPS}}
 
-A capacidade GPS tem como objetivo indicar ao condutor qual o percurso que este deve tomar de acordo com o seu desejo de viagem (direta ou turística) e com as condições do meio externo. Estas condições do meio externo são parte integrante desta capacidade (\emph{beliefs}), tendo ela assim informação sobre os vários componentes do espaço como pontos de interesse, ponto inicial e final da viagem, o mapa das estradas, entre outros. \\
+A capacidade \textit{GPS} tem como objetivo indicar ao condutor qual o percurso que este deve tomar de acordo com o seu desejo de viagem (direta ou turística) e com as condições do meio externo. Estas condições do meio externo são parte integrante desta capacidade (\emph{beliefs}), tendo ela assim informação sobre os vários componentes do espaço como pontos de interesse, ponto inicial e final da viagem, o mapa das estradas, entre outros. \\
 
 Em caso de viagem turística, para encontrar o caminho a seguir, começa por verificar quais os pontos de interesse que correspondem às condições presentes no momento, isto é, quais os pontos de interesse ainda não visitados que cumprem com o estado do tempo atual e que cumprem também as precedências impostas.
 São assim eliminados a priori os pontos de interesse não válidos por um qualquer motivo.
 De seguida é analisado o caminho mais curto a seguir até cada um destes pontos e escolhido o mais curto como o próximo caminho a seguir, garantindo assim a escolha do "melhor" ponto de interesse. \\
 
-Após todos os pontos de interesse estarem visitados ou não existirem condições para visitar os que ainda não estão, o GPS encaminha o Driver para o ponto final da viagem, situação que também se verifica aquando da viagem direta em que são ignorados os pontos de interesse e o Driver é encaminhado diretamente para o ponto final. \\
+Após todos os pontos de interesse estarem visitados ou não existirem condições para visitar os que ainda não estão, o \textit{GPS} encaminha o Driver para o ponto final da viagem, situação que também se verifica aquando da viagem direta em que são ignorados os pontos de interesse e o Driver é encaminhado diretamente para o ponto final. \\
 
-A escolha de caminho feita pelo GPS pode ser interrompida de duas formas: o agente Driver avista um acidente no seu raio de visão ou o agente Rádio comunica através de mensagem a existência de um acidente no mapa de estradas. Em ambos os casos a estratégia seguida pelo GPS é idêntica: marca no seu mapa de estradas o acidente (ficando assim o acidente referenciado e sendo considerado em futuros cálculos) e verifica a necessidade de recalcular a rota do Driver. O procedimento para recalcular a rota é idêntico ao já explicado, visto que o acidente foi marcado no mapa pelo GPS e portanto todos os caminhos que passem pelo menos não serão considerados. \\
+A escolha de caminho feita pelo \textit{GPS} pode ser interrompida de duas formas: o agente Driver avista um acidente no seu raio de visão ou o agente Rádio comunica através de mensagem a existência de um acidente no mapa de estradas. Em ambos os casos a estratégia seguida pelo \textit{GPS} é idêntica: marca no seu mapa de estradas o acidente (ficando assim o acidente referenciado e sendo considerado em futuros cálculos) e verifica a necessidade de recalcular a rota do Driver. O procedimento para recalcular a rota é idêntico ao já explicado, visto que o acidente foi marcado no mapa pelo \textit{GPS} e portanto todos os caminhos que passem pelo menos não serão considerados. \\
 
 \subsection{Driver}
 
-O agente Driver importa a capacidade GPS para fazer uso do seu conhecimento tal como acontece numa situação real de utilização de um sistema de GPS.
+O agente Driver importa a capacidade \textit{GPS} para fazer uso do seu conhecimento tal como acontece numa situação real de utilização de um sistema de \textit{GPS}.
 Num determinado momento o Driver tem conhecimento do ponto inicial da viagem, do ponto final e do ponto de interesse para onde se está a deslocar para além de saber se está a realizar uma viagem do tipo turística ou direta. \\
 
-O objetivo principal do agente passa por analisar o ambiente circundante (raio de visão) verificando a existência de acidentes. Caso seja avistado um acidente este é marcado no mapa e o GPS que irá recalcular a nova rota a seguir.
+O objetivo principal do agente passa por analisar o ambiente circundante (raio de visão) verificando a existência de acidentes. Caso seja avistado um acidente este é marcado no mapa e o \textit{GPS} que irá recalcular a nova rota a seguir.
  
 \subsection{Rádio} 
  
@@ -146,7 +150,9 @@ Representa o ponto final da viagem para o qual o condutor tem como objetivo diri
 
 O \emph{Jadex} BDI 2.0 é um motor que permite especificar agentes inteligentes baseado no modelo \emph{Belief-Desire-Intention} com recurso a \emph{XML} e Java. Uma das principais vantagens da ferramenta é não introduzir nenhuma linguagem de programação nova, permitindo usar \emph{IDEs} focados no desenvolvimento orientado a objetos, como o \textit{NetBeans}. \\
 
-Para a interface gráfica recorreu-se ao conhecido \textit{Swing}, que permite desenvolver interfaces gráficas em \textit{Java} de forma simples e versátil.
+Para a interface gráfica recorreu-se ao conhecido \textit{Swing}, que permite desenvolver interfaces gráficas em \textit{Java} de forma simples e versátil. \\
+
+Com o objetivo de ter um controlo de versões do projeto recorreu-se ao \textit{Git}, que permite de forma simples e eficaz manter um repositório sempre atualizado, assim como resolver conflitos de código facilmente.
 
 \subsection{Características Principais do Jadex}
 
@@ -167,11 +173,13 @@ O ambiente de desenvolvimento escolhido foi o \textit{NetBeans}, pois é um \text
 
 Para desenvolver o projeto em \textit{Jadex}, foi descarregada a versão mais recente do \textit{site} oficial (2.0), que inclui as bibliotecas em formato \textit{*.jar} necessárias. \\
 
+Em relação à utilização do \textit{Git}, recorreu-se à consola do sistema operativo. \\
+
 \section{Estrutura da aplicação}
 \subsection{Módulos da aplicação}
 A aplicação é composta por dois grandes módulos. A Interface representa as classes \textit{Java} que implementam a interface externa ao próprio \textit{Jadex}. Nela estão incluídas a janela com o \textit{log} do utilizador e os seus \textit{beliefs}, a janela que permite adicionar novos componentes ao mapa da estrada e a janela que permite começar a simulação e consultar informação relativa ao cenário atual. \\ 
 
-Por outro lado, o módulo da Aplicação contém os agentes, a \textit{capability} GPS e o Mundo - que inclui os pontos de interesse, os acidentes e o mapa de estrada. O Condutor importa a capacidade GPS, que lhe permite movimentar pelo espaço. Por sua vez, é o GPS que tem acesso ao mundo em si, e que lhe permite calcular a rota do condutor. De acordo com a especificação, o GPS não tem acesso aos acidentes \textit{à priori}. Por último, o agente Rádio tem acesso direto aos acidentes ao aceder ao Mundo e comunica-os ao condutor, caso essa opção esteja ativa.\\ 
+Por outro lado, o módulo da Aplicação contém os agentes, a \textit{capability} \textit{GPS} e o Mundo - que inclui os pontos de interesse, os acidentes e o mapa de estrada. O Condutor importa a capacidade \textit{GPS}, que lhe permite movimentar pelo espaço. Por sua vez, é o \textit{GPS} que tem acesso ao mundo em si, e que lhe permite calcular a rota do condutor. De acordo com a especificação, o \textit{GPS} não tem acesso aos acidentes \textit{à priori}. Por último, o agente Rádio tem acesso direto aos acidentes ao aceder ao Mundo e comunica-os ao condutor, caso essa opção esteja ativa.\\ 
 
 \begin{figure}[htp]
   \centering
@@ -184,14 +192,15 @@ Por outro lado, o módulo da Aplicação contém os agentes, a \textit{capability} G
 \textbf{Objetos mais utilizados (e referenciados no relatório)}
 
 \begin{itemize}
-\item{\textit{ISpaceObject} - representação de um objeto do espaço. Permite aceder a várias informações, nomeadamente o seu \textit{ID}, a sua posição e as suas propriedades.}
-\item{\textit{Grid2D} - representação do espaço em si. Permite aceder a todos os objetos, assim como apaga-los ou inserir novos.}
+\item{\textit{ISpaceObject} - representação de um objeto do espaço. Permite aceder a várias informações, nomeadamente ao seu \textit{ID}, à sua posição e às suas propriedades.}
+\item{\textit{Grid2D} - representação do espaço em si. Permite aceder a todos os objetos do espaço, assim como apaga-los ou inserir novos.}
 \item{\textit{IVector2} - representação de um vetor (com coordenadas \textit{x} e \textit{y}) do espaço 2D.}
-\item{\textit{IBDIExternalAccess} - interface que permite aceder às propriedades de um agente fora do seu âmbito.}
+\item{\textit{IBDIExternalAccess} - interface que permite aceder a um agente em \textit{threads} externas (fora do seu âmbito).}
+\item{\textit{IBDIInternalAccess} - interface que permite aceder às propriedades internas de um agente.}
 \end{itemize}
 
 
-Tendo em conta os objetivos do projeto, podemos identificar quatro estruturas principais: o condutos, o GPS, o rádio e o Mundo em si. \\
+Tendo em conta os objetivos do projeto, podemos identificar quatro estruturas principais: o condutos, o \textit{GPS}, o rádio e o Mundo em si. \\
 
 \textbf{Condutor}
 
@@ -231,7 +240,7 @@ Tendo em conta os objetivos do projeto, podemos identificar quatro estruturas pr
 
 \end{itemize}
 
-\textbf{GPS}
+\textbf{\textit{GPS}}
 
 \begin{itemize}
 \item{Beliefs}
@@ -306,43 +315,105 @@ Para deslocar o condutor no espaço foi necessário implementar um algoritmo para 
 
 Desta forma, a primeira operação a fazer quando surge a intenção de um agente em ir de uma posição para a outra, é calcular o caminho entre essas duas posições. Se existir caminho, é criada uma \textit{task} (\textit{MoveTask}) que desloca o condutor até à posição pretendida. Esta \textit{Task} é executada a cada \textit{tick} de relógio da aplicação, movimentando o condutor de acordo com a velocidade definida previamente para os objetos do ambiente. \\
 
-\lstset{language=Java,breaklines=true}
 \begin{lstlisting}
 ...
-final IVector2 destination = (IVector2) getProperty(PROPERTY_DESTINATION); //posição do destino final
-final IVector2 interdestination = new Vector2Double(path.get(0).x, path.get(0).y); //posição da célula intermédia adjacente
-double speed = ((Number) obj.getProperty(PROPERTY_SPEED)).doubleValue(); //valor definido para a velocidade
-double maxdist = progress * speed * 0.001; //distância máxima que pode percorrer, tendo em conta o progresso do deslocamento atual
-IVector2 loc = (IVector2) obj.getProperty(Space2D.PROPERTY_POSITION); //posição atual do condutor
+//posição do destino final
+final IVector2 destination = (IVector2) getProperty(PROPERTY_DESTINATION); 
 
-IVector2 newloc = ((Space2D) space).getDistance(loc, interdestination).getAsDouble() <= maxdist? interdestination : interdestination.copy().subtract(loc).normalize().multiply(maxdist).add(loc); //nova posição baseada na posição atual, posição final e distância máxima que pode percorrer
+//posição da célula intermédia adjacente
+final IVector2 interdestination = new Vector2Double(path.get(0).x, path.get(0).y);
+ 
+//valor definido para a velocidade
+double speed = ((Number) obj.getProperty(PROPERTY_SPEED)).doubleValue();
+ 
+//distância máxima que pode percorrer, tendo em conta o progresso do deslocamento atual
+double maxdist = progress * speed * 0.001; 
 
-((Space2D) space).setPosition(obj.getId(), newloc); //movimento para a nova localização
+//posição atual do condutor
+IVector2 loc = (IVector2) obj.getProperty(Space2D.PROPERTY_POSITION);
+
+//nova posição baseada na posição atual, posição final e distância máxima que pode percorrer
+IVector2 newloc = ((Space2D) space).getDistance(loc, interdestination).getAsDouble() <= maxdist? interdestination : interdestination.copy().subtract(loc).normalize().multiply(maxdist).add(loc); 
+
+//movimento para a nova localização
+((Space2D) space).setPosition(obj.getId(), newloc); 
 
 //se a nova localização for a da posição intermédia desejada, essa célula é removida do caminho, pois estamos nela
 if (newloc == interdestination) {path.remove(0);}
-\end{lstlisting}
+\end{lstlisting} 
+\vspace{5 mm}
 
 Durante a execução desta \textit{task} é verificado a cada momento se existe algum acidente na área de visão do condutor (também definida para os objetos do ambiente). Ao encontrar um novo acidente ainda não avistado, o conhecimento do condutor é atualizado convenientemente. Tendo em conta que esta movimentação dá-se no espaço em si, o \textit{Jadex} dispões de um acesso externo (\textit{IBDIExternalAccess}) que permite aceder aos \textit{beliefs} do condutor, para serem atualizados com a nova informação.  \\
 
-\lstset{language=Java,breaklines=true}
+
 \begin{lstlisting}
 ...
-final IBDIExternalAccess agent = (IBDIExternalAccess) getProperty(PROPERTY_SCOPE); //acedendo ao scope da task é possível criar um acesso externo ao agente, pois foi este que iniciou a task
+//acedendo ao scope da task é possível criar um acesso externo ao agente, pois foi este que iniciou a task
+final IBDIExternalAccess agent = (IBDIExternalAccess) getProperty(PROPERTY_SCOPE); 
+
+//raio de visão do condutor
+double vision = ((Number) obj.getProperty(PROPERTY_VISION)).doubleValue(); 
+
+//objetos que estão no raio de visão do condutor
+final Set objects = ((Space2D) space).getNearObjects((IVector2) obj.getProperty(Space2D.PROPERTY_POSITION), new Vector1Double(vision)); 
 
 //como a execução do agente não está sincronizada com a aplicação em si, é necessário registar um step que é efetuado no próximo tick do agente
 agent.scheduleStep((IComponentStep) new IComponentStep<Void>() {
  public IFuture<Void> execute(IInternalAccess ia) {
-  IBDIInternalAccess bia = (IBDIInternalAccess) ia; //acesso interno do agente
+  //acesso interno do agente
+  IBDIInternalAccess bia = (IBDIInternalAccess) ia;
+   
   ...
-  bia.getBeliefbase().getBelief("acidente").setFact(so); //acede-se ao belief acidente e atualiza-se com o novo acidente encontrado
+  //acede-se ao belief acidente e atualiza-se com o novo acidente encontrado
+  bia.getBeliefbase().getBelief("acidente").setFact(so); 
   ...
-  return IFuture.DONE;
+  
+  return IFuture.DONE; 
  }
 });
 \end{lstlisting}
+\vspace{5 mm}
 
 \textbf{Troca de mensagens entre o rádio e o condutor \\}
+
+A troca de mensagens entre o rádio e o condutor é unidirecional. Isto é, o condutor recebe mensagens do rádio, e não o contrário. Para enviar mensagens, é necessário registar o evento na declaração \textit{XML} do rádio, especificando o protocolo de comunicação, o tipo de mensagem e a direção das mensagens. Para este processo, é usado o mecanismos de mensagens \textit{FIPA} (\textit{FIPA Agent Message Transport Service Specification}). \\
+
+\lstset{language=XML,breaklines=true, backgroundcolor=\color{light-gray}, basicstyle=\footnotesize, xleftmargin=0pt, xrightmargin=5pt}
+\begin{lstlisting}
+...
+<!-- A direção da mensagem é "send", pois pretende-se apenas enviar mensagens -->
+<messageevent name="inform_accident" type="fipa" direction="send">
+ <parameter name="performative" class="String" direction="fixed">
+ <!-- A mensagem é do tipo INFORM, pois contém apenas informações (e não uma query, por exemplo). O parâmetro "perfomative" tem de ser sempre especificado, pois define a intenção da mensagem. A direção é "fixed", pois representa informação estática -->
+  <value>SFipa.INFORM</value>
+ </parameter>
+ <parameter name="language" class="String" direction="fixed">
+ <!-- Aqui define-se a linguagem em que é feito o marshaling da mensagem. Esta tem de coincidir com a linguagem de recepção -->
+  <value>SFipa.JADEX_XML</value>
+ </parameter>
+</messageevent>
+\end{lstlisting}
+\vspace{5 mm}
+
+Depois de definir o evento é necessário criar o plano que enviará as mensagem. Como podem surgir sempre novos acidentes, o plano está sempre em execução. \\
+
+\lstset{language=Java,breaklines=true, backgroundcolor=\color{light-gray}, basicstyle=\footnotesize, xleftmargin=0pt, xrightmargin=5pt}
+\begin{lstlisting}
+...
+//lista com todos os agentes do tipo condutor
+IComponentIdentifier[] drivers = group.getAgentsForRole("Driver");
+//lista de todos os acidentes do espaço
+ISpaceObject[] accidents = space.getSpaceObjectsByType("accident");
+//nova mensagem do tipo "inform_accident"
+IMessageEvent me = createMessageEvent("inform_accident");
+//definição dos recetores 
+me.getParameter(SFipa.RECEIVERS).setValue(drivers);
+//definição do conteúdo da mensagem, neste caso com os acidentes conhecidos
+me.getParameter(SFipa.CONTENT).setValue(accidents);
+sendMessage(me);
+\end{lstlisting}
+\vspace{5 mm}
+
 
 \chapter{Experiências}
 

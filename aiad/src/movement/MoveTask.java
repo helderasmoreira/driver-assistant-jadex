@@ -79,8 +79,6 @@ public class MoveTask extends AbstractTask {
             path.remove(0);
         }
 
-       
-        // Process vision at new location.
         double vision = ((Number) obj.getProperty(PROPERTY_VISION)).doubleValue();
         final Set objects = ((Space2D) space).getNearObjects((IVector2) obj.getProperty(Space2D.PROPERTY_POSITION), new Vector1Double(vision));
         if (objects != null) {
