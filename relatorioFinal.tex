@@ -183,7 +183,7 @@ Por outro lado, o módulo da Aplicação contém os agentes, a \textit{capability} \
 
 \begin{figure}[htp]
   \centering
-  \includegraphics[width=0.9\textwidth]{components}
+  \includegraphics[width=0.8\textwidth]{components}
   \caption{Esquema representativo dos módulos da aplicação.}
 \end{figure}
 
@@ -313,7 +313,7 @@ Tendo em conta os objetivos do projeto, podemos identificar quatro estruturas pr
 
 Para deslocar o condutor no espaço foi necessário implementar um algoritmo para encontrar o melhor caminho entre dois pontos. Assim, escolheu-se o algoritmo A*, abordado na unidade curricular de Inteligência Artificial. Dada uma matriz e dois pontos, é calculado o caminho mais curto entre eles. Na matriz, as células com caminho são representadas pelo valor um, e as restantes pelo valor zero. \\
 
-Desta forma, a primeira operação a fazer quando surge a intenção de um agente em ir de uma posição para a outra, é calcular o caminho entre essas duas posições. Se existir caminho, é criada uma \textit{task} (\textit{MoveTask}) que desloca o condutor até à posição pretendida. Esta \textit{Task} é executada a cada \textit{tick} de relógio da aplicação, movimentando o condutor de acordo com a velocidade definida previamente para os objetos do ambiente. \\
+Desta forma, a primeira operação a fazer quando surge a intenção de um agente em ir de uma posição para a outra, é calcular o caminho entre essas duas posições. Se existir caminho, é criada uma \textit{task} (\textit{MoveTask}) que desloca o condutor até à posição pretendida. Esta \textit{task} é executada a cada \textit{tick} de relógio da aplicação, movimentando o condutor de acordo com a velocidade definida previamente para os objetos do ambiente. \\
 
 \begin{lstlisting}
 ...
@@ -411,6 +411,23 @@ me.getParameter(SFipa.RECEIVERS).setValue(drivers);
 //definição do conteúdo da mensagem, neste caso com os acidentes conhecidos
 me.getParameter(SFipa.CONTENT).setValue(accidents);
 sendMessage(me);
+\end{lstlisting}
+\vspace{5 mm}
+
+Por sua vez, o processo do lado do condutor é semelhante. Depois de definir no \textit{XML} o evento de receção de mensagens (semelhante ao do rádio, mas com a direção definida como "\textit{receive}"), é necessário criar o plano que processa as mensagens recebidas. \\
+
+
+\lstset{language=Java,breaklines=true, backgroundcolor=\color{light-gray}, basicstyle=\footnotesize, xleftmargin=0pt, xrightmargin=5pt}
+\begin{lstlisting}
+...
+//receção da mensagem
+IMessageEvent req = (IMessageEvent) getReason();
+
+//conteúdo da mensagem (sabemos à partida que é do tipo ISpaceObject[])
+ISpaceObject[] accidents = (ISpaceObject[]) req.getParameter(SFipa.CONTENT).getValue();
+
+//tratamento dos acidentes...
+...
 \end{lstlisting}
 \vspace{5 mm}
 
