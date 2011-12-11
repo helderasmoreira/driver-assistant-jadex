@@ -15,6 +15,7 @@ public class Utils {
     public static boolean radio = false;
     public static boolean firstRadio = true;
     public static ISpaceObject acidente = null;
+    public static ISpaceObject acc = null;
 
     public static void markAccident(Node n) {
         map[n.y][n.x] = 0;

@@ -36,7 +36,7 @@ public class InformAccident extends Plan {
             me.getParameter(SFipa.RECEIVERS).setValue(drivers2);
             me.getParameter(SFipa.CONTENT).setValue(accidents);
             sendMessage(me);
-            
+            Utils.firstRadio = false;
         }
 
         int acc = accidents.length;
