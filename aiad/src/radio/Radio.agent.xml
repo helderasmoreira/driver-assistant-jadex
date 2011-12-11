@@ -39,7 +39,6 @@
     </plans>
    	
     <events>
-	
         <messageevent name="inform_accident" type="fipa" direction="send">
             <parameter name="performative" class="String" direction="fixed">
                 <value>SFipa.INFORM</value>
