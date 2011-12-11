@@ -495,7 +495,7 @@ poi = filter(poi, (String) space.getProperty("weather"));
 
 Foram realizadas experiências em três diferentes configurações, diferenciando no tipo de percurso e no número de agentes. Todas as configurações têm por base um mapa com dimensões de 30x30, ponto inicial e ponto final, bem como um rádio que pode ser ligado e desligado.
 
-\begin{figure}[h]
+\begin{figure}[H]
   \centering
   \includegraphics[width=0.8\textwidth]{mapa}
   \caption{Mapa do Mundo.}
@@ -511,7 +511,7 @@ Esta experiência tem como objectivo testar o algoritmo implementado, o A*. Anali
 
 Analisando os logs de um percurso completo e o mapa do mundo, vemos que o condutor percorre correctamente todos os pontos de interesse antes de chegar ao ponto final, tal como pretendido.
 
-\begin{figure}[h]
+\begin{figure}[H]
   \centering
   \includegraphics[width=0.8\textwidth]{todos_pois}
   \caption{Ações do condutor num percurso sem acidentes.}
@@ -523,7 +523,7 @@ Cada ponto de interesse tem uma condição atmosférica associada, ou seja, só pode
 
 Tendo o estado do tempo definido com "Sol", e sendo que o Zoo só é visitado quando está sol o condutor terá que visita-lo. Nesta primeira experiência foi possível comprovar que tal acontece.
 
-\begin{figure}[htp]
+\begin{figure}[H]
   \centering
   \includegraphics[width=0.8\textwidth]{zoo_sol}
   \caption{Ações do condutor com o estado do tempo "Sol".}
@@ -531,7 +531,7 @@ Tendo o estado do tempo definido com "Sol", e sendo que o Zoo só é visitado quan
 
 Alterando agora o estado do tempo para "Chuva" verificamos positivamente que o condutor não visita o Zoo, tal como pretendido.
 
-\begin{figure}[htp]
+\begin{figure}[H]
   \centering
   \includegraphics[width=0.8\textwidth]{zoo_chuva}
   \caption{Ações do condutor com o estado do tempo "Chuva".}
@@ -546,7 +546,7 @@ Existem pontos de interesse que só podem ser visitados depois de outros pontos d
 
 Não existindo condições que impeçam a visita de nenhum dos pontos anteriores conseguimos ver que o condutor se comporta como pretendido e antes de visitar o estádio visita os outros dois pontos.
 
-\begin{figure}[htp]
+\begin{figure}[H]
   \centering
   \includegraphics[width=0.8\textwidth]{estadio_com_pre}
   \caption{Ações do condutor quando visita o estádio com pré-condições.}
@@ -554,7 +554,7 @@ Não existindo condições que impeçam a visita de nenhum dos pontos anteriores con
 
 Caso exista algum impedimento, como por exemplo, um acidente ou mais que bloqueiem por completo o acesso ao Zoo o Estádio não pode ser visitado. Nesta situação o condutor como pretendido vai para o ponto seguinte.
 
-\begin{figure}[htp]
+\begin{figure}[H]
   \centering
   \includegraphics[width=0.8\textwidth]{estadio_falha_pre}
   \caption{Ações do condutor quando não visita o estádio pois falha uma pré-condição.}
@@ -566,7 +566,7 @@ Neste caso podemos concluir que as pré-condições de um ponto influenciam correta
 
 O rádio serve para alertar a existência dos acidentes no percurso, quando este se encontra desligado o condutor só fica a conhecer um acidente quando este se encontra no seu campo de visão, e só depois é que é calculado um caminho alternativo.
 
-\begin{figure}[htp]
+\begin{figure}[H]
   \centering
   \includegraphics[width=0.8\textwidth]{radio_off}
   \caption{Ações do condutor quando o rádio se encontra desligado.}
@@ -574,7 +574,7 @@ O rádio serve para alertar a existência dos acidentes no percurso, quando este s
 
 Caso o rádio esteja ligado, este informa o condutor de todos os acidentes existentes, podendo assim o -percurso ser calculado sabendo já que determinada rua se encontra impedida. 
 
-\begin{figure}[htp]
+\begin{figure}[H]
   \centering
   \includegraphics[width=0.8\textwidth]{radio_on}
   \caption{Ações do condutor quando o rádio se encontra ligado.}
@@ -588,7 +588,7 @@ Podemos então assim verificar tanto que o condutor consegue detetar os acidentes
 Neste modo o condutor vai do ponto inicial para o ponto final sem passar por nenhum ponto de interesse.
 Ao correr este modo verificamos positivamente que o condutor encaminha-se diretamente para o ponto final, sendo apenas influenciado pela existência ou não de acidentes. 
 
-\begin{figure}[htp]
+\begin{figure}[H]
   \centering
   \includegraphics[width=0.8\textwidth]{direto}
   \caption{Ações do condutor em percurso directo.}
@@ -603,9 +603,16 @@ Para testar esta comunicação foi feita uma simulação com o rádio desligado de mo
 
 \section{Resultados}
 
+Ao analisar os resultados de todas as experiências podemos concluir que dados diversos cenários o condutor toma sempre as decisões de forma correta tendo sempre em vista o melhor caminho para o ponto de interesse seguinte ou para o ponto final.
+
 \chapter{Conclusões}
 
 \chapter{Melhoramentos}
+
+Futuramente poderia ser criado um modo de inserção dinâmico de pontos de interesse no mapa. Teríamos ainda a possibilidade de alterar o ponto de destino durante a simulação, ou antes de esta começar também poderíamos alterar o ponto de partida e localização dos pontos de interesse.  
+
+Finalmente poderíamos incluir a opção de adicionar e remover condutores da simulação, sendo assim possível criar um vasto leque de simulações diferentes.
+
 
 \chapter{Recursos}
 \section{Bibliografia}
@@ -639,7 +646,7 @@ Para testar esta comunicação foi feita uma simulação com o rádio desligado de mo
 Abrir o IDE e escolhe como main class "jadex.base.Starter".
 Ao correr a aplicação abrirá a janela do Jadex Control Center, onde é necessário adicionar ao path a pasta "application" que se encontra dentro da pasta src do projecto.
 
-\begin{figure}[htp]
+\begin{figure}[H]
   \centering
   \includegraphics[width=0.8\textwidth]{addPath}
   \caption{Janela do Path do Jadex Control Center.}
@@ -647,7 +654,7 @@ Ao correr a aplicação abrirá a janela do Jadex Control Center, onde é necessário
 
 Abrir a pasta "application", selecionar "BDIDriveAssistant.application.xml" e depois consoante o pretendido escolher uma das três opções na "Configuration" e carregar no botão Start.
 
-\begin{figure}[htp]
+\begin{figure}[H]
   \centering
   \includegraphics[width=0.8\textwidth]{start}
   \caption{Janela Principal do Jadex Control Center.}
@@ -655,7 +662,7 @@ Abrir a pasta "application", selecionar "BDIDriveAssistant.application.xml" e de
 
 Na interface principal é possível iniciar a simulação, ligar e desligar o Rádio, bem como adicionar e remover acidentes e caminhos no mapa.
 
-\begin{figure}[htp]
+\begin{figure}[H]
   \centering
   \includegraphics[width=0.8\textwidth]{principal}
   \caption{Janela Principal.}
@@ -663,7 +670,7 @@ Na interface principal é possível iniciar a simulação, ligar e desligar o Rádio,
 
 Na janela das configurações do mundo é possível alterar o estado do tempo e ver os detalhes de cada ponto de interesse, nomeadamente as suas pré-condições e as condições atmosféricas em que é visitado.
 
-\begin{figure}[htp]
+\begin{figure}[H]
   \centering
   \includegraphics[width=0.8\textwidth]{configs}
   \caption{Janela das Configurações do Mundo.}
@@ -671,7 +678,7 @@ Na janela das configurações do mundo é possível alterar o estado do tempo e ver 
 
 É possível ver os beliefs do condutor e as suas ações na janela do log das ações do condutor.
 
-\begin{figure}[htp]
+\begin{figure}[H]
   \centering
   \includegraphics[width=0.8\textwidth]{logs}
   \caption{Janela das Ações do condutor.}
@@ -679,7 +686,7 @@ Na janela das configurações do mundo é possível alterar o estado do tempo e ver 
 
 A ultima janela, BDI Drive Assistant, mostra os diferentes pontos de interesse e acidentes do percurso, o ponto inicial e final, bem como o condutor a deslocar-se ao longo do mapa.
 
-\begin{figure}[htp]
+\begin{figure}[H]
   \centering
   \includegraphics[width=0.8\textwidth]{driver}
   \caption{Janela do BDI Drive Assistant.}
