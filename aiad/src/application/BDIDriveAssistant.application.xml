@@ -5,6 +5,7 @@
 	pelos locais de lazer disponíveis. Existem os seguinte cenários:
 	<ul>
 	<li>Visita turística - passa pelos vários pontos de interessa</li>
+        <li>Visita turística com dois condutores - passa pelos vários pontos de interessa e há dois condutores no espaço</li>
 	<li>Directo - desloca-se directamente para o destino final</li>
 	</ul>
 	

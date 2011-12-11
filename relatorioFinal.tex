@@ -598,14 +598,29 @@ Tal como anteriormente verificamos que o condutor processa de forma correcta a i
 
 \section{Visita Turística com dois condutores}
 
-No caso da visita turística com dois condutores, é introduzida uma nova forma de comunicação de acidentes.
-Para testar esta comunicação foi feita uma simulação com o rádio desligado de modo a verificar que sempre que um condutor encontra um acidente informa o outro da existência do mesmo para que este possa escolher outro caminho, tendo funcionado tal como previsto.
+No caso da visita turística com dois condutores, é introduzida uma nova forma de comunicação de acidentes. \\
+
+Para testar esta comunicação foi feita uma simulação com o rádio desligado de modo a verificar que sempre que um condutor encontra um acidente informa o outro da existência do mesmo para que este possa escolher outro caminho, tendo funcionado tal como previsto. \\
 
 \section{Resultados}
 
-Ao analisar os resultados de todas as experiências podemos concluir que dados diversos cenários o condutor toma sempre as decisões de forma correta tendo sempre em vista o melhor caminho para o ponto de interesse seguinte ou para o ponto final.
+Ao analisar os resultados de todas as experiências podemos concluir que dados diversos cenários o condutor toma sempre as decisões de forma correta tendo sempre em vista o melhor caminho para o ponto de interesse seguinte ou para o ponto final. \\
 
 \chapter{Conclusões}
+
+O objetivo do trabalho passava por implementar um agente BDI capaz de aconselhar o condutor sobre o melhor percurso a realizar numa viagem de automóvel. Este foi totalmente satisfeito, e foram ainda implementadas funcionalidades adicionais que aumentam o valor da aplicação final, e a aproximam mais de casos reais.   \\
+
+Tal como proposto, existem dois modos distintos: turístico e direto. O agente BDI não conhece inicialmente as condições da estrada e apenas sabe se há alguma acidente quando este se aproxima do seu raio de visão, ou o rádio está ligado. As condições atmosféricas são também tidas em conta na visita aos diferentes pontos de interesse. \\
+
+Para além disso, cada ponto de interesse contém uma lista de pré-condições, constituída por pontos de interesse, e que restringem a visita a estes, tal como explicado ao longo do relatório. \\
+
+Em relação à interface, o proposto seria visualizar as decisões do condutor e vê-lo a atuar no espaço. Para melhorar a interação com o utilizador, foi ainda acrescentada uma janela com informação relativa ao condutor, uma janela que permite interagir com o mapa de estradas e outra onde é possível consultar informação relativa ao estado atmosférico e aos pontos de interesse. \\
+
+Durante as aulas práticas foi ainda sugerido incluir um cenário com mais do que um condutor e haver partilha de informação relativa a acidentes entre eles. Assim, o programa foi ligeiramente adaptado para ser possível demonstrar possíveis implementações e melhoramentos futuros, resultantes do aumentar do âmbito do projeto inicial. \\ 
+
+Para efeitos de demonstração, foram então preparados três cenários distintos - modo turístico, modo turístico com dois condutores e modo direto. \\
+
+Este projeto foi bastante enriquecedor, pois, para além de nos ter introduzido ao estudo de sistemas multi-agente, permitiu estudar, em particular, a arquitetura \textit{BDI} e a sua implementação em \textit{Jadex}. Apesar da dificuldade inicial em perceber e conseguir concretizar algumas ideias na ferramenta, os exemplos fornecidos e a documentação \textit{online} permitiram construir uma aplicação sólida e que ultrapassa os objetivos propostos. \\
 
 \chapter{Melhoramentos}
 
