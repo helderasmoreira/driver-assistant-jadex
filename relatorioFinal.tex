@@ -103,12 +103,12 @@ O Radio comunica através de eventos por mensagem com o Driver, indicando numa pr
 
 \subsection{Aplicação - a mudar} 
 
-A aplicação recorre às funcionalidades disponibilizadas pelo \emph{Jadex} 2.0 e tem como elemento principal um espaço 2D da classe \emph{ContinuousSpace2D} que aloja vários elementos:
+A aplicação recorre às funcionalidades disponibilizadas pelo \emph{Jadex} 2.0 e tem como elemento principal um espaço 2D da classe \emph{Grid2D} que aloja vários elementos:
 
 \begin{itemize}
 
 \item {\bf Mapa de estradas} \\
-Representa os caminhos onde o condutor pode movimentar-se e será representado pelo meio de arestas. Esta representação tem como objetivo permitir o mapeamento do mapa num grafo, facilitando a determinação de percursos.
+Representa os caminhos onde o condutor pode movimentar-se e é representado através de células que irão indicar se é um caminho válido ou não . Esta representação tem como objetivo permitir o mapeamento do mapa numa matriz, facilitando a determinação de percursos.
 
 \item {\bf Pontos de interesse} \\
 São os pontos de interesse que o condutor deve visitar caso faça uma visita turística. Podem conter propriedades específicas, tais como o facto de só permitir visitas num determinado estado atmosférico ou também uma pré-condição para a visita (a visita de outro ponto de interesse por exemplo).
@@ -138,14 +138,6 @@ Representa o ponto final da viagem para o qual o condutor tem como objetivo diri
   \includegraphics[width=0.8\textwidth]{interacao}
   \caption{Esquema representativo das interações entre os vários componentes.}
 \end{figure}
-
-
-Hierarquicamente, o GPS encontra-se numa camada superior ao agente Driver e é esta que, com conhecimento do ambiente e com um pedido do agente, o move até à localização desejada. De acordo com a pesquisa que fizemos sobre a tecnologia \emph{Jadex} e sobre as possíveis abordagens ao problema esta pareceu-nos a mais correta e viável. \\
-
-Assim o processo de interação entre os vários componentes começa pelo agente que comunicará ao GPS a sua intenção de realizar uma viagem e visitar os pontos turísticos conhecidos. O GPS calcula o caminho que o agente deve seguir e move-o de acordo. Ao mover-se o condutor comunicará ao GPS caso encontre algum acidente no seu caminho e este recalculará a nova rota. \\
-
-Caso o modo rádio esteja ativado, este comunica através de eventos por mensagem com o GPS, indicando-lhe os acidentes que estão presentes ao longo do mapa e este terá a responsabilidade de avaliar se os acidentes encontrados interferem no percurso definido para o condutor e caso isso aconteça, recalcular a rota. \\
-
 
 
 \chapter{Desenvolvimento}
