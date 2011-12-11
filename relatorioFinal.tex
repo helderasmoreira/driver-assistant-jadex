@@ -131,13 +131,17 @@ Representa o ponto final da viagem para o qual o condutor tem como objetivo diri
 
 \section{Protocolos de interação}
 
+O agente Driver importa a capacidade GPS para fazer uso do seu conhecimento e como tal interage com ela através dos seus \emph{beliefs} e \emph{goals}. Esta estrutura e interação tenta ser fiel à interação real que existe um sistema de GPS e um condutor humano. O condutor pode consultar o conhecimento do GPS e vai, ao longo da viagem, inserindo novos dados no sistema que os tratará devidamente. \\
+
+O agente Rádio por sua vez comunica com o Driver através de eventos por mensagem, enviando mensagens que possuem informação sobre os acidentes presentes no espaço. Mais uma vez, esta interação é o mais fiel possível a uma situação real em que o condutor ouve uma mensagem proveniente do rádio e insere a informação recebida no GPS sendo que este recalculará a nova rota tendo por os novos dados. \\
+
+Quer o Rádio quer o GPS interagem com a Aplicação através da Grid2D onde estão contidos os vários elementos da simulação. Desta forma o Rádio tem conhecimento dos acidentes, assim como o Driver e o GPS possuem informação sobre os vários pontos de interesse a visitar e os diferentes caminhos possíveis. \\
 
 \begin{figure}[htp]
   \centering
   \includegraphics[width=0.8\textwidth]{interacao}
   \caption{Esquema representativo das interações entre os vários componentes.}
 \end{figure}
-
 
 \chapter{Desenvolvimento}
 
@@ -662,7 +666,7 @@ Em segundo, a adaptação das interfaces disponíveis para alojarem vários condutor
 \section{Manual do utilizador}
 
 Abrir o IDE e escolhe como main class "jadex.base.Starter".
-Ao correr a aplicação abrirá a janela do Jadex Control Center, onde é necessário adicionar ao path a pasta "application" que se encontra dentro da pasta src do projecto.
+Ao correr a aplicação abrirá a janela do Jadex Control Center, onde é necessário adicionar ao path a pasta "application" que se encontra dentro da pasta src do projeto.
 
 \begin{figure}[H]
   \centering
@@ -678,7 +682,7 @@ Abrir a pasta "application", selecionar "BDIDriveAssistant.application.xml" e de
   \caption{Janela Principal do Jadex Control Center.}
 \end{figure}
 
-Na interface principal é possível iniciar a simulação, ligar e desligar o Rádio, bem como adicionar e remover acidentes e caminhos no mapa.
+Na interface principal é possível iniciar a simulação, ligar e desligar o Rádio, bem como adicionar e remover acidentes e caminhos no mapa. Para isso deverá clicar numa célula com o botão esquerdo e ela avançará para o seu próximo estado. Existem três estados possíveis: caminho, acidente e caminho indisponível que são identificados através de diferentes cores (vermelho = acidente, cinza claro = caminho indisponível e cinza escuro = caminho disponível).
 
 \begin{figure}[H]
   \centering
@@ -694,7 +698,7 @@ Na janela das configurações do mundo é possível alterar o estado do tempo e ver 
   \caption{Janela das Configurações do Mundo.}
 \end{figure}
 
-É possível ver os beliefs do condutor e as suas ações na janela do log das ações do condutor.
+É possível ver os \emph{beliefs} do condutor e as suas ações na janela do log das ações do condutor.
 
 \begin{figure}[H]
   \centering
