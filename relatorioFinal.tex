@@ -439,9 +439,27 @@ ISpaceObject[] accidents = (ISpaceObject[]) req.getParameter(SFipa.CONTENT).getV
 
 Foram realizadas experiências em três diferentes configurações, diferenciando no tipo de percurso e no número de agentes. Todas as configurações têm por base um mapa com dimensões de 30x30, ponto inicial e ponto final, bem como um rádio que pode ser ligado e desligado.
 
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.8\textwidth]{mapa}
+  \caption{Mapa do Mundo.}
+\end{figure}
+
 \section{Visita Turística}
 
 Nesta configuração o condutor tem de ir do ponto inicial até ao ponto final passando por todos os pontos de interesse que se encontrem em condições de serem visitados.
+
+\subsection{Todos os Pontos de Interesse de acordo com a sua posição}
+
+Esta experiência tem como objectivo testar o algoritmo implementado, o A*. Analisando o mapa anterior conseguimos ver que a Igreja é o primeiro ponto a ser visitado pois é o que se encontra mais próximo da partida tal como demonstram os logs das ações.
+
+Analisando os logs de um percurso completo e o mapa do mundo, vemos que o condutor percorre correctamente todos os pontos de interesse antes de chegar ao ponto final, tal como pretendido.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.8\textwidth]{todos_pois}
+  \caption{Ações do condutor num percurso sem acidentes.}
+\end{figure}
 
 \subsection{Condições Atmosféricas}
 
