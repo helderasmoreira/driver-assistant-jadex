@@ -86,29 +86,30 @@ A aplicação contempla dois agentes, Driver e Rádio, e uma \emph{capability}, \te
 A capacidade \textit{GPS} tem como objetivo indicar ao condutor qual o percurso que este deve tomar de acordo com o seu desejo de viagem (direta ou turística) e com as condições do meio externo. Estas condições do meio externo são parte integrante desta capacidade (\emph{beliefs}), tendo ela assim informação sobre os vários componentes do espaço como pontos de interesse, ponto inicial e final da viagem, o mapa das estradas, entre outros. \\
 
 Em caso de viagem turística, para encontrar o caminho a seguir, começa por verificar quais os pontos de interesse que correspondem às condições presentes no momento, isto é, quais os pontos de interesse ainda não visitados que cumprem com o estado do tempo atual e que cumprem também as precedências impostas.
-São assim eliminados a priori os pontos de interesse não válidos por um qualquer motivo.
+São assim eliminados \textit{a priori} os pontos de interesse não válidos por um qualquer motivo.
 De seguida é analisado o caminho mais curto a seguir até cada um destes pontos e escolhido o mais curto como o próximo caminho a seguir, garantindo assim a escolha do "melhor" ponto de interesse. \\
 
 Após todos os pontos de interesse estarem visitados ou não existirem condições para visitar os que ainda não estão, o \textit{GPS} encaminha o Driver para o ponto final da viagem, situação que também se verifica aquando da viagem direta em que são ignorados os pontos de interesse e o Driver é encaminhado diretamente para o ponto final. \\
 
-A escolha de caminho feita pelo \textit{GPS} pode ser interrompida de duas formas: o agente Driver avista um acidente no seu raio de visão ou o agente Rádio comunica através de mensagem a existência de um acidente no mapa de estradas. Em ambos os casos a estratégia seguida pelo \textit{GPS} é idêntica: marca no seu mapa de estradas o acidente (ficando assim o acidente referenciado e sendo considerado em futuros cálculos) e verifica a necessidade de recalcular a rota do Driver. O procedimento para recalcular a rota é idêntico ao já explicado, visto que o acidente foi marcado no mapa pelo \textit{GPS} e portanto todos os caminhos que passem pelo menos não serão considerados. \\
+A escolha de caminho feita pelo \textit{GPS} pode ser interrompida de duas formas: o agente \textit{Driver} avista um acidente no seu raio de visão ou o agente Rádio comunica através de mensagem a existência de um acidente no mapa de estradas. Em ambos os casos a estratégia seguida pelo \textit{GPS} é idêntica: marca no seu mapa de estradas o acidente (ficando assim o acidente referenciado e sendo considerado em futuros cálculos) e verifica a necessidade de recalcular a rota do \textit{Driver}. O procedimento para recalcular a rota é idêntico ao já explicado, visto que o acidente foi marcado no mapa pelo \textit{GPS} e portanto todos os caminhos que passem pelo menos não serão considerados. \\
 
 \subsection{\textit{Driver}}
 
-O agente Driver importa a capacidade \textit{GPS} para fazer uso do seu conhecimento tal como acontece numa situação real de utilização de um sistema de \textit{GPS}.
-Num determinado momento o Driver tem conhecimento do ponto inicial da viagem, do ponto final e do ponto de interesse para onde se está a deslocar para além de saber se está a realizar uma viagem do tipo turística ou direta. \\
+O agente \textit{Driver} importa a capacidade \textit{GPS} para fazer uso do seu conhecimento tal como acontece numa situação real de utilização de um sistema de \textit{GPS}. \\
+
+Num determinado momento o \textit{Driver} tem conhecimento do ponto inicial da viagem, do ponto final e do ponto de interesse para onde se está a deslocar para além de saber se está a realizar uma viagem do tipo turística ou direta. \\
 
 O objetivo principal do agente passa por analisar o ambiente circundante (raio de visão) verificando a existência de acidentes. Caso seja avistado um acidente este é marcado no mapa e o \textit{GPS} que irá recalcular a nova rota a seguir.
  
-\subsection{\textit{Rádio}} 
+\subsection{\textit{Radio}}
  
-O agente Radio funciona como um rádio real, avisando o condutor de todos os acidentes que existem no mapa. O agente tem como conhecimento o próprio mapa, estando assim ciente de todos os acidentes, quer sejam os iniciais, quer os que são adicionados em runtime. \\
+O agente \textit{Radio} funciona como um rádio real, avisando o condutor de todos os acidentes que existem no mapa. O agente tem como conhecimento o próprio mapa, estando assim ciente de todos os acidentes, quer sejam os iniciais, quer os que são adicionados em \textit{runtime}. \\
 
-O Radio comunica através de eventos por mensagem com o Driver, indicando numa primeira comunicação todos os acidentes e posteriormente aquando do aparecimento de novos acidentes, enviando uma nova comunicação em que são apenas enviados os novos acidentes.
+O \textit{Radio} comunica através de eventos por mensagem com o \textit{Driver}, indicando numa primeira comunicação todos os acidentes e posteriormente aquando do aparecimento de novos acidentes, enviando uma nova comunicação em que são apenas enviados os novos acidentes.
 
-\subsection{\textit{Aplicação}} 
+\section{Aplicação}
 
-A aplicação recorre às funcionalidades disponibilizadas pelo \emph{Jadex} 2.0 e tem como elemento principal um espaço 2D da classe \emph{Grid2D} que aloja vários elementos:
+A aplicação é constituída pelos seguintes elementos:
 
 \begin{itemize}
 
@@ -133,9 +134,9 @@ Representa o ponto final da viagem para o qual o condutor tem como objetivo diri
 
 O agente Driver importa a capacidade GPS para fazer uso do seu conhecimento e como tal interage com ela através dos seus \emph{beliefs} e \emph{goals}. Esta estrutura e interação tenta ser fiel à interação real que existe um sistema de GPS e um condutor humano. O condutor pode consultar o conhecimento do GPS e vai, ao longo da viagem, inserindo novos dados no sistema que os tratará devidamente. \\
 
-O agente Rádio por sua vez comunica com o Driver através de eventos por mensagem, enviando mensagens que possuem informação sobre os acidentes presentes no espaço. Mais uma vez, esta interação é o mais fiel possível a uma situação real em que o condutor ouve uma mensagem proveniente do rádio e insere a informação recebida no GPS sendo que este recalculará a nova rota tendo por os novos dados. \\
+O agente Rádio por sua vez comunica com o \textit{Driver} através de eventos por mensagem, enviando mensagens que possuem informação sobre os acidentes presentes no espaço. Mais uma vez, esta interação é o mais fiel possível a uma situação real em que o condutor ouve uma mensagem proveniente do rádio e insere a informação recebida no \textit{GPS} sendo que este recalculará a nova rota tendo em conta os novos dados. \\
 
-Quer o Rádio quer o GPS interagem com a Aplicação através da Grid2D onde estão contidos os vários elementos da simulação. Desta forma o Rádio tem conhecimento dos acidentes, assim como o Driver e o GPS possuem informação sobre os vários pontos de interesse a visitar e os diferentes caminhos possíveis. \\
+Quer o Rádio quer o \textit{GPS} interagem com a Aplicação através da \textit{Grid2D} onde estão contidos os vários elementos da simulação. Desta forma o Rádio tem conhecimento dos acidentes, assim como o \textit{Driver} e o \textit{GPS} possuem informação sobre os vários pontos de interesse a visitar e os diferentes caminhos possíveis. \\
 
 \begin{figure}[htp]
   \centering
@@ -178,7 +179,7 @@ Em relação à utilização do \textit{Git}, recorreu-se à consola do sistema operat
 \subsection{Módulos da aplicação}
 A aplicação é composta por dois grandes módulos. A Interface representa as classes \textit{Java} que implementam a interface externa ao próprio \textit{Jadex}. Nela estão incluídas a janela com o \textit{log} do utilizador e os seus \textit{beliefs}, a janela que permite adicionar novos componentes ao mapa da estrada e a janela que permite começar a simulação e consultar informação relativa ao cenário atual. \\ 
 
-Por outro lado, o módulo da Aplicação contém os agentes, a \textit{capability} \textit{GPS} e o Mundo - que inclui os pontos de interesse, os acidentes e o mapa de estrada. O Condutor importa a capacidade \textit{GPS}, que lhe permite movimentar pelo espaço. Por sua vez, é o \textit{GPS} que tem acesso ao mundo em si, e que lhe permite calcular a rota do condutor. De acordo com a especificação, o \textit{GPS} não tem acesso aos acidentes \textit{à priori}. Por último, o agente Rádio tem acesso direto aos acidentes ao aceder ao Mundo e comunica-os ao condutor, caso essa opção esteja ativa.\\ 
+Por outro lado, o módulo da Aplicação contém os agentes, a \textit{capability} \textit{GPS} e o Mundo - que inclui os pontos de interesse, os acidentes e o mapa de estrada. O Condutor importa a capacidade \textit{GPS}, que lhe permite movimentar pelo espaço. Por sua vez, é o \textit{GPS} que tem acesso ao mundo em si, e que lhe permite calcular a rota do condutor. De acordo com a especificação, o \textit{GPS} não tem acesso aos acidentes \textit{a priori}. Por último, o agente Rádio tem acesso direto aos acidentes ao aceder ao Mundo e comunica-os ao condutor, caso essa opção esteja ativa.\\ 
 
 \begin{figure}[H]
   \centering
@@ -497,7 +498,7 @@ poi = filter(poi, (String) space.getProperty("weather"));
 
 \section{Objetivo de cada experiência}
 
-Foram realizadas experiências em três diferentes configurações, diferenciando no tipo de percurso e no número de agentes. Todas as configurações têm por base um mapa com dimensões de 30x30, ponto inicial e ponto final, bem como um rádio que pode ser ligado e desligado.
+Foram realizadas experiências em três diferentes configurações, diferenciando no tipo de percurso e no número de agentes. Todas as configurações têm por base um mapa com dimensões de 30x30, ponto inicial e ponto final, bem como um rádio que pode ser ligado e desligado. \\
 
 \begin{figure}[H]
   \centering
@@ -511,9 +512,9 @@ Nesta configuração o condutor tem de ir do ponto inicial até ao ponto final pass
 
 \subsection{Todos os Pontos de Interesse de acordo com a sua posição}
 
-Esta experiência tem como objectivo testar o algoritmo implementado, o A*. Analisando o mapa anterior conseguimos ver que a Igreja é o primeiro ponto a ser visitado pois é o que se encontra mais próximo da partida tal como demonstram os logs das ações.
+Esta experiência tem como objetivo testar o algoritmo implementado, o A*. Analisando o mapa anterior conseguimos ver que a Igreja é o primeiro ponto a ser visitado pois é o que se encontra mais próximo da partida tal como demonstram os \textit{logs} das ações.
 
-Analisando os logs de um percurso completo e o mapa do mundo, vemos que o condutor percorre correctamente todos os pontos de interesse antes de chegar ao ponto final, tal como pretendido.
+Analisando os \textit{logs} de um percurso completo e o mapa do mundo, vemos que o condutor percorre corretamente todos os pontos de interesse antes de chegar ao ponto final, tal como pretendido.
 
 \begin{figure}[H]
   \centering
@@ -523,9 +524,9 @@ Analisando os logs de um percurso completo e o mapa do mundo, vemos que o condut
 
 \subsection{Condições Atmosféricas}
 
-Cada ponto de interesse tem uma condição atmosférica associada, ou seja, só pode ser visitado caso essa condição se verifique.
+Cada ponto de interesse tem uma condição atmosférica associada, ou seja, só pode ser visitado caso essa condição se verifique. \\
 
-Tendo o estado do tempo definido com "Sol", e sendo que o Zoo só é visitado quando está sol o condutor terá que visita-lo. Nesta primeira experiência foi possível comprovar que tal acontece.
+Tendo o estado do tempo definido com "Sol", e sendo que o Zoo só é visitado quando está sol o condutor terá que visitá-lo. Nesta primeira experiência foi possível comprovar que tal acontece.
 
 \begin{figure}[H]
   \centering
@@ -541,12 +542,11 @@ Alterando agora o estado do tempo para "Chuva" verificamos positivamente que o c
   \caption{Ações do condutor com o estado do tempo "Chuva".}
 \end{figure}
 
-
 Com estas duas experiências conseguimos ver que as decisões são tomadas de forma correta consoante o estado do tempo.
 
 \subsection{Pré-Condições de Visita de um Ponto de Interesse}
 
-Existem pontos de interesse que só podem ser visitados depois de outros pontos de interesse, como por exemplo, o Estádio que só pode ser visitado depois do Zoo e da Igreja.
+Existem pontos de interesse que só podem ser visitados depois de outros pontos de interesse, como por exemplo, o Estádio que só pode ser visitado depois do Zoo e da Igreja. \\
 
 Não existindo condições que impeçam a visita de nenhum dos pontos anteriores conseguimos ver que o condutor se comporta como pretendido e antes de visitar o estádio visita os outros dois pontos.
 
@@ -576,7 +576,7 @@ O rádio serve para alertar a existência dos acidentes no percurso, quando este s
   \caption{Ações do condutor quando o rádio se encontra desligado.}
 \end{figure}
 
-Caso o rádio esteja ligado, este informa o condutor de todos os acidentes existentes, podendo assim o -percurso ser calculado sabendo já que determinada rua se encontra impedida. 
+Caso o rádio esteja ligado, este informa o condutor de todos os acidentes existentes, podendo assim o percurso ser calculado sabendo já que determinada rua se encontra impedida. 
 
 \begin{figure}[H]
   \centering
@@ -588,17 +588,17 @@ Podemos então assim verificar tanto que o condutor consegue detetar os acidentes
 
 \section{Direto}
  
+Neste modo o condutor vai do ponto inicial para o ponto final sem passar por nenhum ponto de interesse. \\
 
-Neste modo o condutor vai do ponto inicial para o ponto final sem passar por nenhum ponto de interesse.
 Ao correr este modo verificamos positivamente que o condutor encaminha-se diretamente para o ponto final, sendo apenas influenciado pela existência ou não de acidentes. 
 
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.8\textwidth]{direto}
-  \caption{Ações do condutor em percurso directo.}
+  \caption{Ações do condutor em percurso direto.}
 \end{figure}
 
-Tal como anteriormente verificamos que o condutor processa de forma correcta a informação relativa a um acidente, independentemente de estar ter vindo do rádio ou do seu raio de visão.
+Tal como anteriormente, verificamos que o condutor processa de forma correta a informação relativa a um acidente, independentemente de esta ter vindo do rádio ou do seu raio de visão.
 
 \section{Visita Turística com dois condutores}
 
@@ -665,16 +665,16 @@ Em segundo, a adaptação das interfaces disponíveis para alojarem vários condutor
 \chapter{Apêndice}
 \section{Manual do utilizador}
 
-Abrir o IDE e escolhe como main class "jadex.base.Starter".
-Ao correr a aplicação abrirá a janela do Jadex Control Center, onde é necessário adicionar ao path a pasta "application" que se encontra dentro da pasta src do projeto.
+Abrir a linha de comandos e executar o comando \textit{"java -jar DriverAssistant.jar"}.
+Ao correr a aplicação abrirá a janela do \textit{Jadex Control Center}, onde é necessário adicionar ao \textit{path} a pasta "\textit{application}" que se encontra dentro da pasta \textit{src} do projeto.
 
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.8\textwidth]{addPath}
-  \caption{Janela do Path do Jadex Control Center.}
+  \caption{Janela do \textit{path} do \textit{Jadex Control Center}.}
 \end{figure}
 
-Abrir a pasta "application", selecionar "BDIDriveAssistant.application.xml" e depois consoante o pretendido escolher uma das três opções na "Configuration" e carregar no botão Start.
+Abrir a pasta "\textit{application}", selecionar "\textit{BDIDriveAssistant.application.xml}" e depois consoante o pretendido escolher uma das três opções na "\textit{Configuration}" e carregar no botão \textit{Start}.
 
 \begin{figure}[H]
   \centering
@@ -682,7 +682,7 @@ Abrir a pasta "application", selecionar "BDIDriveAssistant.application.xml" e de
   \caption{Janela Principal do Jadex Control Center.}
 \end{figure}
 
-Na interface principal é possível iniciar a simulação, ligar e desligar o Rádio, bem como adicionar e remover acidentes e caminhos no mapa. Para isso deverá clicar numa célula com o botão esquerdo e ela avançará para o seu próximo estado. Existem três estados possíveis: caminho, acidente e caminho indisponível que são identificados através de diferentes cores (vermelho = acidente, cinza claro = caminho indisponível e cinza escuro = caminho disponível).
+Na interface principal é possível iniciar a simulação, ligar e desligar o rádio, bem como adicionar e remover acidentes e caminhos no mapa. Para isso deverá clicar numa célula com o botão esquerdo e ela avançará para o seu próximo estado. Existem três estados possíveis: caminho, acidente e caminho indisponível que são identificados através de diferentes cores (vermelho = acidente, cinza claro = caminho indisponível e cinza escuro = caminho disponível).
 
 \begin{figure}[H]
   \centering
@@ -706,7 +706,7 @@ Na janela das configurações do mundo é possível alterar o estado do tempo e ver 
   \caption{Janela das Ações do condutor.}
 \end{figure}
 
-A ultima janela, BDI Drive Assistant, mostra os diferentes pontos de interesse e acidentes do percurso, o ponto inicial e final, bem como o condutor a deslocar-se ao longo do mapa.
+A última janela, \textit{BDI Drive Assistant}, mostra os diferentes pontos de interesse e acidentes do percurso, o ponto inicial e final, bem como o condutor a deslocar-se ao longo do mapa.
 
 \begin{figure}[H]
   \centering

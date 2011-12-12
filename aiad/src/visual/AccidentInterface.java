@@ -266,19 +266,6 @@ public class AccidentInterface extends javax.swing.JFrame {
         }
     }
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-
-            private IEnvironmentSpace space;
-
-            public void run() {
-                new AccidentInterface(space).setVisible(true);
-            }
-        });
-    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;

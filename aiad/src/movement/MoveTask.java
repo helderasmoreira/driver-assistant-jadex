@@ -13,7 +13,6 @@ import jadex.extension.envsupport.environment.space2d.Space2D;
 import jadex.extension.envsupport.math.IVector2;
 import jadex.extension.envsupport.math.Vector1Double;
 import jadex.extension.envsupport.math.Vector2Double;
-import jadex.xml.annotation.XMLClassname;
 
 import java.util.Iterator;
 import java.util.List;
@@ -85,7 +84,6 @@ public class MoveTask extends AbstractTask {
 
             agent.scheduleStep((IComponentStep) new IComponentStep<Void>() {
 
-                @XMLClassname("add")
                 public IFuture<Void> execute(IInternalAccess ia) {
                     IBDIInternalAccess bia = (IBDIInternalAccess) ia;
 
